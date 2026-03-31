@@ -1,2193 +1,1396 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JVC Catering | Premium Catering Experience</title>
-  <meta name="description" content="Premium catering services for weddings, corporate events, and private parties. Exceptional food, unforgettable experiences.">
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-  <style>
-    /* ═══════════════════════════════════════
-       ROOT / VARIABLES
-    ═══════════════════════════════════════ */
-    :root {
-      --amber:    #E8803A;
-      --amber-dk: #C4601F;
-      --amber-lt: #F2A66E;
-      --forest:   #1A5C35;
-      --forest-dk:#0F3B21;
-      --forest-lt:#2E8B57;
-      --ivory:    #FAF7F2;
-      --cream:    #F5EFE6;
-      --charcoal: #1C1C1E;
-      --dark:     #111111;
-      --muted:    #6B7280;
-      --white:    #FFFFFF;
-      --glass-bg: rgba(255,255,255,0.08);
-      --glass-bdr:rgba(255,255,255,0.18);
-    }
-
-    /* ═══════════════════════════════════════
-       RESET + BASE
-    ═══════════════════════════════════════ */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--ivory);
-      color: var(--charcoal);
-      overflow-x: hidden;
-      cursor: none;
-    }
-    img { display: block; width: 100%; }
-    a { text-decoration: none; color: inherit; }
-
-    /* ═══════════════════════════════════════
-       CUSTOM CURSOR
-    ═══════════════════════════════════════ */
-    #cursor-dot {
-      position: fixed; top: 0; left: 0; z-index: 9999;
-      width: 8px; height: 8px;
-      background: var(--amber);
-      border-radius: 50%;
-      pointer-events: none;
-      transform: translate(-50%,-50%);
-      transition: transform 0.05s linear;
-    }
-    #cursor-ring {
-      position: fixed; top: 0; left: 0; z-index: 9998;
-      width: 36px; height: 36px;
-      border: 1.5px solid var(--amber);
-      border-radius: 50%;
-      pointer-events: none;
-      transform: translate(-50%,-50%);
-      transition: transform 0.18s ease, width 0.25s ease, height 0.25s ease, opacity 0.25s ease;
-      opacity: 0.6;
-    }
-    body:has(.magnetic-btn:hover) #cursor-ring,
-    body:has(a:hover) #cursor-ring {
-      width: 56px; height: 56px; opacity: 1;
-    }
-
-    /* ═══════════════════════════════════════
-       SCROLLBAR
-    ═══════════════════════════════════════ */
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: var(--cream); }
-    ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--amber), var(--forest)); border-radius: 4px; }
-    ::selection { background: var(--amber); color: #fff; }
-
-    /* ═══════════════════════════════════════
-       PRELOADER
-    ═══════════════════════════════════════ */
-    #preloader {
-      position: fixed; inset: 0; z-index: 10000;
-      background: var(--dark);
-      display: flex; align-items: center; justify-content: center;
-      flex-direction: column; gap: 20px;
-      transition: opacity 0.7s ease, visibility 0.7s ease;
-    }
-    #preloader.hidden { opacity: 0; visibility: hidden; }
-    .loader-logo {
-      font-family: 'Cinzel', serif;
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 700;
-      color: #fff;
-      letter-spacing: 0.3em;
-      animation: flicker 1.5s infinite alternate;
-    }
-    .loader-logo span { color: var(--amber); }
-    .loader-bar {
-      width: 200px; height: 1px;
-      background: rgba(255,255,255,0.1);
-      position: relative; overflow: hidden;
-    }
-    .loader-bar::after {
-      content: '';
-      position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-      background: linear-gradient(90deg, transparent, var(--amber), transparent);
-      animation: loader-sweep 1.5s ease infinite;
-    }
-    @keyframes loader-sweep { to { left: 100%; } }
-    @keyframes flicker {
-      0%,100% { opacity: 1; }
-      92% { opacity: 0.8; }
-      94% { opacity: 0.2; }
-      96% { opacity: 0.9; }
-    }
-    .loader-sub {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.75rem;
-      letter-spacing: 0.35em;
-      color: rgba(255,255,255,0.4);
-      text-transform: uppercase;
-    }
-
-    /* ═══════════════════════════════════════
-       NOISE OVERLAY (texture)
-    ═══════════════════════════════════════ */
-    .noise::before {
-      content: '';
-      position: absolute; inset: 0; z-index: 1;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-    }
-
-    /* ═══════════════════════════════════════
-       NAVBAR
-    ═══════════════════════════════════════ */
-    #navbar {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
-      padding: 0 clamp(1.5rem, 4vw, 3rem);
-      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    #navbar.scrolled {
-      background: rgba(250,247,242,0.92);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(232,128,58,0.12);
-      box-shadow: 0 4px 40px rgba(0,0,0,0.06);
-    }
-    .nav-inner {
-      max-width: 1400px; margin: 0 auto;
-      display: flex; align-items: center; justify-content: space-between;
-      height: 80px;
-    }
-    .nav-logo {
-      font-family: 'Cinzel', serif;
-      font-size: 1.3rem; font-weight: 700;
-      color: #fff; letter-spacing: 0.12em;
-      transition: color 0.4s;
-    }
-    #navbar.scrolled .nav-logo { color: var(--dark); }
-    .nav-logo span { color: var(--amber); }
-    .nav-links { display: flex; align-items: center; gap: 0.25rem; }
-    .nav-link {
-      padding: 0.5rem 1rem;
-      font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em;
-      color: rgba(255,255,255,0.85);
-      text-transform: uppercase;
-      position: relative; transition: color 0.3s;
-    }
-    #navbar.scrolled .nav-link { color: var(--muted); }
-    .nav-link::after {
-      content: ''; position: absolute; bottom: 0; left: 1rem;
-      width: 0; height: 1px;
-      background: linear-gradient(90deg, var(--forest), var(--amber));
-      transition: width 0.3s ease;
-    }
-    .nav-link:hover::after { width: calc(100% - 2rem); }
-    .nav-link:hover { color: var(--amber); }
-    #navbar.scrolled .nav-link:hover { color: var(--amber); }
-    .nav-cta {
-      background: var(--amber);
-      color: #fff;
-      padding: 0.65rem 1.8rem;
-      border-radius: 100px;
-      font-size: 0.82rem; font-weight: 600; letter-spacing: 0.06em;
-      text-transform: uppercase;
-      display: flex; align-items: center; gap: 0.5rem;
-      transition: all 0.3s ease;
-      cursor: none;
-    }
-    .nav-cta:hover {
-      background: var(--amber-dk);
-      box-shadow: 0 8px 30px rgba(232,128,58,0.45);
-      transform: translateY(-1px);
-    }
-    /* hamburger */
-    #ham { display: none; flex-direction: column; gap: 5px; cursor: none; padding: 6px; }
-    #ham span {
-      display: block; width: 24px; height: 1.5px;
-      background: #fff; border-radius: 2px;
-      transition: all 0.35s ease;
-    }
-    #navbar.scrolled #ham span { background: var(--dark); }
-    #ham.open span:nth-child(1) { transform: rotate(45deg) translate(4.5px, 4.5px); }
-    #ham.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-    #ham.open span:nth-child(3) { transform: rotate(-45deg) translate(4.5px, -4.5px); }
-
-    /* Mobile drawer */
-    #mobile-drawer {
-      position: fixed; top: 0; right: -100%; bottom: 0;
-      width: min(360px, 100vw);
-      background: var(--dark);
-      z-index: 490; padding: 100px 2.5rem 2.5rem;
-      transition: right 0.45s cubic-bezier(0.4, 0, 0.2, 1);
-      display: flex; flex-direction: column; gap: 0.5rem;
-    }
-    #mobile-drawer.open { right: 0; }
-    .drawer-link {
-      display: flex; align-items: center; gap: 1rem;
-      padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.06);
-      font-size: 1.1rem; color: rgba(255,255,255,0.7);
-      letter-spacing: 0.04em;
-      transition: color 0.3s;
-    }
-    .drawer-link i { color: var(--amber); width: 20px; }
-    .drawer-link:hover { color: #fff; }
-    .drawer-cta {
-      margin-top: 2rem; padding: 1rem;
-      background: var(--amber); border-radius: 12px;
-      color: #fff; text-align: center;
-      font-weight: 600; letter-spacing: 0.05em;
-      font-size: 0.9rem;
-    }
-
-    /* ═══════════════════════════════════════
-       HERO
-    ═══════════════════════════════════════ */
-    #hero {
-      position: relative; min-height: 100svh;
-      display: flex; align-items: center; justify-content: center;
-      overflow: hidden;
-    }
-    .hero-bg {
-      position: absolute; inset: 0;
-      background: url('https://images.unsplash.com/photo-1555244162-803834f70033?w=1920&h=1080&fit=crop') center/cover no-repeat;
-      animation: kenburns 20s ease-in-out infinite alternate;
-      transform-origin: center;
-    }
-    @keyframes kenburns {
-      0%   { transform: scale(1)    translate(0, 0); }
-      33%  { transform: scale(1.08) translate(-1%, 0.5%); }
-      66%  { transform: scale(1.12) translate(1%, -0.5%); }
-      100% { transform: scale(1.05) translate(0.5%, 1%); }
-    }
-    .hero-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(
-        145deg,
-        rgba(15,59,33,0.78) 0%,
-        rgba(20,20,20,0.55) 45%,
-        rgba(196,96,31,0.62) 100%
-      );
-    }
-    .hero-overlay-bottom {
-      position: absolute; bottom: 0; left: 0; right: 0; height: 40%;
-      background: linear-gradient(to top, rgba(10,10,10,0.5), transparent);
-    }
-    .hero-content {
-      position: relative; z-index: 10;
-      text-align: center; padding: 0 1.5rem;
-      max-width: 1100px; margin: 0 auto;
-    }
-    .hero-eyebrow {
-      display: inline-flex; align-items: center; gap: 0.6rem;
-      padding: 0.5rem 1.4rem;
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-bdr);
-      backdrop-filter: blur(12px);
-      border-radius: 100px;
-      font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase;
-      color: rgba(255,255,255,0.9);
-      margin-bottom: 2.2rem;
-      animation: fadeUp 0.9s 0.3s both;
-    }
-    .hero-eyebrow .dot { width: 6px; height: 6px; background: #4ade80; border-radius: 50%; animation: pulse-dot 2s infinite; }
-    @keyframes pulse-dot { 0%,100%{box-shadow:0 0 0 0 rgba(74,222,128,0.6)} 50%{box-shadow:0 0 0 6px rgba(74,222,128,0)} }
-    .hero-h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(3.5rem, 9vw, 8.5rem);
-      font-weight: 300; line-height: 0.92;
-      color: #fff; letter-spacing: -0.02em;
-      animation: fadeUp 0.9s 0.5s both;
-    }
-    .hero-h1 em { font-style: italic; color: var(--amber-lt); }
-    .hero-h1 .outline-text {
-      -webkit-text-stroke: 1px rgba(255,255,255,0.6);
-      color: transparent;
-    }
-    .hero-sub {
-      margin: 2rem auto;
-      max-width: 520px;
-      font-size: 1rem; font-weight: 300;
-      color: rgba(255,255,255,0.75); line-height: 1.8;
-      letter-spacing: 0.02em;
-      animation: fadeUp 0.9s 0.7s both;
-    }
-    .hero-btns {
-      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
-      animation: fadeUp 0.9s 0.9s both;
-    }
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: 0.6rem;
-      background: var(--amber);
-      color: #fff;
-      padding: 1rem 2.4rem;
-      border-radius: 100px;
-      font-size: 0.88rem; font-weight: 600; letter-spacing: 0.08em;
-      text-transform: uppercase;
-      transition: all 0.35s ease;
-      cursor: none;
-      position: relative; overflow: hidden;
-    }
-    .btn-primary::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-      transform: translateX(-100%);
-      transition: transform 0.5s ease;
-    }
-    .btn-primary:hover::before { transform: translateX(100%); }
-    .btn-primary:hover {
-      background: var(--amber-dk);
-      box-shadow: 0 12px 40px rgba(232,128,58,0.5);
-      transform: translateY(-2px);
-    }
-    .btn-ghost {
-      display: inline-flex; align-items: center; gap: 0.6rem;
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-bdr);
-      backdrop-filter: blur(12px);
-      color: #fff;
-      padding: 1rem 2.4rem;
-      border-radius: 100px;
-      font-size: 0.88rem; font-weight: 500; letter-spacing: 0.06em;
-      text-transform: uppercase;
-      transition: all 0.35s ease;
-      cursor: none;
-    }
-    .btn-ghost:hover {
-      background: rgba(255,255,255,0.18);
-      border-color: rgba(255,255,255,0.4);
-      transform: translateY(-2px);
-    }
-    /* hero stats */
-    .hero-stats {
-      position: absolute; bottom: 3rem; left: 0; right: 0;
-      display: flex; justify-content: center; gap: 0;
-      animation: fadeUp 0.9s 1.1s both;
-      z-index: 10;
-    }
-    .stat-item {
-      padding: 1.5rem 2.5rem;
-      border-right: 1px solid rgba(255,255,255,0.12);
-      text-align: center;
-    }
-    .stat-item:last-child { border-right: none; }
-    .stat-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 600; color: #fff; line-height: 1;
-    }
-    .stat-label {
-      font-size: 0.7rem; letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.5);
-      margin-top: 0.3rem;
-    }
-    /* scroll indicator */
-    .scroll-ind {
-      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
-      z-index: 10; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-      animation: fadeIn 1s 1.3s both;
-    }
-    .scroll-ind span {
-      font-size: 0.65rem; letter-spacing: 0.25em;
-      color: rgba(255,255,255,0.4); text-transform: uppercase;
-    }
-    .scroll-line {
-      width: 1px; height: 50px;
-      background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
-      animation: scroll-line 2s ease-in-out infinite;
-    }
-    @keyframes scroll-line {
-      0%   { transform: scaleY(0); transform-origin: top; opacity: 1; }
-      50%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
-      51%  { transform: scaleY(1); transform-origin: bottom; }
-      100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
-    }
-
-    /* ═══════════════════════════════════════
-       MARQUEE BAND
-    ═══════════════════════════════════════ */
-    .marquee-band {
-      background: var(--amber);
-      padding: 0.85rem 0;
-      overflow: hidden;
-      position: relative;
-    }
-    .marquee-track {
-      display: flex; gap: 0;
-      animation: marquee 30s linear infinite;
-      width: max-content;
-    }
-    .marquee-item {
-      display: flex; align-items: center; gap: 2rem;
-      padding: 0 2rem;
-      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.2em;
-      text-transform: uppercase; color: #fff;
-      white-space: nowrap;
-    }
-    .marquee-item i { font-size: 0.5rem; opacity: 0.6; }
-    @keyframes marquee { to { transform: translateX(-50%); } }
-
-    /* ═══════════════════════════════════════
-       SECTION UTILITY
-    ═══════════════════════════════════════ */
-    .section { padding: clamp(5rem, 10vw, 9rem) clamp(1.5rem, 4vw, 3rem); }
-    .container { max-width: 1400px; margin: 0 auto; }
-    .section-label {
-      display: inline-flex; align-items: center; gap: 0.7rem;
-      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.3em;
-      text-transform: uppercase; color: var(--amber);
-      margin-bottom: 1.2rem;
-    }
-    .section-label::before {
-      content: ''; width: 32px; height: 1px; background: var(--amber);
-    }
-    .section-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.8rem, 5vw, 5rem);
-      font-weight: 400; line-height: 1.05;
-      color: var(--dark); letter-spacing: -0.02em;
-    }
-    .section-title em { font-style: italic; color: var(--amber); }
-    .section-title .green { color: var(--forest); }
-    .section-desc {
-      font-size: 1rem; color: var(--muted);
-      line-height: 1.85; max-width: 520px; font-weight: 300;
-    }
-
-    /* Reveal animations */
-    .reveal { opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease, transform 0.8s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    .reveal-left { opacity: 0; transform: translateX(-50px); transition: opacity 0.8s ease, transform 0.8s ease; }
-    .reveal-left.visible { opacity: 1; transform: translateX(0); }
-    .reveal-right { opacity: 0; transform: translateX(50px); transition: opacity 0.8s ease, transform 0.8s ease; }
-    .reveal-right.visible { opacity: 1; transform: translateX(0); }
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
-
-    /* ═══════════════════════════════════════
-       SERVICES
-    ═══════════════════════════════════════ */
-    #services { background: var(--ivory); }
-    .services-intro {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: end;
-      margin-bottom: 5rem;
-    }
-    .services-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
-    }
-    .service-card {
-      position: relative; overflow: hidden;
-      border-radius: 20px;
-      background: #fff;
-      border: 1px solid rgba(0,0,0,0.06);
-      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      cursor: none;
-    }
-    .service-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 30px 70px rgba(0,0,0,0.1);
-      border-color: transparent;
-    }
-    .service-img { height: 260px; overflow: hidden; }
-    .service-img img { height: 100%; object-fit: cover; transition: transform 0.7s ease; }
-    .service-card:hover .service-img img { transform: scale(1.1); }
-    .service-body { padding: 2rem; }
-    .service-icon {
-      width: 48px; height: 48px;
-      background: linear-gradient(135deg, var(--amber), var(--amber-dk));
-      border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 1.2rem;
-      box-shadow: 0 8px 20px rgba(232,128,58,0.3);
-    }
-    .service-icon i { color: #fff; font-size: 1.1rem; }
-    .service-icon.green {
-      background: linear-gradient(135deg, var(--forest-lt), var(--forest));
-      box-shadow: 0 8px 20px rgba(26,92,53,0.3);
-    }
-    .service-card h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.65rem; font-weight: 600; margin-bottom: 0.6rem;
-      color: var(--dark); transition: color 0.3s;
-    }
-    .service-card:hover h3 { color: var(--amber); }
-    .service-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.75; margin-bottom: 1.5rem; }
-    .service-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.8rem; }
-    .service-list li {
-      display: flex; align-items: center; gap: 0.6rem;
-      font-size: 0.85rem; color: var(--charcoal);
-    }
-    .service-list li i { color: var(--forest-lt); font-size: 0.7rem; }
-    .service-link {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--amber);
-      transition: gap 0.3s;
-    }
-    .service-link:hover { gap: 0.9rem; }
-    /* small add-ons row */
-    .addon-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; margin-top: 3rem; }
-    .addon-card {
-      background: #fff; border: 1px solid rgba(0,0,0,0.06);
-      border-radius: 16px; padding: 1.5rem 1.2rem; text-align: center;
-      transition: all 0.4s;
-    }
-    .addon-card:hover {
-      border-color: var(--amber);
-      box-shadow: 0 12px 30px rgba(232,128,58,0.12);
-      transform: translateY(-4px);
-    }
-    .addon-card i { font-size: 1.4rem; color: var(--amber); margin-bottom: 0.8rem; display: block; }
-    .addon-card h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.3rem; }
-    .addon-card p { font-size: 0.75rem; color: var(--muted); }
-
-    /* ═══════════════════════════════════════
-       MENU SECTION (tabbed)
-    ═══════════════════════════════════════ */
-    #menu { background: var(--dark); position: relative; overflow: hidden; }
-    #menu .noise::before { background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E"); }
-    .menu-glow {
-      position: absolute; width: 600px; height: 600px; border-radius: 50%;
-      filter: blur(120px); pointer-events: none;
-    }
-    .menu-glow-1 { top: -200px; left: -200px; background: rgba(26,92,53,0.25); }
-    .menu-glow-2 { bottom: -200px; right: -200px; background: rgba(232,128,58,0.2); }
-    #menu .section-label { color: var(--amber-lt); }
-    #menu .section-label::before { background: var(--amber-lt); }
-    #menu .section-title { color: #fff; }
-    .menu-tabs {
-      display: flex; gap: 0.5rem; flex-wrap: wrap;
-      margin: 3rem 0 2.5rem;
-    }
-    .tab-btn {
-      padding: 0.6rem 1.5rem;
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 100px;
-      font-size: 0.8rem; font-weight: 500; letter-spacing: 0.08em;
-      text-transform: uppercase; color: rgba(255,255,255,0.5);
-      background: transparent;
-      cursor: none; transition: all 0.3s ease;
-    }
-    .tab-btn.active {
-      background: var(--amber); border-color: var(--amber); color: #fff;
-      box-shadow: 0 4px 20px rgba(232,128,58,0.4);
-    }
-    .tab-btn:hover:not(.active) { color: #fff; border-color: rgba(255,255,255,0.3); }
-    .menu-panel { display: none; }
-    .menu-panel.active { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; animation: fadeIn 0.4s ease; }
-    .menu-card {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 16px; padding: 0;
-      overflow: hidden;
-      transition: all 0.4s ease;
-    }
-    .menu-card:hover {
-      background: rgba(255,255,255,0.07);
-      border-color: rgba(232,128,58,0.3);
-      transform: translateY(-4px);
-    }
-    .menu-card-img { height: 180px; overflow: hidden; }
-    .menu-card-img img { height: 100%; object-fit: cover; transition: transform 0.5s; }
-    .menu-card:hover .menu-card-img img { transform: scale(1.08); }
-    .menu-card-body { padding: 1.4rem; }
-    .menu-card-body h4 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.25rem; font-weight: 600; color: #fff; margin-bottom: 0.4rem;
-    }
-    .menu-card-body p { font-size: 0.8rem; color: rgba(255,255,255,0.45); line-height: 1.6; }
-    .menu-tag {
-      display: inline-block; margin-top: 1rem;
-      padding: 0.3rem 0.8rem;
-      background: rgba(232,128,58,0.15); border: 1px solid rgba(232,128,58,0.25);
-      border-radius: 100px; font-size: 0.68rem; color: var(--amber-lt);
-      letter-spacing: 0.1em; text-transform: uppercase;
-    }
-
-    /* ═══════════════════════════════════════
-       GALLERY
-    ═══════════════════════════════════════ */
-    #gallery { background: var(--cream); }
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: auto;
-      gap: 1rem;
-      margin-top: 3.5rem;
-    }
-    .gallery-item {
-      position: relative; overflow: hidden;
-      border-radius: 16px; cursor: none;
-      background: #ddd;
-    }
-    .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
-    .gallery-item:nth-child(4) { grid-column: span 2; }
-    .gallery-item img {
-      width: 100%; height: 100%; object-fit: cover;
-      transition: transform 0.7s cubic-bezier(0.4,0,0.2,1);
-    }
-    .gallery-item:hover img { transform: scale(1.1); }
-    .gallery-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%);
-      opacity: 0; transition: opacity 0.4s ease;
-      display: flex; flex-direction: column; justify-content: flex-end; padding: 1.5rem;
-    }
-    .gallery-item:hover .gallery-overlay { opacity: 1; }
-    .gallery-overlay h4 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem; color: #fff; font-weight: 600;
-    }
-    .gallery-overlay span { font-size: 0.75rem; color: rgba(255,255,255,0.6); }
-    .gallery-expand {
-      position: absolute; top: 1rem; right: 1rem;
-      width: 36px; height: 36px;
-      background: rgba(255,255,255,0.9); border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      color: var(--amber); font-size: 0.75rem;
-      opacity: 0; transform: scale(0.7);
-      transition: all 0.3s ease;
-    }
-    .gallery-item:hover .gallery-expand { opacity: 1; transform: scale(1); }
-    .gallery-filter-row {
-      display: flex; gap: 0.6rem; flex-wrap: wrap;
-      margin-top: 2.5rem; justify-content: center;
-    }
-    .gf-btn {
-      padding: 0.5rem 1.3rem;
-      border: 1px solid rgba(0,0,0,0.1);
-      border-radius: 100px;
-      font-size: 0.78rem; font-weight: 500; letter-spacing: 0.06em;
-      text-transform: uppercase; color: var(--muted);
-      background: #fff; cursor: none; transition: all 0.3s;
-    }
-    .gf-btn.active { background: var(--forest); color: #fff; border-color: var(--forest); }
-    .gf-btn:hover:not(.active) { border-color: var(--amber); color: var(--amber); }
-
-    /* ═══════════════════════════════════════
-       PORTFOLIO
-    ═══════════════════════════════════════ */
-    #portfolio { background: var(--ivory); }
-    .portfolio-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem; margin-top: 3.5rem; }
-    .portfolio-card {
-      background: #fff; border-radius: 20px;
-      overflow: hidden; border: 1px solid rgba(0,0,0,0.05);
-      transition: all 0.45s ease; cursor: none;
-    }
-    .portfolio-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 24px 60px rgba(0,0,0,0.1);
-    }
-    .portfolio-img { height: 240px; overflow: hidden; }
-    .portfolio-img img { height: 100%; object-fit: cover; transition: transform 0.6s ease; }
-    .portfolio-card:hover .portfolio-img img { transform: scale(1.08); }
-    .portfolio-body { padding: 2rem; }
-    .portfolio-tag {
-      display: inline-block; padding: 0.3rem 0.9rem;
-      border-radius: 100px; font-size: 0.72rem; font-weight: 600;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-    .portfolio-tag.amber { background: rgba(232,128,58,0.1); color: var(--amber); }
-    .portfolio-tag.forest { background: rgba(26,92,53,0.1); color: var(--forest); }
-    .portfolio-tag.purple { background: rgba(124,58,237,0.1); color: #7c3aed; }
-    .portfolio-body h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.5rem; font-weight: 600;
-      color: var(--dark); margin-bottom: 0.5rem;
-    }
-    .portfolio-body p { font-size: 0.85rem; color: var(--muted); line-height: 1.7; margin-bottom: 1rem; }
-    .portfolio-meta {
-      display: flex; align-items: center; justify-content: space-between;
-      font-size: 0.78rem; color: var(--muted);
-    }
-    .stars { color: #f59e0b; font-size: 0.7rem; }
-
-    /* ═══════════════════════════════════════
-       TESTIMONIALS
-    ═══════════════════════════════════════ */
-    #testimonials {
-      background: linear-gradient(135deg, var(--forest-dk) 0%, var(--dark) 60%, var(--charcoal) 100%);
-      position: relative; overflow: hidden;
-    }
-    #testimonials .section-label { color: var(--amber-lt); }
-    #testimonials .section-label::before { background: var(--amber-lt); }
-    #testimonials .section-title { color: #fff; }
-    .testi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 3.5rem; }
-    .testi-card {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 20px; padding: 2.2rem;
-      transition: all 0.4s ease;
-    }
-    .testi-card:hover {
-      background: rgba(255,255,255,0.08);
-      border-color: rgba(232,128,58,0.25);
-      transform: translateY(-4px);
-    }
-    .testi-quote {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 4rem; color: var(--amber); line-height: 0.5;
-      margin-bottom: 1rem; opacity: 0.5;
-    }
-    .testi-text {
-      font-size: 0.92rem; color: rgba(255,255,255,0.65);
-      line-height: 1.85; font-style: italic; margin-bottom: 1.8rem;
-    }
-    .testi-author { display: flex; align-items: center; gap: 1rem; }
-    .testi-avatar {
-      width: 46px; height: 46px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--amber), var(--forest));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.85rem; font-weight: 700; color: #fff; flex-shrink: 0;
-    }
-    .testi-name { font-size: 0.88rem; font-weight: 600; color: #fff; }
-    .testi-role { font-size: 0.75rem; color: rgba(255,255,255,0.35); margin-top: 0.1rem; }
-    .testi-stars { color: #f59e0b; font-size: 0.7rem; margin-bottom: 0.3rem; }
-
-    /* ═══════════════════════════════════════
-       MULTI-STEP QUOTE FORM
-    ═══════════════════════════════════════ */
-    #contact { background: var(--ivory); }
-    .contact-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 5rem; align-items: start; }
-    .contact-info-block { padding-top: 2rem; }
-    .contact-info-block p { font-size: 1rem; color: var(--muted); line-height: 1.85; margin-bottom: 3rem; }
-    .info-list { display: flex; flex-direction: column; gap: 1.5rem; }
-    .info-item { display: flex; align-items: center; gap: 1.2rem; }
-    .info-icon {
-      width: 48px; height: 48px; border-radius: 12px; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .info-icon.amber-bg { background: rgba(232,128,58,0.1); color: var(--amber); }
-    .info-icon.forest-bg { background: rgba(26,92,53,0.1); color: var(--forest); }
-    .info-icon i { font-size: 1.1rem; }
-    .info-text { font-size: 0.88rem; }
-    .info-text strong { display: block; color: var(--dark); font-weight: 600; margin-bottom: 0.1rem; }
-    .info-text span { color: var(--muted); }
-    .social-row { display: flex; gap: 0.8rem; margin-top: 2.5rem; }
-    .social-btn {
-      width: 42px; height: 42px; border-radius: 10px;
-      background: #fff; border: 1px solid rgba(0,0,0,0.08);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--muted); transition: all 0.3s; cursor: none;
-    }
-    .social-btn:hover { background: var(--amber); color: #fff; border-color: var(--amber); transform: translateY(-2px); }
-
-    /* Multi-step form */
-    .form-box {
-      background: #fff; border-radius: 24px;
-      box-shadow: 0 20px 70px rgba(0,0,0,0.07);
-      padding: 2.8rem; border: 1px solid rgba(0,0,0,0.05);
-    }
-    .step-progress {
-      display: flex; align-items: center; gap: 0;
-      margin-bottom: 2.5rem;
-    }
-    .step-dot {
-      width: 32px; height: 32px; border-radius: 50%;
-      background: var(--cream); border: 2px solid rgba(0,0,0,0.08);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.78rem; font-weight: 700; color: var(--muted);
-      transition: all 0.4s ease; flex-shrink: 0; z-index: 1;
-    }
-    .step-dot.active { background: var(--amber); border-color: var(--amber); color: #fff; box-shadow: 0 4px 15px rgba(232,128,58,0.4); }
-    .step-dot.done { background: var(--forest); border-color: var(--forest); color: #fff; }
-    .step-line {
-      flex: 1; height: 2px;
-      background: rgba(0,0,0,0.08);
-      position: relative; overflow: hidden;
-    }
-    .step-line::after {
-      content: ''; position: absolute; top: 0; left: 0; height: 100%;
-      background: linear-gradient(90deg, var(--forest), var(--amber));
-      width: 0; transition: width 0.5s ease;
-    }
-    .step-line.filled::after { width: 100%; }
-    .step-label {
-      font-size: 0.65rem; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--muted); margin-top: 0.4rem;
-    }
-    .step-col { display: flex; flex-direction: column; align-items: center; }
-
-    .form-step { display: none; }
-    .form-step.active { display: block; animation: fadeUp 0.4s ease; }
-    .step-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.7rem; font-weight: 600; color: var(--dark);
-      margin-bottom: 0.4rem;
-    }
-    .step-sub { font-size: 0.85rem; color: var(--muted); margin-bottom: 2rem; }
-
-    /* event type selector */
-    .event-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.8rem; margin-bottom: 1.5rem; }
-    .event-option {
-      border: 2px solid rgba(0,0,0,0.07); border-radius: 14px;
-      padding: 1.2rem 0.8rem; text-align: center;
-      cursor: none; transition: all 0.3s;
-      background: var(--cream);
-    }
-    .event-option.selected { border-color: var(--amber); background: rgba(232,128,58,0.06); }
-    .event-option:hover:not(.selected) { border-color: rgba(232,128,58,0.3); }
-    .event-option i { font-size: 1.4rem; color: var(--muted); margin-bottom: 0.5rem; display: block; transition: color 0.3s; }
-    .event-option.selected i { color: var(--amber); }
-    .event-option span { font-size: 0.78rem; font-weight: 600; color: var(--charcoal); display: block; }
-
-    /* form fields */
-    .field { margin-bottom: 1.3rem; }
-    .field label {
-      display: block; font-size: 0.78rem; font-weight: 600;
-      letter-spacing: 0.05em; text-transform: uppercase;
-      color: var(--charcoal); margin-bottom: 0.5rem;
-    }
-    .field input, .field select, .field textarea {
-      width: 100%; padding: 0.85rem 1.1rem;
-      border: 1.5px solid rgba(0,0,0,0.1);
-      border-radius: 12px; font-family: 'DM Sans', sans-serif;
-      font-size: 0.9rem; color: var(--dark);
-      background: var(--ivory);
-      transition: all 0.3s;
-      outline: none;
-    }
-    .field input:focus, .field select:focus, .field textarea:focus {
-      border-color: var(--amber);
-      box-shadow: 0 0 0 4px rgba(232,128,58,0.12);
-      background: #fff;
-    }
-    .field textarea { resize: none; height: 100px; }
-    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .guest-slider { -webkit-appearance: none; appearance: none; height: 4px; border-radius: 4px; background: linear-gradient(90deg, var(--amber) var(--val, 20%), rgba(0,0,0,0.1) var(--val, 20%)); outline: none; cursor: none; }
-    .guest-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: var(--amber); box-shadow: 0 2px 8px rgba(232,128,58,0.4); }
-    .guest-count-display {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.5rem; font-weight: 600; color: var(--amber); text-align: center;
-      line-height: 1;
-    }
-    .guest-label { font-size: 0.72rem; letter-spacing: 0.15em; color: var(--muted); text-align: center; text-transform: uppercase; }
-    .form-nav { display: flex; gap: 1rem; margin-top: 2rem; }
-    .btn-step-next {
-      flex: 1; padding: 1rem;
-      background: var(--amber); color: #fff;
-      border: none; border-radius: 12px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.88rem; font-weight: 600; letter-spacing: 0.08em;
-      text-transform: uppercase; cursor: none;
-      transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 0.6rem;
-    }
-    .btn-step-next:hover { background: var(--amber-dk); box-shadow: 0 8px 25px rgba(232,128,58,0.4); transform: translateY(-1px); }
-    .btn-step-back {
-      padding: 1rem 1.5rem;
-      background: transparent; color: var(--muted);
-      border: 1.5px solid rgba(0,0,0,0.1);
-      border-radius: 12px; font-family: 'DM Sans', sans-serif;
-      font-size: 0.88rem; font-weight: 500; cursor: none;
-      transition: all 0.3s; display: flex; align-items: center; gap: 0.4rem;
-    }
-    .btn-step-back:hover { border-color: var(--muted); color: var(--dark); }
-    .btn-submit-final {
-      flex: 1; padding: 1rem;
-      background: linear-gradient(135deg, var(--forest), var(--forest-lt));
-      color: #fff; border: none; border-radius: 12px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.88rem; font-weight: 600; letter-spacing: 0.08em;
-      text-transform: uppercase; cursor: none;
-      transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 0.6rem;
-    }
-    .btn-submit-final:hover { box-shadow: 0 8px 25px rgba(26,92,53,0.35); transform: translateY(-1px); }
-    .form-security {
-      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
-      font-size: 0.75rem; color: var(--muted); margin-top: 1rem;
-    }
-    .form-security i { color: #4ade80; }
-
-    /* ═══════════════════════════════════════
-       CTA BAND
-    ═══════════════════════════════════════ */
-    .cta-section {
-      background: var(--amber);
-      padding: 5rem clamp(1.5rem, 4vw, 3rem);
-      position: relative; overflow: hidden;
-    }
-    .cta-section::before {
-      content: 'JVC';
-      position: absolute; right: -1rem; top: 50%; transform: translateY(-50%);
-      font-family: 'Cinzel', serif; font-size: 18rem; font-weight: 700;
-      color: rgba(255,255,255,0.06); line-height: 1; pointer-events: none;
-    }
-    .cta-inner { max-width: 800px; margin: 0 auto; text-align: center; position: relative; z-index: 1; }
-    .cta-inner h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 400;
-      color: #fff; line-height: 1.1; margin-bottom: 1rem;
-    }
-    .cta-inner p { color: rgba(255,255,255,0.8); font-size: 1rem; margin-bottom: 2.5rem; }
-    .cta-inner .btn-white {
-      display: inline-flex; align-items: center; gap: 0.7rem;
-      background: #fff; color: var(--amber);
-      padding: 1.1rem 2.8rem; border-radius: 100px;
-      font-size: 0.88rem; font-weight: 700; letter-spacing: 0.08em;
-      text-transform: uppercase; transition: all 0.35s; cursor: none;
-    }
-    .cta-inner .btn-white:hover {
-      box-shadow: 0 16px 40px rgba(0,0,0,0.2);
-      transform: translateY(-2px);
-    }
-
-    /* ═══════════════════════════════════════
-       FOOTER
-    ═══════════════════════════════════════ */
-    footer {
-      background: var(--dark); color: rgba(255,255,255,0.55);
-      padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 4vw, 3rem) 2rem;
-    }
-    .footer-inner { max-width: 1400px; margin: 0 auto; }
-    .footer-top {
-      display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
-      gap: 4rem; padding-bottom: 4rem;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-    .footer-brand p { font-size: 0.88rem; line-height: 1.8; margin: 1.2rem 0 1.8rem; color: rgba(255,255,255,0.4); max-width: 280px; }
-    .footer-logo {
-      font-family: 'Cinzel', serif;
-      font-size: 1.4rem; font-weight: 700; color: #fff; letter-spacing: 0.12em;
-    }
-    .footer-logo span { color: var(--amber); }
-    .footer-col h5 {
-      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.25em;
-      text-transform: uppercase; color: rgba(255,255,255,0.35);
-      margin-bottom: 1.3rem;
-    }
-    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
-    .footer-links a {
-      font-size: 0.88rem; color: rgba(255,255,255,0.45);
-      display: flex; align-items: center; gap: 0.5rem;
-      transition: color 0.3s;
-    }
-    .footer-links a:hover { color: var(--amber); }
-    .footer-links a i { font-size: 0.55rem; color: var(--amber); opacity: 0.6; }
-    .footer-bottom {
-      display: flex; align-items: center; justify-content: space-between;
-      padding-top: 2rem; flex-wrap: wrap; gap: 1rem;
-    }
-    .footer-bottom p { font-size: 0.8rem; }
-    .footer-legal { display: flex; gap: 1.5rem; font-size: 0.8rem; }
-    .footer-legal a { color: rgba(255,255,255,0.35); transition: color 0.3s; }
-    .footer-legal a:hover { color: var(--amber); }
-    .footer-social { display: flex; gap: 0.8rem; }
-    .footer-social a {
-      width: 36px; height: 36px; border-radius: 8px;
-      background: rgba(255,255,255,0.05);
-      display: flex; align-items: center; justify-content: center;
-      color: rgba(255,255,255,0.35); font-size: 0.85rem;
-      transition: all 0.3s; cursor: none;
-    }
-    .footer-social a:hover { background: var(--amber); color: #fff; }
-
-    /* ═══════════════════════════════════════
-       FLOATING BUTTONS
-    ═══════════════════════════════════════ */
-    #wa-btn {
-      position: fixed; bottom: 2rem; right: 2rem; z-index: 400;
-      width: 58px; height: 58px;
-      background: #25d366;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 8px 30px rgba(37,211,102,0.45);
-      cursor: none; transition: all 0.35s;
-      animation: wa-pulse 3s infinite;
-    }
-    #wa-btn:hover { transform: scale(1.1); box-shadow: 0 12px 40px rgba(37,211,102,0.6); }
-    #wa-btn i { color: #fff; font-size: 1.6rem; }
-    @keyframes wa-pulse {
-      0%,100% { box-shadow: 0 8px 30px rgba(37,211,102,0.45); }
-      50% { box-shadow: 0 8px 30px rgba(37,211,102,0.45), 0 0 0 12px rgba(37,211,102,0.1); }
-    }
-    .wa-tooltip {
-      position: absolute; bottom: calc(100% + 12px); right: 0;
-      background: #fff; color: var(--dark);
-      padding: 0.5rem 1rem; border-radius: 10px;
-      font-size: 0.78rem; font-weight: 600;
-      white-space: nowrap;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.12);
-      opacity: 0; transform: translateY(6px);
-      transition: all 0.3s;
-      pointer-events: none;
-    }
-    .wa-tooltip::after {
-      content: ''; position: absolute; top: 100%; right: 18px;
-      border: 6px solid transparent; border-top-color: #fff;
-    }
-    #wa-btn:hover .wa-tooltip { opacity: 1; transform: translateY(0); }
-
-    #scroll-top {
-      position: fixed; bottom: 2rem; left: 2rem; z-index: 400;
-      width: 46px; height: 46px;
-      background: var(--dark); border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      color: rgba(255,255,255,0.6); font-size: 0.85rem;
-      cursor: none; transition: all 0.35s;
-      opacity: 0; pointer-events: none;
-    }
-    #scroll-top.visible { opacity: 1; pointer-events: auto; }
-    #scroll-top:hover { background: var(--amber); color: #fff; transform: translateY(-2px); }
-
-    /* mobile bottom bar */
-    #mobile-cta-bar {
-      display: none;
-      position: fixed; bottom: 0; left: 0; right: 0; z-index: 300;
-      background: #fff; border-top: 1px solid rgba(0,0,0,0.07);
-      padding: 0.9rem 1.5rem;
-    }
-    #mobile-cta-bar a {
-      display: flex; align-items: center; justify-content: center; gap: 0.6rem;
-      background: var(--amber); color: #fff;
-      padding: 0.85rem; border-radius: 12px;
-      font-size: 0.88rem; font-weight: 600;
-    }
-
-    /* ═══════════════════════════════════════
-       LIGHTBOX
-    ═══════════════════════════════════════ */
-    #lightbox {
-      position: fixed; inset: 0; z-index: 600;
-      background: rgba(0,0,0,0.96);
-      backdrop-filter: blur(20px);
-      display: none; align-items: center; justify-content: center;
-    }
-    #lightbox.open { display: flex; }
-    #lb-img {
-      max-width: 85vw; max-height: 85vh;
-      border-radius: 12px; object-fit: contain;
-      animation: scaleIn 0.4s ease;
-    }
-    @keyframes scaleIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-    #lb-close {
-      position: absolute; top: 1.5rem; right: 1.5rem;
-      width: 44px; height: 44px; border-radius: 50%;
-      background: rgba(255,255,255,0.1); border: none;
-      display: flex; align-items: center; justify-content: center;
-      color: #fff; font-size: 1.1rem; cursor: none; transition: all 0.3s;
-    }
-    #lb-close:hover { background: var(--amber); }
-    #lb-prev, #lb-next {
-      position: absolute; top: 50%; transform: translateY(-50%);
-      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 50%; width: 50px; height: 50px;
-      display: flex; align-items: center; justify-content: center;
-      color: #fff; font-size: 0.9rem; cursor: none; transition: all 0.3s;
-    }
-    #lb-prev { left: 1.5rem; }
-    #lb-next { right: 1.5rem; }
-    #lb-prev:hover, #lb-next:hover { background: var(--amber); border-color: var(--amber); }
-    #lb-caption {
-      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
-      background: rgba(255,255,255,0.08); backdrop-filter: blur(8px);
-      padding: 0.6rem 1.5rem; border-radius: 100px;
-      color: rgba(255,255,255,0.7); font-size: 0.82rem;
-    }
-
-    /* ═══════════════════════════════════════
-       SUCCESS MODAL
-    ═══════════════════════════════════════ */
-    #success-modal {
-      position: fixed; inset: 0; z-index: 700;
-      background: rgba(0,0,0,0.7); backdrop-filter: blur(12px);
-      display: none; align-items: center; justify-content: center;
-    }
-    #success-modal.open { display: flex; }
-    .success-box {
-      background: #fff; border-radius: 24px;
-      padding: 3rem 2.5rem; max-width: 440px; width: 90%;
-      text-align: center; animation: scaleIn 0.4s ease;
-    }
-    .success-icon {
-      width: 72px; height: 72px;
-      background: linear-gradient(135deg, var(--forest), var(--forest-lt));
-      border-radius: 50%; margin: 0 auto 1.5rem;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .success-icon i { color: #fff; font-size: 1.8rem; }
-    .success-box h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2rem; color: var(--dark); margin-bottom: 0.7rem;
-    }
-    .success-box p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; margin-bottom: 2rem; }
-    .success-close {
-      width: 100%; padding: 0.9rem;
-      background: var(--amber); color: #fff; border: none; border-radius: 12px;
-      font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 600;
-      cursor: none; transition: all 0.3s;
-    }
-    .success-close:hover { background: var(--amber-dk); }
-
-    /* ═══════════════════════════════════════
-       RESPONSIVE
-    ═══════════════════════════════════════ */
-    @media (max-width: 1024px) {
-      .services-grid { grid-template-columns: repeat(2,1fr); }
-      .addon-row { grid-template-columns: repeat(2,1fr); }
-      .menu-panel.active { grid-template-columns: repeat(2,1fr); }
-      .gallery-grid { grid-template-columns: repeat(3,1fr); }
-      .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 1; }
-      .gallery-item:nth-child(4) { grid-column: span 1; }
-      .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
-      .footer-top { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
-    }
-    @media (max-width: 768px) {
-      .nav-links, .nav-cta { display: none; }
-      #ham { display: flex; }
-      .services-intro { grid-template-columns: 1fr; gap: 1.5rem; }
-      .services-grid { grid-template-columns: 1fr; }
-      .addon-row { grid-template-columns: repeat(2,1fr); }
-      .menu-panel.active { grid-template-columns: 1fr; }
-      .gallery-grid { grid-template-columns: repeat(2,1fr); }
-      .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 1; }
-      .gallery-item:nth-child(4) { grid-column: span 2; }
-      .portfolio-grid { grid-template-columns: 1fr; }
-      .testi-grid { grid-template-columns: 1fr; }
-      .hero-stats { flex-direction: column; gap: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(10px); bottom: 0; padding: 1rem 0; }
-      .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); padding: 0.8rem; }
-      .stat-item:last-child { border-bottom: none; }
-      #cursor-dot, #cursor-ring { display: none; }
-      body { cursor: auto; }
-      .btn-primary, .btn-ghost, .nav-cta, .btn-step-next, .btn-step-back, .btn-submit-final, .service-card, .event-option, .tab-btn, .gf-btn, .gallery-item, .portfolio-card, .testi-card, .addon-card, .social-btn, .footer-social a, #wa-btn, #scroll-top, .success-close, #lb-close, #lb-prev, #lb-next { cursor: pointer; }
-      .footer-top { grid-template-columns: 1fr 1fr; }
-      #mobile-cta-bar { display: block; }
-      .scroll-ind { display: none; }
-      .event-grid { grid-template-columns: repeat(2,1fr); }
-      .field-row { grid-template-columns: 1fr; }
-      .testi-grid { gap: 1rem; }
-      body { padding-bottom: 70px; }
-    }
-    @media (max-width: 480px) {
-      .gallery-grid { grid-template-columns: 1fr; }
-      .gallery-item:nth-child(1), .gallery-item:nth-child(4) { grid-column: span 1; }
-      .footer-top { grid-template-columns: 1fr; }
-      .footer-bottom { flex-direction: column; align-items: flex-start; }
-      .hero-btns { flex-direction: column; align-items: center; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JVC Catering | Premium Catering Experience</title>
+    <meta name="description" content="Premium catering services for weddings, corporate events, and private parties. Exceptional food, unforgettable experiences.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#F97316',
+                        secondary: '#15803D',
+                        dark: '#1F2937',
+                    },
+                    fontFamily: {
+                        heading: ['Playfair Display', 'serif'],
+                        body: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.6s ease-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'pulse-slow': 'pulse 3s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    
+    <style>
+        /* Custom Styles */
+        .gradient-overlay {
+            background: linear-gradient(135deg, rgba(21, 128, 61, 0.8) 0%, rgba(249, 115, 22, 0.8) 100%);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #15803D 0%, #F97316 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #15803D 0%, #F97316 100%);
+        }
+        
+        .image-zoom {
+            overflow: hidden;
+        }
+        
+        .image-zoom img {
+            transition: transform 0.5s ease;
+        }
+        
+        .image-zoom:hover img {
+            transform: scale(1.1);
+        }
+        
+        /* Smooth Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #15803D, #F97316);
+            border-radius: 4px;
+        }
+        
+        /* Navbar Blur */
+        .navbar-blur {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        
+        /* Form Focus */
+        .form-focus:focus {
+            outline: none;
+            border-color: #F97316;
+            box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+        }
+        
+        /* Loading Animation */
+        .loading-spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #F97316;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+    </style>
 </head>
-<body>
+<body class="font-body text-gray-700 antialiased">
+    
+    <!-- ==================== NAVBAR ==================== -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 navbar-blur shadow-md transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <a href="#" class="flex items-center space-x-3">
+                    <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center shadow-lg">
+                        <i class="fas fa-utensils text-white text-xl"></i>
+                    </div>
+                    <span class="font-heading text-2xl font-bold gradient-text">JVC Catering</span>
+                </a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="text-gray-700 hover:text-primary font-medium transition-colors duration-300">Home</a>
+                    <a href="#services" class="text-gray-700 hover:text-primary font-medium transition-colors duration-300">Services</a>
+                    <a href="#menu" class="text-gray-700 hover:text-primary font-medium transition-colors duration-300">Menu</a>
+                    <a href="#gallery" class="text-gray-700 hover:text-primary font-medium transition-colors duration-300">Gallery</a>
+                    <a href="#portfolio" class="text-gray-700 hover:text-primary font-medium transition-colors duration-300">Portfolio</a>
+                    <a href="#testimonials" class="text-gray-700 hover:text-primary font-medium transition-colors duration-300">Reviews</a>
+                    <a href="#contact" class="gradient-bg text-white px-6 py-3 rounded-full font-medium hover:shadow-xl hover:scale-105 transition-all duration-300">Get Quote</a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="md:hidden text-gray-700 hover:text-primary transition-colors">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="mobile-menu fixed top-20 right-0 w-64 bg-white shadow-2xl md:hidden">
+            <div class="flex flex-col p-6 space-y-4">
+                <a href="#home" class="text-gray-700 hover:text-primary font-medium transition-colors mobile-link">Home</a>
+                <a href="#services" class="text-gray-700 hover:text-primary font-medium transition-colors mobile-link">Services</a>
+                <a href="#menu" class="text-gray-700 hover:text-primary font-medium transition-colors mobile-link">Menu</a>
+                <a href="#gallery" class="text-gray-700 hover:text-primary font-medium transition-colors mobile-link">Gallery</a>
+                <a href="#portfolio" class="text-gray-700 hover:text-primary font-medium transition-colors mobile-link">Portfolio</a>
+                <a href="#testimonials" class="text-gray-700 hover:text-primary font-medium transition-colors mobile-link">Reviews</a>
+                <a href="#contact" class="gradient-bg text-white px-6 py-3 rounded-full font-medium text-center mobile-link">Get Quote</a>
+            </div>
+        </div>
+    </nav>
 
-<!-- CURSOR -->
-<div id="cursor-dot"></div>
-<div id="cursor-ring"></div>
+    <!-- ==================== HERO SECTION ==================== -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <!-- Background Image -->
+        <div class="absolute inset-0">
+            <img 
+                src="https://images.unsplash.com/photo-1555244162-803834f70033?w=1920&h=1080&fit=crop" 
+                alt="Premium Catering Setup" 
+                class="w-full h-full object-cover"
+                loading="eager"
+            >
+            <div class="absolute inset-0 gradient-overlay"></div>
+        </div>
+        
+        <!-- Content -->
+        <div class="relative z-10 text-center text-white px-4 max-w-5xl mx-auto">
+            <div class="animate-slide-up">
+                <span class="inline-block bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium mb-6">
+                    ✨ Premium Catering Services
+                </span>
+                <h1 class="font-heading text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                    Premium Catering<br/>
+                    <span class="text-orange-400">Experience</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-100 mb-8 max-w-3xl mx-auto">
+                    Weddings • Corporate Events • Private Parties
+                </p>
+                <p class="text-lg text-gray-200 mb-10 max-w-2xl mx-auto">
+                    Creating unforgettable culinary experiences with exceptional food, elegant presentation, and impeccable service.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#contact" class="gradient-bg text-white px-8 py-4 rounded-full font-semibold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2">
+                        <i class="fab fa-whatsapp"></i>
+                        Request Quote
+                    </a>
+                    <a href="#menu" class="bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white/30 hover:scale-105 transition-all duration-300 border-2 border-white/50">
+                        View Menus
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Stats -->
+            <div class="grid grid-cols-3 gap-4 mt-16 max-w-2xl mx-auto">
+                <div class="text-center">
+                    <div class="text-3xl md:text-4xl font-bold text-orange-400">500+</div>
+                    <div class="text-sm text-gray-200">Events Catered</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl md:text-4xl font-bold text-green-400">10+</div>
+                    <div class="text-sm text-gray-200">Years Experience</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl md:text-4xl font-bold text-orange-400">98%</div>
+                    <div class="text-sm text-gray-200">Happy Clients</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <a href="#services" class="text-white/80 hover:text-white transition-colors">
+                <i class="fas fa-chevron-down text-2xl"></i>
+            </a>
+        </div>
+    </section>
 
-<!-- PRELOADER -->
-<div id="preloader">
-  <div class="loader-logo">JVC <span>·</span></div>
-  <div class="loader-sub">Catering Excellence</div>
-  <div class="loader-bar"></div>
-</div>
+    <!-- ==================== SERVICES SECTION ==================== -->
+    <section id="services" class="py-20 md:py-28 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="text-center mb-16">
+                <span class="text-primary font-semibold text-sm uppercase tracking-wider">What We Offer</span>
+                <h2 class="font-heading text-4xl md:text-5xl font-bold text-dark mt-3 mb-4">
+                    Our <span class="gradient-text">Services</span>
+                </h2>
+                <p class="text-gray-600 max-w-2xl mx-auto text-lg">
+                    From intimate gatherings to grand celebrations, we deliver exceptional catering experiences tailored to your needs.
+                </p>
+            </div>
+            
+            <!-- Services Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Wedding Catering -->
+                <div class="group bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl hover:scale-105 transition-all duration-300">
+                    <div class="image-zoom h-64">
+                        <img 
+                            src="https://images.unsplash.com/photo-1519225421980-715cb0202128?w=800&h=600&fit=crop" 
+                            alt="Wedding Catering" 
+                            class="w-full h-full object-cover"
+                            loading="lazy"
+                        >
+                    </div>
+                    <div class="p-8">
+                        <div class="w-14 h-14 gradient-bg rounded-xl flex items-center justify-center mb-6 shadow-lg">
+                            <i class="fas fa-rings-wedding text-white text-2xl"></i>
+                        </div>
+                        <h3 class="font-heading text-2xl font-bold text-dark mb-3">Wedding Catering</h3>
+                        <p class="text-gray-600 mb-6">
+                            Make your special day unforgettable with our exquisite wedding menus, elegant presentations, and flawless service.
+                        </p>
+                        <ul class="space-y-2 mb-6">
+                            <li class="flex items-center text-gray-600">
+                                <i class="fas fa-check text-green-500 mr-3"></i>
+                                Custom Menu Planning
+                            </li>
+                            <li class="flex items-center text-gray-600">
+                                <i class="fas fa-check text-green-500 mr-3"></i>
+                                Premium Table Settings
+                            </li>
+                            <li class="flex items-center text-gray-600">
+                                <i class="fas fa-check text-green-500 mr-3"></i>
+                                Professional Staff
+                            </li>
+                        </ul>
+                        <a href="#contact" class="inline-flex items-center text-primary font-semibold hover:text-orange-600 transition-colors">
+                            Get Quote <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Corporate Events -->
+                <div class="group bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl hover:scale-105 transition-all duration-300">
+                    <div class="image-zoom h-64">
+                        <img 
+                            src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&h=600&fit=crop" 
+                            alt="Corporate Events" 
+                            class="w-full h-full object-cover"
+                            loading="lazy"
+                        >
+                    </div>
+                    <div class="p-8">
+                        <div class="w-14 h-14 gradient-bg rounded-xl flex items-center justify-center mb-6 shadow-lg">
+                            <i class="fas fa-briefcase text-white text-2xl"></i>
+                        </div>
+                        <h3 class="font-heading text-2xl font-bold text-dark mb-3">Corporate Events</h3>
+                        <p class="text-gray-600 mb-6">
+                            Impress your clients and team with sophisticated catering for conferences, meetings, and corporate celebrations.
+                        </p>
+                        <ul class="space-y-2 mb-6">
+                            <li class="flex items-center text-gray-600">
+                                <i class="fas fa-check text-green-500 mr-3"></i>
+                                Business Lunch Packages
+                            </li>
+                            <li class="flex items-center text-gray-600">
+                                <i class="fas fa-check text-green-500 mr-3"></i>
+                                Conference Catering
+                            </li>
+                            <li class="flex items-center text-gray-600">
+                                <i class="fas fa-check text-green-500 mr-3"></i>
+                                Team Building Events
+                            </li>
+                        </ul>
+                        <a href="#contact" class="inline-flex items-center text-primary font-semibold hover:text-orange-600 transition-colors">
+                            Get Quote <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Private Parties -->
+                <div class="group bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl hover:scale-105 transition-all duration-300">
+                    <div class="image-zoom h-64">
+                        <img 
+                            src="https://images.unsplash.com/photo-1530103862676-de3c9a59af57?w=800&h=600&fit=crop" 
+                            alt="Private Parties" 
+                            class="w-full h-full object-cover"
+                            loading="lazy"
+                        >
+                    </div>
+                    <div class="p-8">
+                        <div class="w-14 h-14 gradient-bg rounded-xl flex items-center justify-center mb-6 shadow-lg">
+                            <i class="fas fa-glass-cheers text-white text-2xl"></i>
+                        </div>
+                        <h3 class="font-heading text-2xl font-bold text-dark mb-3">Private Parties</h3>
+                        <p class="text-gray-600 mb-6">
+                            Celebrate life's moments with our customized party catering, from birthdays to anniversaries and everything in between.
+                        </p>
+                        <ul class="space-y-2 mb-6">
+                            <li class="flex items-center text-gray-600">
+                                <i class="fas fa-check text-green-500 mr-3"></i>
+                                Birthday Celebrations
+                            </li>
+                            <li class="flex items-center text-gray-600">
+                                <i class="fas fa-check text-green-500 mr-3"></i>
+                                Anniversary Parties
+                            </li>
+                            <li class="flex items-center text-gray-600">
+                                <i class="fas fa-check text-green-500 mr-3"></i>
+                                Custom Themes
+                            </li>
+                        </ul>
+                        <a href="#contact" class="inline-flex items-center text-primary font-semibold hover:text-orange-600 transition-colors">
+                            Get Quote <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- NAVBAR -->
-<nav id="navbar">
-  <div class="nav-inner">
-    <a href="#hero" class="nav-logo">JVC <span>Catering</span></a>
-    <div class="nav-links">
-      <a href="#services" class="nav-link">Services</a>
-      <a href="#menu" class="nav-link">Menu</a>
-      <a href="#gallery" class="nav-link">Gallery</a>
-      <a href="#portfolio" class="nav-link">Portfolio</a>
-      <a href="#testimonials" class="nav-link">Reviews</a>
-    </div>
-    <a href="#contact" class="nav-cta magnetic-btn">
-      <i class="fab fa-whatsapp"></i> Get Quote
+    <!-- ==================== MENU PREVIEW SECTION ==================== -->
+    <section id="menu" class="py-20 md:py-28 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="text-center mb-16">
+                <span class="text-primary font-semibold text-sm uppercase tracking-wider">Delicious Options</span>
+                <h2 class="font-heading text-4xl md:text-5xl font-bold text-dark mt-3 mb-4">
+                    Explore Our <span class="gradient-text">Menu</span>
+                </h2>
+                <p class="text-gray-600 max-w-2xl mx-auto text-lg">
+                    Discover our diverse selection of cuisines crafted with passion and the finest ingredients.
+                </p>
+            </div>
+            
+            <!-- Menu Categories -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Starters -->
+                <div class="group bg-gradient-to-br from-gray-50 to-white rounded-2xl shadow-lg p-6 hover:shadow-xl hover:scale-105 transition-all duration-300 border border-gray-100">
+                    <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center mb-4 shadow-lg mx-auto">
+                        <i class="fas fa-carrot text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-dark text-center mb-3">Starters & Appetizers</h3>
+                    <p class="text-gray-600 text-center text-sm mb-4">
+                        Fresh salads, soups, and delightful bites to begin your culinary journey.
+                    </p>
+                    <div class="space-y-2 text-sm text-gray-500">
+                        <div class="flex justify-between">
+                            <span>Caesar Salad</span>
+                            <span class="text-primary">✓</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Bruschetta</span>
+                            <span class="text-primary">✓</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Spring Rolls</span>
+                            <span class="text-primary">✓</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Main Course -->
+                <div class="group bg-gradient-to-br from-gray-50 to-white rounded-2xl shadow-lg p-6 hover:shadow-xl hover:scale-105 transition-all duration-300 border border-gray-100">
+                    <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center mb-4 shadow-lg mx-auto">
+                        <i class="fas fa-drumstick-bite text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-dark text-center mb-3">Main Course</h3>
+                    <p class="text-gray-600 text-center text-sm mb-4">
+                        Hearty dishes featuring premium meats, seafood, and vegetarian options.
+                    </p>
+                    <div class="space-y-2 text-sm text-gray-500">
+                        <div class="flex justify-between">
+                            <span>Grilled Salmon</span>
+                            <span class="text-primary">✓</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Beef Tenderloin</span>
+                            <span class="text-primary">✓</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Chicken Tikka</span>
+                            <span class="text-primary">✓</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Desserts -->
+                <div class="group bg-gradient-to-br from-gray-50 to-white rounded-2xl shadow-lg p-6 hover:shadow-xl hover:scale-105 transition-all duration-300 border border-gray-100">
+                    <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center mb-4 shadow-lg mx-auto">
+                        <i class="fas fa-ice-cream text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-dark text-center mb-3">Desserts</h3>
+                    <p class="text-gray-600 text-center text-sm mb-4">
+                        Sweet endings with artisan cakes, pastries, and traditional delights.
+                    </p>
+                    <div class="space-y-2 text-sm text-gray-500">
+                        <div class="flex justify-between">
+                            <span>Chocolate Cake</span>
+                            <span class="text-primary">✓</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Tiramisu</span>
+                            <span class="text-primary">✓</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Fruit Tart</span>
+                            <span class="text-primary">✓</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Beverages -->
+                <div class="group bg-gradient-to-br from-gray-50 to-white rounded-2xl shadow-lg p-6 hover:shadow-xl hover:scale-105 transition-all duration-300 border border-gray-100">
+                    <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center mb-4 shadow-lg mx-auto">
+                        <i class="fas fa-wine-glass text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-dark text-center mb-3">Beverages</h3>
+                    <p class="text-gray-600 text-center text-sm mb-4">
+                        Refreshing drinks, premium juices, and specialty beverages.
+                    </p>
+                    <div class="space-y-2 text-sm text-gray-500">
+                        <div class="flex justify-between">
+                            <span>Fresh Juices</span>
+                            <span class="text-primary">✓</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Mocktails</span>
+                            <span class="text-primary">✓</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Coffee & Tea</span>
+                            <span class="text-primary">✓</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- CTA -->
+            <div class="text-center mt-12">
+                <a href="#contact" class="gradient-bg text-white px-10 py-4 rounded-full font-semibold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 inline-flex items-center gap-2">
+                    <i class="fas fa-file-alt"></i>
+                    View Full Menu
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== GALLERY SECTION ==================== -->
+    <section id="gallery" class="py-20 md:py-28 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="text-center mb-16">
+                <span class="text-primary font-semibold text-sm uppercase tracking-wider">Our Work</span>
+                <h2 class="font-heading text-4xl md:text-5xl font-bold text-dark mt-3 mb-4">
+                    Photo <span class="gradient-text">Gallery</span>
+                </h2>
+                <p class="text-gray-600 max-w-2xl mx-auto text-lg">
+                    Browse through our collection of beautifully crafted events and culinary presentations.
+                </p>
+            </div>
+            
+            <!-- Gallery Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <!-- Gallery Item 1 -->
+                <div class="group relative image-zoom rounded-2xl overflow-hidden shadow-lg cursor-pointer" onclick="openLightbox(this)">
+                    <img 
+                        src="https://images.unsplash.com/photo-1555244162-803834f70033?w=600&h=600&fit=crop" 
+                        alt="Buffet Setup" 
+                        class="w-full h-64 object-cover"
+                        loading="lazy"
+                    >
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <span class="text-white font-medium">Luxury Buffet</span>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item 2 -->
+                <div class="group relative image-zoom rounded-2xl overflow-hidden shadow-lg cursor-pointer" onclick="openLightbox(this)">
+                    <img 
+                        src="https://images.unsplash.com/photo-1519225421980-715cb0202128?w=600&h=600&fit=crop" 
+                        alt="Wedding Table" 
+                        class="w-full h-64 object-cover"
+                        loading="lazy"
+                    >
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <span class="text-white font-medium">Wedding Setup</span>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item 3 -->
+                <div class="group relative image-zoom rounded-2xl overflow-hidden shadow-lg cursor-pointer" onclick="openLightbox(this)">
+                    <img 
+                        src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=600&h=600&fit=crop" 
+                        alt="Food Presentation" 
+                        class="w-full h-64 object-cover"
+                        loading="lazy"
+                    >
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <span class="text-white font-medium">Food Presentation</span>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item 4 -->
+                <div class="group relative image-zoom rounded-2xl overflow-hidden shadow-lg cursor-pointer" onclick="openLightbox(this)">
+                    <img 
+                        src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=600&h=600&fit=crop" 
+                        alt="Corporate Event" 
+                        class="w-full h-64 object-cover"
+                        loading="lazy"
+                    >
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <span class="text-white font-medium">Corporate Event</span>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item 5 -->
+                <div class="group relative image-zoom rounded-2xl overflow-hidden shadow-lg cursor-pointer" onclick="openLightbox(this)">
+                    <img 
+                        src="https://images.unsplash.com/photo-1530103862676-de3c9a59af57?w=600&h=600&fit=crop" 
+                        alt="Party Setup" 
+                        class="w-full h-64 object-cover"
+                        loading="lazy"
+                    >
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <span class="text-white font-medium">Party Setup</span>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item 6 -->
+                <div class="group relative image-zoom rounded-2xl overflow-hidden shadow-lg cursor-pointer" onclick="openLightbox(this)">
+                    <img 
+                        src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&h=600&fit=crop" 
+                        alt="Plated Meal" 
+                        class="w-full h-64 object-cover"
+                        loading="lazy"
+                    >
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <span class="text-white font-medium">Plated Meals</span>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item 7 -->
+                <div class="group relative image-zoom rounded-2xl overflow-hidden shadow-lg cursor-pointer" onclick="openLightbox(this)">
+                    <img 
+                        src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&h=600&fit=crop" 
+                        alt="Fine Dining" 
+                        class="w-full h-64 object-cover"
+                        loading="lazy"
+                    >
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <span class="text-white font-medium">Fine Dining</span>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item 8 -->
+                <div class="group relative image-zoom rounded-2xl overflow-hidden shadow-lg cursor-pointer" onclick="openLightbox(this)">
+                    <img 
+                        src="https://images.unsplash.com/photo-1550966871-3ed3c47e2ce2?w=600&h=600&fit=crop" 
+                        alt="Dessert Display" 
+                        class="w-full h-64 object-cover"
+                        loading="lazy"
+                    >
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <span class="text-white font-medium">Dessert Display</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- View More Button -->
+            <div class="text-center mt-12">
+                <a href="#contact" class="inline-flex items-center text-primary font-semibold hover:text-orange-600 transition-colors">
+                    View More Photos <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PORTFOLIO SECTION ==================== -->
+    <section id="portfolio" class="py-20 md:py-28 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="text-center mb-16">
+                <span class="text-primary font-semibold text-sm uppercase tracking-wider">Our Success Stories</span>
+                <h2 class="font-heading text-4xl md:text-5xl font-bold text-dark mt-3 mb-4">
+                    Featured <span class="gradient-text">Events</span>
+                </h2>
+                <p class="text-gray-600 max-w-2xl mx-auto text-lg">
+                    Discover some of our most memorable events and the experiences we've created.
+                </p>
+            </div>
+            
+            <!-- Portfolio Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Portfolio Item 1 -->
+                <div class="group bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
+                    <div class="image-zoom h-64">
+                        <img 
+                            src="https://images.unsplash.com/photo-1519225421980-715cb0202128?w=800&h=600&fit=crop" 
+                            alt="Wedding Event" 
+                            class="w-full h-full object-cover"
+                            loading="lazy"
+                        >
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="bg-orange-100 text-primary px-3 py-1 rounded-full text-sm font-medium">Wedding</span>
+                            <span class="text-gray-500 text-sm"><i class="fas fa-users mr-1"></i> 250 Guests</span>
+                        </div>
+                        <h3 class="font-heading text-xl font-bold text-dark mb-2">Royal Wedding Celebration</h3>
+                        <p class="text-gray-600 text-sm mb-4">
+                            A magnificent 3-course dinner with live stations for 250 guests at the Grand Palace Hotel.
+                        </p>
+                        <div class="flex items-center text-green-600 text-sm">
+                            <i class="fas fa-star mr-1"></i>
+                            <i class="fas fa-star mr-1"></i>
+                            <i class="fas fa-star mr-1"></i>
+                            <i class="fas fa-star mr-1"></i>
+                            <i class="fas fa-star mr-1"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Portfolio Item 2 -->
+                <div class="group bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
+                    <div class="image-zoom h-64">
+                        <img 
+                            src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&h=600&fit=crop" 
+                            alt="Corporate Event" 
+                            class="w-full h-full object-cover"
+                            loading="lazy"
+                        >
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="bg-green-100 text-secondary px-3 py-1 rounded-full text-sm font-medium">Corporate</span>
+                            <span class="text-gray-500 text-sm"><i class="fas fa-users mr-1"></i> 150 Guests</span>
+                        </div>
+                        <h3 class="font-heading text-xl font-bold text-dark mb-2">Annual Tech Conference</h3>
+                        <p class="text-gray-600 text-sm mb-4">
+                            Full-day catering with breakfast, lunch, and refreshment breaks for industry leaders.
+                        </p>
+                        <div class="flex items-center text-green-600 text-sm">
+                            <i class="fas fa-star mr-1"></i>
+                            <i class="fas fa-star mr-1"></i>
+                            <i class="fas fa-star mr-1"></i>
+                            <i class="fas fa-star mr-1"></i>
+                            <i class="fas fa-star mr-1"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Portfolio Item 3 -->
+                <div class="group bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
+                    <div class="image-zoom h-64">
+                        <img 
+                            src="https://images.unsplash.com/photo-1530103862676-de3c9a59af57?w=800&h=600&fit=crop" 
+                            alt="Private Party" 
+                            class="w-full h-full object-cover"
+                            loading="lazy"
+                        >
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="bg-purple-100 text-purple-600 px-3 py-1 rounded-full text-sm font-medium">Private</span>
+                            <span class="text-gray-500 text-sm"><i class="fas fa-users mr-1"></i> 80 Guests</span>
+                        </div>
+                        <h3 class="font-heading text-xl font-bold text-dark mb-2">50th Anniversary Party</h3>
+                        <p class="text-gray-600 text-sm mb-4">
+                            Elegant buffet dinner with customized menu and themed decorations for a golden celebration.
+                        </p>
+                        <div class="flex items-center text-green-600 text-sm">
+                            <i class="fas fa-star mr-1"></i>
+                            <i class="fas fa-star mr-1"></i>
+                            <i class="fas fa-star mr-1"></i>
+                            <i class="fas fa-star mr-1"></i>
+                            <i class="fas fa-star mr-1"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== TESTIMONIALS SECTION ==================== -->
+    <section id="testimonials" class="py-20 md:py-28 bg-gradient-to-br from-gray-50 to-orange-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="text-center mb-16">
+                <span class="text-primary font-semibold text-sm uppercase tracking-wider">Client Reviews</span>
+                <h2 class="font-heading text-4xl md:text-5xl font-bold text-dark mt-3 mb-4">
+                    What They <span class="gradient-text">Say</span>
+                </h2>
+                <p class="text-gray-600 max-w-2xl mx-auto text-lg">
+                    Don't just take our word for it. Hear from our satisfied clients about their experiences.
+                </p>
+            </div>
+            
+            <!-- Testimonials Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300">
+                    <div class="flex items-center text-yellow-400 mb-4">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 mb-6 italic">
+                        "JVC Catering made our wedding absolutely perfect! The food was exceptional, the presentation was stunning, and the service was flawless. Our guests are still talking about it!"
+                    </p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 gradient-bg rounded-full flex items-center justify-center text-white font-bold mr-4">
+                            SM
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-dark">Sarah & Michael</h4>
+                            <p class="text-gray-500 text-sm">Wedding Event</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300">
+                    <div class="flex items-center text-yellow-400 mb-4">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 mb-6 italic">
+                        "We've used JVC Catering for multiple corporate events. They consistently deliver high-quality food and professional service. Highly recommended for business events!"
+                    </p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 gradient-bg rounded-full flex items-center justify-center text-white font-bold mr-4">
+                            JD
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-dark">James Davidson</h4>
+                            <p class="text-gray-500 text-sm">Corporate Client</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300">
+                    <div class="flex items-center text-yellow-400 mb-4">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 mb-6 italic">
+                        "The team went above and beyond for our anniversary party. The menu was customized perfectly, and everything was executed beautifully. Thank you JVC!"
+                    </p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 gradient-bg rounded-full flex items-center justify-center text-white font-bold mr-4">
+                            EP
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-dark">Emily Parker</h4>
+                            <p class="text-gray-500 text-sm">Private Event</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== CONTACT/QUOTE SECTION ==================== -->
+    <section id="contact" class="py-20 md:py-28 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Left Content -->
+                <div>
+                    <span class="text-primary font-semibold text-sm uppercase tracking-wider">Get In Touch</span>
+                    <h2 class="font-heading text-4xl md:text-5xl font-bold text-dark mt-3 mb-4">
+                        Request a <span class="gradient-text">Quote</span>
+                    </h2>
+                    <p class="text-gray-600 text-lg mb-8">
+                        Ready to plan your next event? Fill out the form and we'll get back to you with a customized quotation via WhatsApp.
+                    </p>
+                    
+                    <!-- Contact Info -->
+                    <div class="space-y-6">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center mr-4 shadow-lg">
+                                <i class="fab fa-whatsapp text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-dark">WhatsApp</h4>
+                                <p class="text-gray-600">+1 (555) 123-4567</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center mr-4 shadow-lg">
+                                <i class="fas fa-envelope text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-dark">Email</h4>
+                                <p class="text-gray-600">info@jvccatering.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center mr-4 shadow-lg">
+                                <i class="fas fa-map-marker-alt text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-dark">Location</h4>
+                                <p class="text-gray-600">Available for all locations</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Social Links -->
+                    <div class="mt-8">
+                        <h4 class="font-semibold text-dark mb-4">Follow Us</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-10 h-10 gradient-bg rounded-full flex items-center justify-center text-white hover:shadow-lg hover:scale-110 transition-all duration-300">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 gradient-bg rounded-full flex items-center justify-center text-white hover:shadow-lg hover:scale-110 transition-all duration-300">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 gradient-bg rounded-full flex items-center justify-center text-white hover:shadow-lg hover:scale-110 transition-all duration-300">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 gradient-bg rounded-full flex items-center justify-center text-white hover:shadow-lg hover:scale-110 transition-all duration-300">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Form -->
+                <div class="bg-gradient-to-br from-gray-50 to-orange-50 rounded-3xl shadow-2xl p-8 md:p-10">
+                    <form id="quoteForm" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <!-- Name -->
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Your Name *</label>
+                                <input 
+                                    type="text" 
+                                    id="name" 
+                                    required
+                                    class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 form-focus bg-white transition-all duration-300"
+                                    placeholder="John Doe"
+                                >
+                            </div>
+                            
+                            <!-- Phone -->
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Phone Number *</label>
+                                <input 
+                                    type="tel" 
+                                    id="phone" 
+                                    required
+                                    class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 form-focus bg-white transition-all duration-300"
+                                    placeholder="+1 (555) 000-0000"
+                                >
+                            </div>
+                        </div>
+                        
+                        <!-- Event Type -->
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Event Type *</label>
+                            <select 
+                                id="eventType" 
+                                required
+                                class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 form-focus bg-white transition-all duration-300"
+                            >
+                                <option value="">Select Event Type</option>
+                                <option value="Wedding">Wedding</option>
+                                <option value="Corporate Event">Corporate Event</option>
+                                <option value="Private Party">Private Party</option>
+                                <option value="Birthday">Birthday</option>
+                                <option value="Anniversary">Anniversary</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <!-- Guests -->
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Number of Guests *</label>
+                                <input 
+                                    type="number" 
+                                    id="guests" 
+                                    required
+                                    min="10"
+                                    class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 form-focus bg-white transition-all duration-300"
+                                    placeholder="100"
+                                >
+                            </div>
+                            
+                            <!-- Date -->
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Event Date *</label>
+                                <input 
+                                    type="date" 
+                                    id="date" 
+                                    required
+                                    class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 form-focus bg-white transition-all duration-300"
+                                >
+                            </div>
+                        </div>
+                        
+                        <!-- Location -->
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Event Location *</label>
+                            <input 
+                                type="text" 
+                                id="location" 
+                                required
+                                class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 form-focus bg-white transition-all duration-300"
+                                placeholder="City, Venue Name"
+                            >
+                        </div>
+                        
+                        <!-- Notes -->
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Additional Notes</label>
+                            <textarea 
+                                id="notes" 
+                                rows="4"
+                                class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 form-focus bg-white transition-all duration-300 resize-none"
+                                placeholder="Any special requirements, dietary restrictions, or preferences..."
+                            ></textarea>
+                        </div>
+                        
+                        <!-- Submit Button -->
+                        <button 
+                            type="submit" 
+                            id="submitBtn"
+                            class="w-full gradient-bg text-white py-4 rounded-xl font-semibold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
+                        >
+                            <i class="fab fa-whatsapp text-xl"></i>
+                            Send via WhatsApp
+                        </button>
+                        
+                        <p class="text-center text-gray-500 text-sm">
+                            <i class="fas fa-lock mr-1"></i>
+                            Your information is secure and will only be used for your quotation.
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== CTA SECTION ==================== -->
+    <section class="py-20 gradient-bg">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="font-heading text-4xl md:text-5xl font-bold text-white mb-6">
+                Ready to Create Magic?
+            </h2>
+            <p class="text-white/90 text-lg mb-8 max-w-2xl mx-auto">
+                Let's bring your vision to life with exceptional food and unforgettable experiences.
+            </p>
+            <a 
+                href="https://wa.me/15551234567?text=Hello%20JVC%20Catering,%20I%20would%20like%20to%20discuss%20my%20event." 
+                class="bg-white text-primary px-10 py-4 rounded-full font-semibold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 inline-flex items-center gap-2"
+            >
+                <i class="fab fa-whatsapp text-xl"></i>
+                Chat With Us Now
+            </a>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="bg-dark text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <!-- Brand -->
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-utensils text-white text-xl"></i>
+                        </div>
+                        <span class="font-heading text-2xl font-bold">JVC Catering</span>
+                    </div>
+                    <p class="text-gray-400 mb-6">
+                        Creating unforgettable culinary experiences with passion, quality, and excellence.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary transition-colors duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary transition-colors duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary transition-colors duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary transition-colors duration-300">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="font-semibold text-lg mb-6">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#home" class="text-gray-400 hover:text-primary transition-colors">Home</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-primary transition-colors">Services</a></li>
+                        <li><a href="#menu" class="text-gray-400 hover:text-primary transition-colors">Menu</a></li>
+                        <li><a href="#gallery" class="text-gray-400 hover:text-primary transition-colors">Gallery</a></li>
+                        <li><a href="#portfolio" class="text-gray-400 hover:text-primary transition-colors">Portfolio</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-primary transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Services -->
+                <div>
+                    <h4 class="font-semibold text-lg mb-6">Services</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Wedding Catering</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Corporate Events</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Private Parties</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Buffet Service</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Plated Dinners</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Custom Menus</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact -->
+                <div>
+                    <h4 class="font-semibold text-lg mb-6">Contact</h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-3 text-primary"></i>
+                            +1 (555) 123-4567
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fab fa-whatsapp mr-3 text-primary"></i>
+                            +1 (555) 123-4567
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-primary"></i>
+                            info@jvccatering.com
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-3 text-primary"></i>
+                            Available Worldwide
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Bottom Bar -->
+            <div class="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm mb-4 md:mb-0">
+                    &copy; 2026 JVC Catering. All rights reserved.
+                </p>
+                <div class="flex space-x-6 text-sm text-gray-400">
+                    <a href="#" class="hover:text-primary transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-primary transition-colors">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== FLOATING WHATSAPP BUTTON ==================== -->
+    <a 
+        href="https://wa.me/15551234567?text=Hello%20JVC%20Catering,%20I%20would%20like%20to%20inquire%20about%20your%20services." 
+        target="_blank"
+        class="fixed bottom-6 right-6 z-50 w-16 h-16 bg-green-500 rounded-full flex items-center justify-center shadow-2xl hover:shadow-3xl hover:scale-110 hover:bg-green-600 transition-all duration-300 animate-pulse-slow"
+        aria-label="Chat on WhatsApp"
+    >
+        <i class="fab fa-whatsapp text-white text-3xl"></i>
     </a>
-    <button id="ham" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</nav>
 
-<!-- MOBILE DRAWER -->
-<div id="mobile-drawer">
-  <a href="#services" class="drawer-link"><i class="fas fa-concierge-bell"></i> Services</a>
-  <a href="#menu" class="drawer-link"><i class="fas fa-book-open"></i> Menu</a>
-  <a href="#gallery" class="drawer-link"><i class="fas fa-images"></i> Gallery</a>
-  <a href="#portfolio" class="drawer-link"><i class="fas fa-trophy"></i> Portfolio</a>
-  <a href="#testimonials" class="drawer-link"><i class="fas fa-star"></i> Reviews</a>
-  <a href="#contact" class="drawer-cta"><i class="fab fa-whatsapp"></i> &nbsp;Request a Quote</a>
-</div>
-
-<!-- HERO -->
-<section id="hero" class="noise">
-  <div class="hero-bg"></div>
-  <div class="hero-overlay"></div>
-  <div class="hero-overlay-bottom"></div>
-
-  <div class="hero-content">
-    <div class="hero-eyebrow">
-      <span class="dot"></span>
-      Premium Catering Since 2016
-    </div>
-    <h1 class="hero-h1">
-      Culinary<br>
-      <em>Artistry</em><br>
-      <span class="outline-text">Delivered</span>
-    </h1>
-    <p class="hero-sub">
-      Weddings · Corporate Events · Private Celebrations<br>
-      Exceptional food. Elegant presentation. Flawless service.
-    </p>
-    <div class="hero-btns">
-      <a href="#contact" class="btn-primary magnetic-btn">
-        <i class="fab fa-whatsapp"></i> Request a Quote
-      </a>
-      <a href="#menu" class="btn-ghost magnetic-btn">
-        <i class="fas fa-book-open"></i> Explore Menus
-      </a>
-    </div>
-  </div>
-
-  <div class="hero-stats">
-    <div class="stat-item">
-      <div class="stat-num counter-el" data-target="500">0</div>
-      <div class="stat-label">Events Catered</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num counter-el" data-target="10">0</div>
-      <div class="stat-label">Years Experience</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num counter-el" data-target="98">0</div>
-      <div class="stat-label">% Client Satisfaction</div>
-    </div>
-  </div>
-
-  <div class="scroll-ind">
-    <span>Scroll</span>
-    <div class="scroll-line"></div>
-  </div>
-</section>
-
-<!-- MARQUEE -->
-<div class="marquee-band">
-  <div class="marquee-track" id="marqueeTrack"></div>
-</div>
-
-<!-- SERVICES -->
-<section id="services" class="section">
-  <div class="container">
-    <div class="services-intro">
-      <div class="reveal-left">
-        <div class="section-label">What We Offer</div>
-        <h2 class="section-title">Premium <em>Services</em><br>Tailored for You</h2>
-      </div>
-      <div class="reveal-right">
-        <p class="section-desc" style="margin-left:auto;">
-          From intimate gatherings to grand celebrations, every event receives our full
-          creative vision, premium ingredients, and devoted professional staff.
-        </p>
-      </div>
+    <!-- ==================== LIGHTBOX ==================== -->
+    <div id="lightbox" class="fixed inset-0 bg-black/90 z-50 hidden items-center justify-center p-4" onclick="closeLightbox()">
+        <button class="absolute top-6 right-6 text-white text-4xl hover:text-primary transition-colors" onclick="closeLightbox()">
+            <i class="fas fa-times"></i>
+        </button>
+        <img id="lightboxImage" src="" alt="Gallery Image" class="max-w-full max-h-[90vh] rounded-2xl shadow-2xl">
     </div>
 
-    <div class="services-grid">
-      <!-- Wedding -->
-      <div class="service-card reveal">
-        <div class="service-img">
-          <img src="https://images.unsplash.com/photo-1519225421980-715cb0202128?w=800&h=600&fit=crop" alt="Wedding Catering" loading="lazy">
-        </div>
-        <div class="service-body">
-          <div class="service-icon"><i class="fas fa-heart"></i></div>
-          <h3>Wedding Catering</h3>
-          <p>Make your special day unforgettable with our exquisite menus, elegant table settings, and seamless execution from start to finish.</p>
-          <ul class="service-list">
-            <li><i class="fas fa-check"></i> Custom Menu Planning</li>
-            <li><i class="fas fa-check"></i> Premium Table Settings</li>
-            <li><i class="fas fa-check"></i> Professional Wait Staff</li>
-          </ul>
-          <a href="#contact" class="service-link">Get a Quote <i class="fas fa-arrow-right"></i></a>
-        </div>
-      </div>
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+        // ==================== MOBILE MENU ====================
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+            const icon = mobileMenuBtn.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+        
+        // Close mobile menu when clicking a link
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
+            });
+        });
+        
+        // ==================== NAVBAR SCROLL EFFECT ====================
+        const navbar = document.getElementById('navbar');
+        let lastScroll = 0;
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                navbar.classList.add('shadow-lg');
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                navbar.classList.remove('shadow-lg');
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+            
+            lastScroll = currentScroll;
+        });
+        
+        // ==================== WHATSAPP FORM SUBMISSION ====================
+        const quoteForm = document.getElementById('quoteForm');
+        const submitBtn = document.getElementById('submitBtn');
+        
+        // WhatsApp Number (Replace with actual number)
+        const WHATSAPP_NUMBER = '15551234567';
+        
+        quoteForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const eventType = document.getElementById('eventType').value;
+            const guests = document.getElementById('guests').value;
+            const date = document.getElementById('date').value;
+            const location = document.getElementById('location').value.trim();
+            const notes = document.getElementById('notes').value.trim();
+            
+            // Format date for display
+            const formattedDate = new Date(date).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            // Create WhatsApp message
+            const message = `Hello JVC Catering,
 
-      <!-- Corporate -->
-      <div class="service-card reveal" style="transition-delay:0.1s;">
-        <div class="service-img">
-          <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&h=600&fit=crop" alt="Corporate Events" loading="lazy">
-        </div>
-        <div class="service-body">
-          <div class="service-icon green"><i class="fas fa-briefcase"></i></div>
-          <h3>Corporate Events</h3>
-          <p>Impress clients and team alike with sophisticated catering for conferences, product launches, and company milestones.</p>
-          <ul class="service-list">
-            <li><i class="fas fa-check"></i> Business Lunch Packages</li>
-            <li><i class="fas fa-check"></i> Conference Catering</li>
-            <li><i class="fas fa-check"></i> Team Building Events</li>
-          </ul>
-          <a href="#contact" class="service-link">Get a Quote <i class="fas fa-arrow-right"></i></a>
-        </div>
-      </div>
+I would like a quotation:
 
-      <!-- Private -->
-      <div class="service-card reveal" style="transition-delay:0.2s;">
-        <div class="service-img">
-          <img src="https://images.unsplash.com/photo-1530103862676-de3c9a59af57?w=800&h=600&fit=crop" alt="Private Parties" loading="lazy">
-        </div>
-        <div class="service-body">
-          <div class="service-icon"><i class="fas fa-glass-cheers"></i></div>
-          <h3>Private Parties</h3>
-          <p>Celebrate life's most precious moments with customized party catering — birthdays, anniversaries, and everything in between.</p>
-          <ul class="service-list">
-            <li><i class="fas fa-check"></i> Birthday Celebrations</li>
-            <li><i class="fas fa-check"></i> Anniversary Parties</li>
-            <li><i class="fas fa-check"></i> Fully Custom Themes</li>
-          </ul>
-          <a href="#contact" class="service-link">Get a Quote <i class="fas fa-arrow-right"></i></a>
-        </div>
-      </div>
-    </div>
+*Name:* ${name}
+*Phone:* ${phone}
+*Event:* ${eventType}
+*Guests:* ${guests}
+*Date:* ${formattedDate}
+*Location:* ${location}
+*Notes:* ${notes || 'None'}
 
-    <!-- Add-on row -->
-    <div class="addon-row">
-      <div class="addon-card reveal">
-        <i class="fas fa-coffee"></i>
-        <h4>Coffee Breaks</h4>
-        <p>Premium beverages & artisan snacks</p>
-      </div>
-      <div class="addon-card reveal" style="transition-delay:0.1s;">
-        <i class="fas fa-utensils"></i>
-        <h4>Buffet Service</h4>
-        <p>Elegant self-service stations</p>
-      </div>
-      <div class="addon-card reveal" style="transition-delay:0.2s;">
-        <i class="fas fa-wine-glass-alt"></i>
-        <h4>Bar Service</h4>
-        <p>Professional mixologists on-site</p>
-      </div>
-      <div class="addon-card reveal" style="transition-delay:0.3s;">
-        <i class="fas fa-truck"></i>
-        <h4>Delivery</h4>
-        <p>Safe, timely, temperature-controlled</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- MENU (TABBED) -->
-<section id="menu" class="section noise" style="position:relative;">
-  <div class="menu-glow menu-glow-1"></div>
-  <div class="menu-glow menu-glow-2"></div>
-  <div class="container" style="position:relative;z-index:2;">
-    <div class="reveal">
-      <div class="section-label">Delicious Options</div>
-      <h2 class="section-title" style="color:#fff;">Explore Our <em>Menu</em></h2>
-    </div>
-    <div class="menu-tabs reveal">
-      <button class="tab-btn active" data-tab="starters">Starters</button>
-      <button class="tab-btn" data-tab="mains">Main Course</button>
-      <button class="tab-btn" data-tab="desserts">Desserts</button>
-      <button class="tab-btn" data-tab="beverages">Beverages</button>
-    </div>
-
-    <!-- Starters -->
-    <div class="menu-panel active reveal" id="tab-starters">
-      <div class="menu-card">
-        <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&h=400&fit=crop" alt="Caesar Salad" loading="lazy"></div>
-        <div class="menu-card-body">
-          <h4>Caesar Salad</h4>
-          <p>Crisp romaine, house-made dressing, shaved parmesan & artisan croutons</p>
-          <span class="menu-tag">Vegetarian</span>
-        </div>
-      </div>
-      <div class="menu-card">
-        <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?w=600&h=400&fit=crop" alt="Bruschetta" loading="lazy"></div>
-        <div class="menu-card-body">
-          <h4>Bruschetta Trio</h4>
-          <p>Toasted sourdough with heritage tomatoes, basil oil & aged balsamic</p>
-          <span class="menu-tag">Chef's Pick</span>
-        </div>
-      </div>
-      <div class="menu-card">
-        <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=600&h=400&fit=crop" alt="Spring Rolls" loading="lazy"></div>
-        <div class="menu-card-body">
-          <h4>Crispy Spring Rolls</h4>
-          <p>Golden fried rolls filled with vegetables & glass noodles, plum dipping sauce</p>
-          <span class="menu-tag">Popular</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Mains -->
-    <div class="menu-panel" id="tab-mains">
-      <div class="menu-card">
-        <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=600&h=400&fit=crop" alt="Salmon" loading="lazy"></div>
-        <div class="menu-card-body">
-          <h4>Grilled Atlantic Salmon</h4>
-          <p>Pan-seared fillet with lemon beurre blanc, capers & seasonal greens</p>
-          <span class="menu-tag">Seafood</span>
-        </div>
-      </div>
-      <div class="menu-card">
-        <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1544025162-d76previewfc2?w=600&h=400&fit=crop&q=80" alt="Beef" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1558030006-450675393462?w=600&h=400&fit=crop'"></div>
-        <div class="menu-card-body">
-          <h4>Beef Tenderloin</h4>
-          <p>28-day aged prime cut with red wine jus, truffle mash & asparagus</p>
-          <span class="menu-tag">Signature</span>
-        </div>
-      </div>
-      <div class="menu-card">
-        <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=600&h=400&fit=crop" alt="Chicken Tikka" loading="lazy"></div>
-        <div class="menu-card-body">
-          <h4>Chicken Tikka Masala</h4>
-          <p>Tandoor-marinated chicken in rich tomato-cream sauce with fragrant basmati</p>
-          <span class="menu-tag">Crowd Favourite</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Desserts -->
-    <div class="menu-panel" id="tab-desserts">
-      <div class="menu-card">
-        <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&h=400&fit=crop" alt="Chocolate Cake" loading="lazy"></div>
-        <div class="menu-card-body">
-          <h4>Decadent Chocolate Cake</h4>
-          <p>Three-layer dark chocolate gateau with ganache & raspberry coulis</p>
-          <span class="menu-tag">Bestseller</span>
-        </div>
-      </div>
-      <div class="menu-card">
-        <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=600&h=400&fit=crop" alt="Tiramisu" loading="lazy"></div>
-        <div class="menu-card-body">
-          <h4>Classic Tiramisu</h4>
-          <p>Espresso-soaked savoiardi, mascarpone cream, cocoa — made fresh daily</p>
-          <span class="menu-tag">Italian</span>
-        </div>
-      </div>
-      <div class="menu-card">
-        <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=600&h=400&fit=crop" alt="Fruit Tart" loading="lazy"></div>
-        <div class="menu-card-body">
-          <h4>Seasonal Fruit Tart</h4>
-          <p>Butter shortcrust, vanilla crème pâtissière, glazed fresh seasonal fruits</p>
-          <span class="menu-tag">Light</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Beverages -->
-    <div class="menu-panel" id="tab-beverages">
-      <div class="menu-card">
-        <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?w=600&h=400&fit=crop" alt="Juices" loading="lazy"></div>
-        <div class="menu-card-body">
-          <h4>Fresh-Pressed Juices</h4>
-          <p>Seasonal fruits cold-pressed to order — watermelon, mango, citrus blends</p>
-          <span class="menu-tag">No Added Sugar</span>
-        </div>
-      </div>
-      <div class="menu-card">
-        <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600&h=400&fit=crop" alt="Mocktails" loading="lazy"></div>
-        <div class="menu-card-body">
-          <h4>Signature Mocktails</h4>
-          <p>Virgin mojitos, passion fruit fizz, elderflower spritz & more creative blends</p>
-          <span class="menu-tag">Alcohol-Free</span>
-        </div>
-      </div>
-      <div class="menu-card">
-        <div class="menu-card-img"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&h=400&fit=crop" alt="Coffee" loading="lazy"></div>
-        <div class="menu-card-body">
-          <h4>Specialty Coffee & Tea</h4>
-          <p>Single-origin brews, artisan teas, full espresso bar service available</p>
-          <span class="menu-tag">Premium</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="reveal" style="text-align:center; margin-top:3rem;">
-      <a href="#contact" class="btn-primary magnetic-btn" style="display:inline-flex;">
-        <i class="fas fa-file-alt"></i> Request Full Menu <i class="fas fa-arrow-right"></i>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- GALLERY -->
-<section id="gallery" class="section">
-  <div class="container">
-    <div style="display:flex; align-items:end; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:0.5rem;" class="reveal">
-      <div>
-        <div class="section-label">Our Work</div>
-        <h2 class="section-title">Photo <em>Gallery</em></h2>
-      </div>
-      <p class="section-desc" style="max-width:350px; font-size:0.9rem;">
-        Browse our beautifully captured events and culinary masterpieces.
-      </p>
-    </div>
-
-    <div class="gallery-grid reveal">
-      <div class="gallery-item" data-cat="buffet" data-src="https://images.unsplash.com/photo-1555244162-803834f70033?w=1200&h=800&fit=crop" data-caption="Luxury Buffet Setup">
-        <img src="https://images.unsplash.com/photo-1555244162-803834f70033?w=800&h=800&fit=crop" alt="Luxury Buffet" loading="lazy">
-        <div class="gallery-overlay"><h4>Luxury Buffet</h4><span>Wedding Setup</span></div>
-        <div class="gallery-expand"><i class="fas fa-expand-alt"></i></div>
-      </div>
-      <div class="gallery-item" data-cat="wedding" data-src="https://images.unsplash.com/photo-1519225421980-715cb0202128?w=1200&h=800&fit=crop" data-caption="Elegant Wedding Table">
-        <img src="https://images.unsplash.com/photo-1519225421980-715cb0202128?w=600&h=500&fit=crop" alt="Wedding Table" loading="lazy">
-        <div class="gallery-overlay"><h4>Wedding Table</h4><span>Elegant Setup</span></div>
-        <div class="gallery-expand"><i class="fas fa-expand-alt"></i></div>
-      </div>
-      <div class="gallery-item" data-cat="food" data-src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&h=800&fit=crop" data-caption="Fine Dining Presentation">
-        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&h=500&fit=crop" alt="Fine Dining" loading="lazy">
-        <div class="gallery-overlay"><h4>Fine Dining</h4><span>Premium Plating</span></div>
-        <div class="gallery-expand"><i class="fas fa-expand-alt"></i></div>
-      </div>
-      <div class="gallery-item" data-cat="corporate" data-src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=1200&h=800&fit=crop" data-caption="Corporate Event">
-        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&h=500&fit=crop" alt="Corporate Event" loading="lazy">
-        <div class="gallery-overlay"><h4>Corporate</h4><span>Business Event</span></div>
-        <div class="gallery-expand"><i class="fas fa-expand-alt"></i></div>
-      </div>
-      <div class="gallery-item" data-cat="party" data-src="https://images.unsplash.com/photo-1530103862676-de3c9a59af57?w=1200&h=800&fit=crop" data-caption="Private Party Celebration">
-        <img src="https://images.unsplash.com/photo-1530103862676-de3c9a59af57?w=600&h=500&fit=crop" alt="Party Setup" loading="lazy">
-        <div class="gallery-overlay"><h4>Party Setup</h4><span>Celebration</span></div>
-        <div class="gallery-expand"><i class="fas fa-expand-alt"></i></div>
-      </div>
-      <div class="gallery-item" data-cat="food" data-src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=1200&h=800&fit=crop" data-caption="Gourmet Specialty">
-        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&h=500&fit=crop" alt="Gourmet" loading="lazy">
-        <div class="gallery-overlay"><h4>Gourmet</h4><span>Specialty Dishes</span></div>
-        <div class="gallery-expand"><i class="fas fa-expand-alt"></i></div>
-      </div>
-      <div class="gallery-item" data-cat="dessert" data-src="https://images.unsplash.com/photo-1550966871-3ed3c47e2ce2?w=1200&h=800&fit=crop" data-caption="Dessert Display">
-        <img src="https://images.unsplash.com/photo-1550966871-3ed3c47e2ce2?w=600&h=500&fit=crop" alt="Desserts" loading="lazy">
-        <div class="gallery-overlay"><h4>Desserts</h4><span>Sweet Endings</span></div>
-        <div class="gallery-expand"><i class="fas fa-expand-alt"></i></div>
-      </div>
-    </div>
-
-    <div class="gallery-filter-row reveal">
-      <button class="gf-btn active" data-filter="all">All</button>
-      <button class="gf-btn" data-filter="wedding"><i class="fas fa-heart"></i> Wedding</button>
-      <button class="gf-btn" data-filter="corporate"><i class="fas fa-briefcase"></i> Corporate</button>
-      <button class="gf-btn" data-filter="party"><i class="fas fa-glass-cheers"></i> Party</button>
-      <button class="gf-btn" data-filter="food"><i class="fas fa-utensils"></i> Food</button>
-      <button class="gf-btn" data-filter="dessert"><i class="fas fa-ice-cream"></i> Desserts</button>
-    </div>
-  </div>
-</section>
-
-<!-- PORTFOLIO -->
-<section id="portfolio" class="section" style="background:var(--dark); padding-top: clamp(4rem,8vw,7rem); padding-bottom: clamp(4rem,8vw,7rem);">
-  <div class="container">
-    <div class="reveal" style="text-align:center; margin-bottom:0.5rem;">
-      <div class="section-label" style="justify-content:center; color:var(--amber-lt);">
-        <span style="width:32px; height:1px; background:var(--amber-lt);"></span>
-        Success Stories
-      </div>
-      <h2 class="section-title" style="color:#fff; text-align:center;">Featured <em>Events</em></h2>
-    </div>
-
-    <div class="portfolio-grid">
-      <div class="portfolio-card reveal">
-        <div class="portfolio-img">
-          <img src="https://images.unsplash.com/photo-1519225421980-715cb0202128?w=800&h=600&fit=crop" alt="Royal Wedding" loading="lazy">
-        </div>
-        <div class="portfolio-body">
-          <span class="portfolio-tag amber">Wedding</span>
-          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.8rem;">
-            <div class="stars">★★★★★</div>
-            <span style="font-size:0.78rem; color:var(--muted);"><i class="fas fa-users" style="color:var(--amber); font-size:0.7rem;"></i> 250 Guests</span>
-          </div>
-          <h3>Royal Wedding Celebration</h3>
-          <p>A magnificent 3-course dinner with live culinary stations for 250 guests at the Grand Palace Hotel.</p>
-          <div class="portfolio-meta"><span>Dec 2025</span><span style="color:var(--amber); font-size:0.78rem; font-weight:600;">View Details →</span></div>
-        </div>
-      </div>
-
-      <div class="portfolio-card reveal" style="transition-delay:0.1s;">
-        <div class="portfolio-img">
-          <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&h=600&fit=crop" alt="Tech Conference" loading="lazy">
-        </div>
-        <div class="portfolio-body">
-          <span class="portfolio-tag forest">Corporate</span>
-          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.8rem;">
-            <div class="stars">★★★★★</div>
-            <span style="font-size:0.78rem; color:var(--muted);"><i class="fas fa-users" style="color:var(--forest); font-size:0.7rem;"></i> 150 Guests</span>
-          </div>
-          <h3>Annual Tech Conference</h3>
-          <p>Full-day catering covering breakfast, gourmet lunch, and refreshment breaks for industry leaders.</p>
-          <div class="portfolio-meta"><span>Nov 2025</span><span style="color:var(--forest); font-size:0.78rem; font-weight:600;">View Details →</span></div>
-        </div>
-      </div>
-
-      <div class="portfolio-card reveal" style="transition-delay:0.2s;">
-        <div class="portfolio-img">
-          <img src="https://images.unsplash.com/photo-1530103862676-de3c9a59af57?w=800&h=600&fit=crop" alt="Anniversary Party" loading="lazy">
-        </div>
-        <div class="portfolio-body">
-          <span class="portfolio-tag purple">Private</span>
-          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.8rem;">
-            <div class="stars">★★★★★</div>
-            <span style="font-size:0.78rem; color:var(--muted);"><i class="fas fa-users" style="color:#7c3aed; font-size:0.7rem;"></i> 80 Guests</span>
-          </div>
-          <h3>50th Anniversary Party</h3>
-          <p>Elegant buffet dinner with customized golden anniversary menu and bespoke themed décor.</p>
-          <div class="portfolio-meta"><span>Oct 2025</span><span style="color:#7c3aed; font-size:0.78rem; font-weight:600;">View Details →</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section id="testimonials" class="section noise" style="position:relative;">
-  <div style="position:absolute; top:-150px; left:50%; transform:translateX(-50%); width:600px; height:600px; background:radial-gradient(circle, rgba(232,128,58,0.08), transparent 70%); pointer-events:none;"></div>
-  <div class="container" style="position:relative;z-index:2;">
-    <div class="reveal" style="text-align:center; margin-bottom:0.5rem;">
-      <div class="section-label" style="justify-content:center;"><span style="width:32px;height:1px;background:var(--amber-lt);"></span>Client Reviews</div>
-      <h2 class="section-title" style="color:#fff; text-align:center;">What They <em>Say</em></h2>
-    </div>
-    <div class="testi-grid">
-      <div class="testi-card reveal">
-        <div class="testi-quote">"</div>
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">JVC Catering made our wedding absolutely perfect. The food was exceptional, the presentation was breathtaking, and the service was completely flawless. Our guests are still talking about it!</p>
-        <div class="testi-author">
-          <div class="testi-avatar">SM</div>
-          <div><div class="testi-name">Sarah & Michael</div><div class="testi-role">Wedding Event</div></div>
-        </div>
-      </div>
-      <div class="testi-card reveal" style="transition-delay:0.1s;">
-        <div class="testi-quote">"</div>
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">We have trusted JVC for every corporate event over the last three years. Consistently high-quality food, professional team, and they always go above and beyond expectation.</p>
-        <div class="testi-author">
-          <div class="testi-avatar">JD</div>
-          <div><div class="testi-name">James Davidson</div><div class="testi-role">Corporate Client · CEO</div></div>
-        </div>
-      </div>
-      <div class="testi-card reveal" style="transition-delay:0.2s;">
-        <div class="testi-quote">"</div>
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">The team went above and beyond for our anniversary celebration. The custom menu was perfection, and every dish was executed beautifully. Truly a luxury experience. Thank you JVC!</p>
-        <div class="testi-author">
-          <div class="testi-avatar">EP</div>
-          <div><div class="testi-name">Emily Parker</div><div class="testi-role">Private Event</div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT (MULTI-STEP FORM) -->
-<section id="contact" class="section">
-  <div class="container">
-    <div class="contact-grid">
-      <!-- Left Info -->
-      <div class="contact-info-block reveal-left">
-        <div class="section-label">Get In Touch</div>
-        <h2 class="section-title" style="margin-bottom:1.5rem;">Request a <em>Quote</em></h2>
-        <p>Ready to plan your next event? Fill out our quick 3-step form and we'll send you a personalised quotation via WhatsApp within minutes.</p>
-        <div class="info-list">
-          <div class="info-item">
-            <div class="info-icon amber-bg"><i class="fab fa-whatsapp"></i></div>
-            <div class="info-text"><strong>WhatsApp</strong><span>+255 689 583 281</span></div>
-          </div>
-          <div class="info-item">
-            <div class="info-icon forest-bg"><i class="fas fa-phone"></i></div>
-            <div class="info-text"><strong>Phone Call</strong><span>+255 689 583 281</span></div>
-          </div>
-          <div class="info-item">
-            <div class="info-icon amber-bg"><i class="fas fa-envelope"></i></div>
-            <div class="info-text"><strong>Email</strong><span>info@jvccatering.com</span></div>
-          </div>
-          <div class="info-item">
-            <div class="info-icon forest-bg"><i class="fas fa-map-marker-alt"></i></div>
-            <div class="info-text"><strong>Location</strong><span>Available for all locations</span></div>
-          </div>
-        </div>
-        <div class="social-row">
-          <a href="#" class="social-btn" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="social-btn" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-          <a href="#" class="social-btn" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-          <a href="#" class="social-btn" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-        </div>
-      </div>
-
-      <!-- Right: Multi-step form -->
-      <div class="form-box reveal-right">
-        <!-- Progress indicator -->
-        <div class="step-progress">
-          <div class="step-col">
-            <div class="step-dot active" id="sdot-1">1</div>
-            <div class="step-label">Event</div>
-          </div>
-          <div class="step-line" id="sline-1"></div>
-          <div class="step-col">
-            <div class="step-dot" id="sdot-2">2</div>
-            <div class="step-label">Details</div>
-          </div>
-          <div class="step-line" id="sline-2"></div>
-          <div class="step-col">
-            <div class="step-dot" id="sdot-3">3</div>
-            <div class="step-label">Confirm</div>
-          </div>
-        </div>
-
-        <form id="quoteForm" novalidate>
-          <!-- STEP 1: Event type -->
-          <div class="form-step active" id="step-1">
-            <div class="step-title">What's the Occasion?</div>
-            <div class="step-sub">Select your event type to get started</div>
-            <div class="event-grid" id="eventGrid">
-              <div class="event-option" data-value="Wedding"><i class="fas fa-rings-wedding"></i><span>Wedding</span></div>
-              <div class="event-option" data-value="Corporate Event"><i class="fas fa-briefcase"></i><span>Corporate</span></div>
-              <div class="event-option" data-value="Birthday"><i class="fas fa-birthday-cake"></i><span>Birthday</span></div>
-              <div class="event-option" data-value="Anniversary"><i class="fas fa-heart"></i><span>Anniversary</span></div>
-              <div class="event-option" data-value="Private Party"><i class="fas fa-glass-cheers"></i><span>Private Party</span></div>
-              <div class="event-option" data-value="Other"><i class="fas fa-ellipsis-h"></i><span>Other</span></div>
-            </div>
-            <div class="form-nav" style="margin-top:1.5rem;">
-              <button type="button" class="btn-step-next" id="next-1">
-                Continue <i class="fas fa-arrow-right"></i>
-              </button>
-            </div>
-          </div>
-
-          <!-- STEP 2: Details -->
-          <div class="form-step" id="step-2">
-            <div class="step-title">Event Details</div>
-            <div class="step-sub">Tell us about your event so we can prepare perfectly</div>
-            <div class="field-row">
-              <div class="field">
-                <label>Your Name *</label>
-                <input type="text" id="f-name" placeholder="John Doe" required>
-              </div>
-              <div class="field">
-                <label>Phone Number *</label>
-                <input type="tel" id="f-phone" placeholder="+255 000 000 000" required>
-              </div>
-            </div>
-            <div class="field-row">
-              <div class="field">
-                <label>Event Date *</label>
-                <input type="date" id="f-date" required>
-              </div>
-              <div class="field">
-                <label>Event Location *</label>
-                <input type="text" id="f-location" placeholder="City, Venue Name" required>
-              </div>
-            </div>
-            <div class="field">
-              <label>Number of Guests: <strong style="color:var(--amber);" id="guest-display">50</strong></label>
-              <input type="range" class="guest-slider" id="f-guests" min="10" max="1000" value="50" step="10" style="width:100%; margin-top:0.8rem;">
-              <div style="display:flex; justify-content:space-between; margin-top:0.4rem;">
-                <span style="font-size:0.72rem; color:var(--muted);">10</span>
-                <span style="font-size:0.72rem; color:var(--muted);">1000+</span>
-              </div>
-            </div>
-            <div class="form-nav">
-              <button type="button" class="btn-step-back" id="back-2"><i class="fas fa-arrow-left"></i> Back</button>
-              <button type="button" class="btn-step-next" id="next-2">Continue <i class="fas fa-arrow-right"></i></button>
-            </div>
-          </div>
-
-          <!-- STEP 3: Confirm -->
-          <div class="form-step" id="step-3">
-            <div class="step-title">Almost Done!</div>
-            <div class="step-sub">Any final notes or special requirements?</div>
-            <div class="field">
-              <label>Additional Notes</label>
-              <textarea id="f-notes" placeholder="Dietary restrictions, theme preferences, special requests..."></textarea>
-            </div>
-            <!-- Summary -->
-            <div id="summary-box" style="background:var(--cream); border-radius:12px; padding:1.2rem; margin-bottom:1.2rem; font-size:0.85rem;">
-              <div style="font-weight:700; font-size:0.78rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); margin-bottom:0.8rem;">Your Event Summary</div>
-              <div id="summary-content" style="display:flex; flex-direction:column; gap:0.4rem; color:var(--charcoal);"></div>
-            </div>
-            <div class="form-nav">
-              <button type="button" class="btn-step-back" id="back-3"><i class="fas fa-arrow-left"></i> Back</button>
-              <button type="submit" class="btn-submit-final" id="submitBtn">
-                <i class="fab fa-whatsapp"></i> Send via WhatsApp
-              </button>
-            </div>
-            <div class="form-security"><i class="fas fa-lock"></i> Your info is private & used only for your quotation</div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA BAND -->
-<div class="cta-section">
-  <div class="cta-inner reveal">
-    <h2>Ready to Create<br><em>Something Magical?</em></h2>
-    <p>Let's turn your vision into an unforgettable culinary experience.</p>
-    <a href="https://wa.me/255689583281?text=Hello%20JVC%20Catering%2C%20I%20would%20like%20to%20discuss%20my%20event." class="btn-white magnetic-btn" target="_blank">
-      <i class="fab fa-whatsapp" style="font-size:1.2rem;"></i> Chat With Us Now
-    </a>
-  </div>
-</div>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div class="footer-logo">JVC <span>Catering</span></div>
-        <p>Creating unforgettable culinary experiences with passion, quality, and excellence since 2016.</p>
-        <div class="footer-social">
-          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-        </div>
-      </div>
-      <div class="footer-col">
-        <h5>Navigation</h5>
-        <ul class="footer-links">
-          <li><a href="#hero"><i class="fas fa-chevron-right"></i> Home</a></li>
-          <li><a href="#services"><i class="fas fa-chevron-right"></i> Services</a></li>
-          <li><a href="#menu"><i class="fas fa-chevron-right"></i> Menu</a></li>
-          <li><a href="#gallery"><i class="fas fa-chevron-right"></i> Gallery</a></li>
-          <li><a href="#portfolio"><i class="fas fa-chevron-right"></i> Portfolio</a></li>
-          <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>Services</h5>
-        <ul class="footer-links">
-          <li><a href="#services"><i class="fas fa-chevron-right"></i> Wedding Catering</a></li>
-          <li><a href="#services"><i class="fas fa-chevron-right"></i> Corporate Events</a></li>
-          <li><a href="#services"><i class="fas fa-chevron-right"></i> Private Parties</a></li>
-          <li><a href="#services"><i class="fas fa-chevron-right"></i> Buffet Service</a></li>
-          <li><a href="#services"><i class="fas fa-chevron-right"></i> Bar Service</a></li>
-          <li><a href="#services"><i class="fas fa-chevron-right"></i> Custom Menus</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>Contact</h5>
-        <ul class="footer-links">
-          <li><a href="tel:+255689583281"><i class="fas fa-phone" style="color:var(--amber);"></i> +255 689 583 281</a></li>
-          <li><a href="https://wa.me/255689583281" target="_blank"><i class="fab fa-whatsapp" style="color:var(--amber);"></i> WhatsApp Us</a></li>
-          <li><a href="mailto:info@jvccatering.com"><i class="fas fa-envelope" style="color:var(--amber);"></i> info@jvccatering.com</a></li>
-          <li><a href="#"><i class="fas fa-map-marker-alt" style="color:var(--amber);"></i> Available Worldwide</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; 2026 JVC Catering. All rights reserved.</p>
-      <div class="footer-legal">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Service</a>
-        <a href="#">Cookie Policy</a>
-      </div>
-    </div>
-  </div>
-</footer>
-
-<!-- FLOATING BUTTONS -->
-<a href="https://wa.me/255689583281?text=Hello%20JVC%20Catering%2C%20I%20would%20like%20to%20inquire%20about%20your%20services." target="_blank" id="wa-btn" aria-label="WhatsApp">
-  <i class="fab fa-whatsapp"></i>
-  <span class="wa-tooltip">Chat with us now!</span>
-</a>
-<button id="scroll-top" aria-label="Scroll to top"><i class="fas fa-arrow-up"></i></button>
-
-<!-- Mobile Bottom CTA bar -->
-<div id="mobile-cta-bar">
-  <a href="https://wa.me/255689583281?text=Hello%20JVC%20Catering" target="_blank">
-    <i class="fab fa-whatsapp"></i> Get Instant Quote on WhatsApp
-  </a>
-</div>
-
-<!-- LIGHTBOX -->
-<div id="lightbox" role="dialog" aria-modal="true">
-  <button id="lb-close"><i class="fas fa-times"></i></button>
-  <button id="lb-prev"><i class="fas fa-chevron-left"></i></button>
-  <img id="lb-img" src="" alt="Gallery image">
-  <button id="lb-next"><i class="fas fa-chevron-right"></i></button>
-  <div id="lb-caption"></div>
-</div>
-
-<!-- SUCCESS MODAL -->
-<div id="success-modal" role="dialog">
-  <div class="success-box">
-    <div class="success-icon"><i class="fas fa-check"></i></div>
-    <h3>Request Sent!</h3>
-    <p>Your quotation request is on its way via WhatsApp. We'll respond with pricing and availability shortly.</p>
-    <button class="success-close" id="modal-close">Continue Browsing</button>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════
-     JAVASCRIPT
-═══════════════════════════════════════ -->
-<script>
-  /* ─── CONFIG ─── */
-  const WA = '255689583281';
-
-  /* ─── PRELOADER ─── */
-  window.addEventListener('load', () => {
-    setTimeout(() => document.getElementById('preloader').classList.add('hidden'), 1200);
-  });
-
-  /* ─── CUSTOM CURSOR ─── */
-  const dot  = document.getElementById('cursor-dot');
-  const ring = document.getElementById('cursor-ring');
-  if (dot && ring) {
-    document.addEventListener('mousemove', e => {
-      dot.style.left  = e.clientX + 'px';
-      dot.style.top   = e.clientY + 'px';
-      ring.style.left = e.clientX + 'px';
-      ring.style.top  = e.clientY + 'px';
-    });
-  }
-
-  /* ─── NAVBAR ─── */
-  const nav = document.getElementById('navbar');
-  const scrollTop = document.getElementById('scroll-top');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 60) {
-      nav.classList.add('scrolled');
-      scrollTop.classList.add('visible');
-    } else {
-      nav.classList.remove('scrolled');
-      scrollTop.classList.remove('visible');
-    }
-  });
-  scrollTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-  /* ─── MOBILE HAMBURGER ─── */
-  const ham    = document.getElementById('ham');
-  const drawer = document.getElementById('mobile-drawer');
-  ham.addEventListener('click', () => {
-    ham.classList.toggle('open');
-    drawer.classList.toggle('open');
-  });
-  drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-    ham.classList.remove('open');
-    drawer.classList.remove('open');
-  }));
-
-  /* ─── SMOOTH ANCHOR SCROLL ─── */
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const t = document.querySelector(a.getAttribute('href'));
-      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-    });
-  });
-
-  /* ─── MARQUEE ─── */
-  const items = ['Wedding Catering','Corporate Events','Private Parties','Buffet Service','Fine Dining','Bar Service','Custom Menus','Premium Quality'];
-  const track = document.getElementById('marqueeTrack');
-  // duplicate for seamless loop
-  [...items, ...items, ...items, ...items].forEach(t => {
-    const el = document.createElement('div');
-    el.className = 'marquee-item';
-    el.innerHTML = `${t} <i class="fas fa-circle"></i>`;
-    track.appendChild(el);
-  });
-
-  /* ─── INTERSECTION OBSERVER (scroll reveals) ─── */
-  const revealObs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-  document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => revealObs.observe(el));
-
-  /* ─── COUNTERS ─── */
-  const counterObs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        const el = e.target;
-        const target = +el.dataset.target;
-        const isPerc = target === 98;
-        let count = 0;
-        const step = target / 60;
-        const timer = setInterval(() => {
-          count = Math.min(count + step, target);
-          el.textContent = Math.floor(count) + (isPerc ? '%' : '+');
-          if (count >= target) clearInterval(timer);
-        }, 25);
-        counterObs.unobserve(el);
-      }
-    });
-  }, { threshold: 0.5 });
-  document.querySelectorAll('.counter-el').forEach(el => counterObs.observe(el));
-
-  /* ─── MENU TABS ─── */
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
-    });
-  });
-
-  /* ─── GALLERY FILTER ─── */
-  document.querySelectorAll('.gf-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.gf-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const filter = btn.dataset.filter;
-      document.querySelectorAll('.gallery-item').forEach(item => {
-        item.style.display = (filter === 'all' || item.dataset.cat === filter) ? '' : 'none';
-      });
-    });
-  });
-
-  /* ─── LIGHTBOX ─── */
-  const lb = document.getElementById('lightbox');
-  const lbImg = document.getElementById('lb-img');
-  const lbCap = document.getElementById('lb-caption');
-  let lbItems = [], lbIdx = 0;
-  document.querySelectorAll('.gallery-item').forEach((item, i) => {
-    lbItems.push({ src: item.dataset.src, caption: item.dataset.caption });
-    item.addEventListener('click', () => openLB(i));
-  });
-  function openLB(i) {
-    lbIdx = i;
-    lbImg.src = lbItems[i].src;
-    lbCap.textContent = lbItems[i].caption;
-    lb.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeLB() { lb.classList.remove('open'); document.body.style.overflow = ''; }
-  document.getElementById('lb-close').addEventListener('click', closeLB);
-  lb.addEventListener('click', e => { if (e.target === lb) closeLB(); });
-  document.getElementById('lb-prev').addEventListener('click', () => openLB((lbIdx - 1 + lbItems.length) % lbItems.length));
-  document.getElementById('lb-next').addEventListener('click', () => openLB((lbIdx + 1) % lbItems.length));
-  document.addEventListener('keydown', e => {
-    if (!lb.classList.contains('open')) return;
-    if (e.key === 'Escape') closeLB();
-    if (e.key === 'ArrowLeft') openLB((lbIdx - 1 + lbItems.length) % lbItems.length);
-    if (e.key === 'ArrowRight') openLB((lbIdx + 1) % lbItems.length);
-  });
-
-  /* ─── MULTI-STEP FORM ─── */
-  let selectedEvent = '';
-  // Event type selection
-  document.querySelectorAll('.event-option').forEach(opt => {
-    opt.addEventListener('click', () => {
-      document.querySelectorAll('.event-option').forEach(o => o.classList.remove('selected'));
-      opt.classList.add('selected');
-      selectedEvent = opt.dataset.value;
-    });
-  });
-
-  // Guest slider
-  const slider = document.getElementById('f-guests');
-  const gDisplay = document.getElementById('guest-display');
-  slider.addEventListener('input', () => {
-    gDisplay.textContent = slider.value;
-    const pct = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
-    slider.style.setProperty('--val', pct + '%');
-  });
-
-  function setStep(n) {
-    document.querySelectorAll('.form-step').forEach((s,i) => s.classList.toggle('active', i+1 === n));
-    // dots
-    for (let i=1; i<=3; i++) {
-      const d = document.getElementById('sdot-'+i);
-      d.classList.remove('active','done');
-      if (i < n) d.classList.add('done');
-      else if (i === n) d.classList.add('active');
-    }
-    // lines
-    for (let i=1; i<=2; i++) {
-      document.getElementById('sline-'+i).classList.toggle('filled', i < n);
-    }
-    // update summary on step 3
-    if (n === 3) buildSummary();
-  }
-
-  document.getElementById('next-1').addEventListener('click', () => {
-    if (!selectedEvent) { alert('Please select an event type.'); return; }
-    setStep(2);
-  });
-  document.getElementById('back-2').addEventListener('click', () => setStep(1));
-  document.getElementById('next-2').addEventListener('click', () => {
-    const name = document.getElementById('f-name').value.trim();
-    const phone = document.getElementById('f-phone').value.trim();
-    const date = document.getElementById('f-date').value;
-    const loc = document.getElementById('f-location').value.trim();
-    if (!name || !phone || !date || !loc) { alert('Please fill in all required fields.'); return; }
-    setStep(3);
-  });
-  document.getElementById('back-3').addEventListener('click', () => setStep(2));
-
-  function buildSummary() {
-    const rows = [
-      ['Event', selectedEvent],
-      ['Name', document.getElementById('f-name').value],
-      ['Phone', document.getElementById('f-phone').value],
-      ['Date', new Date(document.getElementById('f-date').value).toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'})],
-      ['Location', document.getElementById('f-location').value],
-      ['Guests', document.getElementById('f-guests').value],
-    ];
-    document.getElementById('summary-content').innerHTML = rows.map(([k,v]) =>
-      `<div style="display:flex; gap:0.5rem;"><span style="color:var(--muted); min-width:70px; font-size:0.82rem;">${k}</span><strong style="font-size:0.85rem;">${v}</strong></div>`
-    ).join('');
-  }
-
-  document.getElementById('quoteForm').addEventListener('submit', e => {
-    e.preventDefault();
-    const name  = document.getElementById('f-name').value.trim();
-    const phone = document.getElementById('f-phone').value.trim();
-    const date  = document.getElementById('f-date').value;
-    const loc   = document.getElementById('f-location').value.trim();
-    const guests= document.getElementById('f-guests').value;
-    const notes = document.getElementById('f-notes').value.trim();
-    const fmtDate = new Date(date).toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-    const msg = `🍽️ *NEW CATERING INQUIRY* 🍽️\n\nHello JVC Catering!\n\n👤 *Name:* ${name}\n📱 *Phone:* ${phone}\n🎊 *Event Type:* ${selectedEvent}\n👥 *Guests:* ${guests}\n📅 *Date:* ${fmtDate}\n📍 *Location:* ${loc}\n📝 *Notes:* ${notes||'None'}\n\nPlease share pricing & availability. Thank you! 🙏`;
-    const btn = document.getElementById('submitBtn');
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-    btn.disabled = true;
-    setTimeout(() => {
-      window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`, '_blank');
-      btn.innerHTML = '<i class="fab fa-whatsapp"></i> Send via WhatsApp';
-      btn.disabled = false;
-      document.getElementById('success-modal').classList.add('open');
-      document.getElementById('quoteForm').reset();
-      selectedEvent = '';
-      document.querySelectorAll('.event-option').forEach(o => o.classList.remove('selected'));
-      gDisplay.textContent = '50'; slider.value = 50;
-      setStep(1);
-    }, 900);
-  });
-
-  document.getElementById('modal-close').addEventListener('click', () => {
-    document.getElementById('success-modal').classList.remove('open');
-  });
-
-  /* ─── MAGNETIC BUTTONS ─── */
-  if (window.matchMedia('(pointer: fine)').matches) {
-    document.querySelectorAll('.magnetic-btn').forEach(btn => {
-      btn.addEventListener('mousemove', e => {
-        const r = btn.getBoundingClientRect();
-        const x = e.clientX - r.left - r.width/2;
-        const y = e.clientY - r.top  - r.height/2;
-        btn.style.transform = `translate(${x*0.22}px, ${y*0.22}px)`;
-      });
-      btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
-    });
-  }
-
-  /* ─── ACTIVE NAV LINK ─── */
-  const sections = document.querySelectorAll('section[id], div[id="contact"]');
-  const navLinks = document.querySelectorAll('.nav-link');
-  window.addEventListener('scroll', () => {
-    let cur = '';
-    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 200) cur = s.id; });
-    navLinks.forEach(l => {
-      l.style.color = l.getAttribute('href') === '#'+cur ? 'var(--amber)' : '';
-    });
-  }, { passive: true });
-
-  /* ─── HERO PARALLAX ─── */
-  window.addEventListener('scroll', () => {
-    const scrolled = window.scrollY;
-    const heroContent = document.querySelector('#hero .hero-content');
-    if (heroContent && scrolled < window.innerHeight) {
-      heroContent.style.transform = `translateY(${scrolled * 0.25}px)`;
-      heroContent.style.opacity = 1 - (scrolled / (window.innerHeight * 0.8));
-    }
-  }, { passive: true });
-
-  /* ─── SET MIN DATE ─── */
-  document.getElementById('f-date').min = new Date().toISOString().split('T')[0];
-
-  /* ─── GUEST SLIDER INIT ─── */
-  slider.style.setProperty('--val', ((50-10)/(1000-10)*100)+'%');
-</script>
+Please get back to me with pricing and availability. Thank you!`;
+            
+            // Encode message for URL
+            const encodedMessage = encodeURIComponent(message);
+            
+            // Show loading state
+            submitBtn.innerHTML = '<div class="loading-spinner mr-2"></div> Sending...';
+            submitBtn.disabled = true;
+            
+            // Redirect to WhatsApp after short delay
+            setTimeout(() => {
+                window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
+                
+                // Reset button
+                submitBtn.innerHTML = '<i class="fab fa-whatsapp text-xl"></i> Send via WhatsApp';
+                submitBtn.disabled = false;
+                
+                // Reset form
+                quoteForm.reset();
+            }, 1000);
+        });
+        
+        // ==================== LIGHTBOX ====================
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        
+        function openLightbox(element) {
+            const img = element.querySelector('img');
+            lightboxImage.src = img.src;
+            lightbox.classList.remove('hidden');
+            lightbox.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeLightbox() {
+            lightbox.classList.add('hidden');
+            lightbox.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Close lightbox with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+        
+        // ==================== SMOOTH SCROLL FOR ANCHOR LINKS ====================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerOffset = 80;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                    
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // ==================== SCROLL ANIMATIONS ====================
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in');
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all sections
+        document.querySelectorAll('section > div').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(section);
+        });
+        
+        // ==================== SET MINIMUM DATE FOR EVENT DATE ====================
+        const dateInput = document.getElementById('date');
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.setAttribute('min', today);
+        
+        // ==================== FORM VALIDATION VISUAL FEEDBACK ====================
+        const formInputs = quoteForm.querySelectorAll('input, select, textarea');
+        
+        formInputs.forEach(input => {
+            input.addEventListener('blur', () => {
+                if (input.hasAttribute('required') && !input.value.trim()) {
+                    input.classList.add('border-red-500');
+                    input.classList.remove('border-gray-200');
+                } else {
+                    input.classList.remove('border-red-500');
+                    input.classList.add('border-gray-200');
+                }
+            });
+            
+            input.addEventListener('input', () => {
+                input.classList.remove('border-red-500');
+                input.classList.add('border-gray-200');
+            });
+        });
+        
+        // ==================== LAZY LOADING IMAGES ====================
+        if ('loading' in HTMLImageElement.prototype) {
+            const images = document.querySelectorAll('img[loading="lazy"]');
+            images.forEach(img => {
+                img.src = img.src;
+            });
+        } else {
+            // Fallback for browsers that don't support lazy loading
+            const script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js';
+            document.body.appendChild(script);
+        }
+        
+        // ==================== COUNTER ANIMATION ====================
+        function animateCounter(element, target, duration = 2000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            
+            function updateCounter() {
+                start += increment;
+                if (start < target) {
+                    element.textContent = Math.floor(start) + (element.dataset.suffix || '');
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    element.textContent = target + (element.dataset.suffix || '');
+                }
+            }
+            
+            updateCounter();
+        }
+        
+        // Animate stats when visible
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counters = entry.target.querySelectorAll('[data-count]');
+                    counters.forEach(counter => {
+                        const target = parseInt(counter.dataset.count);
+                        animateCounter(counter, target);
+                    });
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        const statsSection = document.querySelector('#home .grid');
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+        
+        // ==================== CONSOLE WELCOME MESSAGE ====================
+        console.log('%c🍽️ JVC Catering Website', 'font-size: 20px; font-weight: bold; color: #F97316;');
+        console.log('%cPremium Catering Experience', 'font-size: 14px; color: #15803D;');
+        console.log('%cBuilt with ❤️ using HTML, Tailwind CSS & JavaScript', 'font-size: 12px; color: #666;');
+    </script>
 </body>
 </html>
