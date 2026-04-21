@@ -107,3 +107,4 @@ src/
 - **Fonts** — Update Google Fonts link in `index.html` and font families in `tailwind.config.js`
 - **WhatsApp Number** — Search for `255767620509` and replace with your number
 - **Images** — Replace Unsplash URLs with your own images in each component
+ 
