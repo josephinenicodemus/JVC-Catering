@@ -3,6 +3,15 @@ import { MessageCircle, Mail, Instagram, Facebook, ChevronRight, Phone, MapPin }
 
 const WA = '255767620509'
 
+// ─── Brand tokens ─────────────────────────────────────────────────────────────
+const GOLD        = '#C97A2A'        // orange/gold accent
+const GREEN       = '#1B6B3A'        // forest green accent
+const CREAM       = '#F5F0E8'        // primary text
+const CREAM_80    = 'rgba(245,240,232,0.80)'
+const CREAM_55    = 'rgba(245,240,232,0.55)'
+const CREAM_38    = 'rgba(245,240,232,0.38)'
+const DIVIDER     = 'rgba(245,240,232,0.08)'
+
 export default function Footer() {
   const { t } = useTranslation()
 
@@ -12,63 +21,203 @@ export default function Footer() {
   }
 
   const navLinks = [
-    { label: 'Home', href: '#hero' },
-    { label: 'About JVC', href: '#about' },
-    { label: 'Services', href: '#services' },
-    { label: 'Menu', href: '#menu' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'Home',      href: '#hero'     },
+    { label: 'About JVC', href: '#about'    },
+    { label: 'Services',  href: '#services' },
+    { label: 'Menu',      href: '#menu'     },
+    { label: 'Contact',   href: '#contact'  },
   ]
 
   const serviceLinks = [
-    'Wedding Catering', 'Corporate Events', 'Private Gatherings', 'Buffet Service', 'Takeaway & Delivery',
+    'Wedding Catering',
+    'Corporate Events',
+    'Private Gatherings',
+    'Buffet Service',
+    'Takeaway & Delivery',
   ]
 
   const contactLinks = [
-    { icon: Phone, val: '+255 767 620 509', href: 'tel:+255767620509' },
-    { icon: Phone, val: '+255 715 602 509', href: 'tel:+255715602509' },
-    { icon: MessageCircle, val: 'WhatsApp Us', href: `https://wa.me/${WA}` },
-    { icon: Mail, val: 'veronica.wlff@gmail.com', href: 'mailto:veronica.wlff@gmail.com' },
-    { icon: Instagram, val: '@jvc.catering._tz', href: 'https://instagram.com/jvc.catering._tz' },
-    { icon: MapPin, val: 'Sinza Mori, Lagana St, DSM', href: null },
+    { Icon: Phone,         val: '+255 767 620 509',        href: 'tel:+255767620509'                          },
+    { Icon: Phone,         val: '+255 715 602 509',        href: 'tel:+255715602509'                          },
+    { Icon: MessageCircle, val: 'WhatsApp Us',             href: `https://wa.me/${WA}`                        },
+    { Icon: Mail,          val: 'veronica.wlff@gmail.com', href: 'mailto:veronica.wlff@gmail.com'             },
+    { Icon: Instagram,     val: '@jvc.catering._tz',       href: 'https://instagram.com/jvc.catering._tz'     },
+    { Icon: MapPin,        val: 'Sinza Mori, Lagana St, DSM', href: null                                      },
+  ]
+
+  const socialIcons = [
+    { href: 'https://instagram.com/jvc.catering._tz', Icon: Instagram,     label: 'Instagram' },
+    { href: `https://wa.me/${WA}`,                    Icon: MessageCircle, label: 'WhatsApp'  },
+    { href: 'mailto:veronica.wlff@gmail.com',         Icon: Mail,          label: 'Email'     },
+    { href: '#',                                       Icon: Facebook,      label: 'Facebook'  },
   ]
 
   return (
-    <footer style={{ background: '#0D0D0D' }} className="px-5 md:px-8 lg:px-12 pt-20 pb-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-white/6">
-          {/* Brand */}
+    <footer style={{
+      // Rich dark charcoal — warmer than pure black, matches hero
+      background: 'linear-gradient(180deg, #0f0e0b 0%, #141210 60%, #0d0c0a 100%)',
+      position: 'relative',
+      overflow: 'hidden',
+    }}>
+
+      {/* ── Top fade — blends with section above ── */}
+      <div style={{
+        position: 'absolute', top: 0, inset: 'auto',
+        left: 0, right: 0, height: '1px',
+        background: `linear-gradient(to right, transparent, ${GOLD}55, ${GREEN}55, transparent)`,
+      }} />
+
+      {/* ── Left accent bar — consistent with Hero ── */}
+      <div style={{
+        position: 'absolute', left: 0, top: 0, bottom: 0, width: '3px',
+        background: `linear-gradient(to bottom, transparent 10%, ${GOLD} 38%, ${GREEN} 62%, transparent 90%)`,
+        pointerEvents: 'none',
+      }} />
+
+      {/* ── Ambient glow spots ── */}
+      <div style={{
+        position: 'absolute', inset: 0, pointerEvents: 'none',
+        backgroundImage: `
+          radial-gradient(ellipse at 10% 100%, rgba(201,122,42,0.06) 0%, transparent 50%),
+          radial-gradient(ellipse at 90% 80%,  rgba(27,107,58,0.05) 0%, transparent 50%)`,
+      }} />
+
+      {/* ── Main content wrapper ── */}
+      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '80px clamp(20px,5vw,64px) 0' }}>
+
+        {/* ══ Top brand strip ══ */}
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          flexWrap: 'wrap', gap: '20px',
+          paddingBottom: '48px',
+          borderBottom: `1px solid ${DIVIDER}`,
+          marginBottom: '56px',
+        }}>
+          {/* Wordmark */}
           <div>
-            <div style={{ fontFamily: '"Playfair Display", serif' }}
-              className="text-2xl font-bold text-white tracking-wider mb-4">
-              JVC <span style={{ color: '#C97A2A' }}>Catering</span>
+            <div style={{
+              fontFamily: '"Playfair Display", serif',
+              fontSize: 'clamp(1.6rem, 3vw, 2rem)',
+              fontWeight: 700, color: CREAM,
+              letterSpacing: '0.04em',
+              lineHeight: 1,
+              marginBottom: '8px',
+            }}>
+              JVC <span style={{ color: GOLD }}>Catering</span>
             </div>
-            <p className="text-sm text-white/34 leading-relaxed mb-6 max-w-[220px]">{t('footer.desc')}</p>
-            <div className="flex gap-2.5">
-              {[
-                { href: 'https://instagram.com/jvc.catering._tz', Icon: Instagram },
-                { href: `https://wa.me/${WA}`, Icon: MessageCircle },
-                { href: 'mailto:veronica.wlff@gmail.com', Icon: Mail },
-                { href: '#', Icon: Facebook },
-              ].map(({ href, Icon }, i) => (
-                <a key={i} href={href} target={href.startsWith('http') ? '_blank' : undefined} rel="noreferrer"
-                  className="w-9 h-9 rounded-lg flex items-center justify-center text-white/30 transition-all duration-300 hover:bg-[#C97A2A] hover:text-white"
-                  style={{ background: 'rgba(255,255,255,0.05)' }}>
-                  <Icon size={15} />
-                </a>
-              ))}
+            <p style={{
+              fontFamily: '"Playfair Display", serif',
+              fontStyle: 'italic',
+              fontSize: '0.85rem',
+              color: CREAM_55,
+              letterSpacing: '0.04em',
+            }}>
+              The service you need
+            </p>
+          </div>
+
+          {/* Social icons */}
+          <div style={{ display: 'flex', gap: '10px' }}>
+            {socialIcons.map(({ href, Icon, label }) => (
+              <a
+                key={label}
+                href={href}
+                aria-label={label}
+                target={href.startsWith('http') ? '_blank' : undefined}
+                rel="noreferrer"
+                style={{
+                  width: '42px', height: '42px',
+                  borderRadius: '10px',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  background: 'rgba(245,240,232,0.06)',
+                  border: `1px solid rgba(245,240,232,0.10)`,
+                  color: CREAM_55,
+                  transition: 'all 0.3s ease',
+                  textDecoration: 'none',
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.background = GOLD
+                  e.currentTarget.style.borderColor = GOLD
+                  e.currentTarget.style.color = '#fff'
+                  e.currentTarget.style.transform = 'translateY(-2px)'
+                  e.currentTarget.style.boxShadow = `0 8px 20px rgba(201,122,42,0.35)`
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.background = 'rgba(245,240,232,0.06)'
+                  e.currentTarget.style.borderColor = 'rgba(245,240,232,0.10)'
+                  e.currentTarget.style.color = CREAM_55
+                  e.currentTarget.style.transform = 'translateY(0)'
+                  e.currentTarget.style.boxShadow = 'none'
+                }}
+              >
+                <Icon size={16} />
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* ══ Main 4-column grid ══ */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+          gap: 'clamp(32px, 4vw, 56px)',
+          paddingBottom: '56px',
+          borderBottom: `1px solid ${DIVIDER}`,
+        }}>
+
+          {/* ── Brand description column ── */}
+          <div>
+            <ColHeading>About JVC</ColHeading>
+            <p style={{
+              fontSize: '0.875rem',
+              color: CREAM_55,
+              lineHeight: 1.85,
+              maxWidth: '220px',
+            }}>
+              {t('footer.desc')}
+            </p>
+
+            {/* Green accent tag */}
+            <div style={{
+              display: 'inline-flex', alignItems: 'center', gap: '8px',
+              marginTop: '20px',
+              background: `rgba(27,107,58,0.12)`,
+              border: `1px solid rgba(27,107,58,0.25)`,
+              borderRadius: '100px',
+              padding: '5px 14px',
+            }}>
+              <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: GREEN, display: 'inline-block' }} />
+              <span style={{ color: GREEN, fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', fontWeight: 600 }}>
+                Est. 2016 · Dar es Salaam
+              </span>
             </div>
           </div>
 
-          {/* Nav */}
+          {/* ── Navigation column ── */}
           <div>
-            <h5 className="text-[0.6rem] font-bold tracking-[0.28em] uppercase text-white/22 mb-5">{t('footer.nav')}</h5>
-            <ul className="flex flex-col gap-2.5">
+            <ColHeading>{t('footer.nav')}</ColHeading>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '12px' }}>
               {navLinks.map(({ label, href }) => (
                 <li key={label}>
-                  <button onClick={() => scrollTo(href)}
-                    className="flex items-center gap-2 text-sm text-white/38 hover:text-[#C97A2A] transition-colors duration-300">
-                    <ChevronRight size={11} style={{ color: '#C97A2A', opacity: 0.4 }} />
+                  <button
+                    onClick={() => scrollTo(href)}
+                    style={{
+                      display: 'flex', alignItems: 'center', gap: '8px',
+                      background: 'none', border: 'none', cursor: 'pointer', padding: 0,
+                      fontSize: '0.875rem', color: CREAM_80,
+                      fontFamily: 'inherit',
+                      transition: 'all 0.25s ease',
+                    }}
+                    onMouseEnter={e => {
+                      e.currentTarget.style.color = GOLD
+                      e.currentTarget.style.transform = 'translateX(4px)'
+                    }}
+                    onMouseLeave={e => {
+                      e.currentTarget.style.color = CREAM_80
+                      e.currentTarget.style.transform = 'translateX(0)'
+                    }}
+                  >
+                    <ChevronRight size={12} style={{ color: GOLD, flexShrink: 0 }} />
                     {label}
                   </button>
                 </li>
@@ -76,15 +225,31 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Services */}
+          {/* ── Services column ── */}
           <div>
-            <h5 className="text-[0.6rem] font-bold tracking-[0.28em] uppercase text-white/22 mb-5">{t('footer.services')}</h5>
-            <ul className="flex flex-col gap-2.5">
+            <ColHeading>{t('footer.services')}</ColHeading>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '12px' }}>
               {serviceLinks.map(s => (
                 <li key={s}>
-                  <button onClick={() => scrollTo('#services')}
-                    className="flex items-center gap-2 text-sm text-white/38 hover:text-[#C97A2A] transition-colors duration-300">
-                    <ChevronRight size={11} style={{ color: '#C97A2A', opacity: 0.4 }} />
+                  <button
+                    onClick={() => scrollTo('#services')}
+                    style={{
+                      display: 'flex', alignItems: 'center', gap: '8px',
+                      background: 'none', border: 'none', cursor: 'pointer', padding: 0,
+                      fontSize: '0.875rem', color: CREAM_80,
+                      fontFamily: 'inherit',
+                      transition: 'all 0.25s ease',
+                    }}
+                    onMouseEnter={e => {
+                      e.currentTarget.style.color = GOLD
+                      e.currentTarget.style.transform = 'translateX(4px)'
+                    }}
+                    onMouseLeave={e => {
+                      e.currentTarget.style.color = CREAM_80
+                      e.currentTarget.style.transform = 'translateX(0)'
+                    }}
+                  >
+                    <ChevronRight size={12} style={{ color: GREEN, flexShrink: 0 }} />
                     {s}
                   </button>
                 </li>
@@ -92,40 +257,111 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Contact */}
+          {/* ── Contact column ── */}
           <div>
-            <h5 className="text-[0.6rem] font-bold tracking-[0.28em] uppercase text-white/22 mb-5">{t('footer.contact')}</h5>
-            <ul className="flex flex-col gap-2.5">
-              {contactLinks.map(({ icon: Icon, val, href }, i) => (
+            <ColHeading>{t('footer.contact')}</ColHeading>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '13px' }}>
+              {contactLinks.map(({ Icon, val, href }, i) => (
                 <li key={i}>
-                  {href
-                    ? <a href={href} target={href.startsWith('http') ? '_blank' : undefined} rel="noreferrer"
-                        className="flex items-center gap-2.5 text-sm text-white/38 hover:text-[#C97A2A] transition-colors duration-300">
-                        <Icon size={12} style={{ color: '#C97A2A', flexShrink: 0 }} />
-                        {val}
-                      </a>
-                    : <span className="flex items-center gap-2.5 text-sm text-white/38">
-                        <Icon size={12} style={{ color: '#C97A2A', flexShrink: 0 }} />
-                        {val}
-                      </span>
-                  }
+                  {href ? (
+                    <a
+                      href={href}
+                      target={href.startsWith('http') ? '_blank' : undefined}
+                      rel="noreferrer"
+                      style={{
+                        display: 'flex', alignItems: 'flex-start', gap: '10px',
+                        fontSize: '0.875rem', color: CREAM_80,
+                        textDecoration: 'none',
+                        transition: 'color 0.25s ease',
+                      }}
+                      onMouseEnter={e => e.currentTarget.style.color = GOLD}
+                      onMouseLeave={e => e.currentTarget.style.color = CREAM_80}
+                    >
+                      <Icon size={13} style={{ color: GOLD, flexShrink: 0, marginTop: '2px' }} />
+                      {val}
+                    </a>
+                  ) : (
+                    <span style={{
+                      display: 'flex', alignItems: 'flex-start', gap: '10px',
+                      fontSize: '0.875rem', color: CREAM_55,
+                    }}>
+                      <Icon size={13} style={{ color: GREEN, flexShrink: 0, marginTop: '2px' }} />
+                      {val}
+                    </span>
+                  )}
                 </li>
               ))}
             </ul>
           </div>
         </div>
 
-        {/* Bottom bar */}
-        <div className="pt-5 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-[0.76rem] text-white/28">
-            &copy; {new Date().getFullYear()} JVC Catering · Veronica Nguma · Dar es Salaam, Tanzania. {t('footer.rights')}
+        {/* ══ Bottom bar ══ */}
+        <div style={{
+          padding: '24px 0 32px',
+          display: 'flex',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: '12px',
+        }}>
+          <p style={{ fontSize: '0.78rem', color: CREAM_38 }}>
+            &copy; {new Date().getFullYear()}{' '}
+            <span style={{ color: CREAM_55 }}>JVC Catering</span>
+            {' · '}Veronica Nguma{' · '}Dar es Salaam, Tanzania.{' '}
+            {t('footer.rights')}
           </p>
-          <div className="flex gap-5">
-            <a href="#" className="text-[0.76rem] text-white/22 hover:text-[#C97A2A] transition-colors">{t('footer.privacy')}</a>
-            <a href="#" className="text-[0.76rem] text-white/22 hover:text-[#C97A2A] transition-colors">{t('footer.terms')}</a>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+            {[
+              { label: t('footer.privacy'), href: '#' },
+              { label: t('footer.terms'),   href: '#' },
+            ].map(({ label, href }, i) => (
+              <span key={label} style={{ display: 'flex', alignItems: 'center' }}>
+                {i > 0 && (
+                  <span style={{ color: CREAM_38, margin: '0 4px', fontSize: '0.7rem' }}>|</span>
+                )}
+                <a
+                  href={href}
+                  style={{
+                    fontSize: '0.78rem', color: CREAM_38,
+                    textDecoration: 'none', padding: '4px 8px',
+                    transition: 'color 0.25s ease',
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.color = GOLD}
+                  onMouseLeave={e => e.currentTarget.style.color = CREAM_38}
+                >
+                  {label}
+                </a>
+              </span>
+            ))}
           </div>
         </div>
+
       </div>
     </footer>
+  )
+}
+
+// ─── Reusable column heading ──────────────────────────────────────────────────
+function ColHeading({ children }) {
+  return (
+    <div style={{ marginBottom: '20px' }}>
+      <h5 style={{
+        fontSize: '0.68rem',
+        fontWeight: 700,
+        letterSpacing: '0.22em',
+        textTransform: 'uppercase',
+        color: '#C97A2A',
+        marginBottom: '10px',
+      }}>
+        {children}
+      </h5>
+      {/* Underline rule */}
+      <div style={{
+        height: '1px', width: '32px',
+        background: 'linear-gradient(to right, #C97A2A, #1B6B3A)',
+        borderRadius: '2px',
+      }} />
+    </div>
   )
 }
