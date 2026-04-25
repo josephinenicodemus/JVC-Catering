@@ -12,17 +12,20 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-svh flex items-center justify-start overflow-hidden bg-[#0D0D0D]"
+      className="relative min-h-screen flex items-center justify-start overflow-hidden bg-[#0D0D0D]"
     >
-      {/* ─── 4K Background Image - Event Catering ─── */}
+      {/* ─── 4K Background Image - Event Catering Buffet ─── */}
       <div className="absolute inset-0 z-0">
         <img
-          src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=3840&h=2160&fit=crop&q=95"
+          src="https://images.unsplash.com/photo-1555244162-803834f70033?w=3840&h=2160&fit=crop&q=95&auto=format"
           alt="JVC Catering - Elegant Event Buffet Setup"
           className="w-full h-full object-cover object-center"
           style={{ animation: 'heroZoom 24s ease-in-out infinite alternate' }}
           loading="eager"
           fetchpriority="high"
+          onError={(e) => {
+            e.target.src = 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=3840&h=2160&fit=crop&q=95'
+          }}
         />
 
         {/* Cinematic gradient overlay - optimized for text readability */}
@@ -30,21 +33,21 @@ export default function Hero() {
           className="absolute inset-0"
           style={{
             background: `linear-gradient(105deg,
-              rgba(13,13,13,0.95) 0%,
-              rgba(13,13,13,0.85) 25%,
-              rgba(13,13,13,0.55) 50%,
-              rgba(13,13,13,0.25) 100%)`,
+              rgba(13,13,13,0.92) 0%,
+              rgba(13,13,13,0.80) 20%,
+              rgba(13,13,13,0.50) 45%,
+              rgba(13,13,13,0.20) 100%)`,
           }}
         />
 
         {/* Bottom vignette */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0D0D0D] via-transparent to-[#0D0D0D]/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0D0D0D]/90 via-transparent to-transparent" />
 
         {/* Luxury film-grain overlay */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            backgroundImage: `url("image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E")`,
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E")`,
             backgroundSize: '256px 256px',
             opacity: 0.4,
             mixBlendMode: 'overlay',
@@ -74,7 +77,7 @@ export default function Hero() {
       <div
         className="relative z-10 w-full max-w-[1400px] mx-auto
           px-6 sm:px-10 lg:px-16 xl:px-24
-          flex flex-col justify-center min-h-svh"
+          flex flex-col justify-center min-h-screen"
         style={{
           paddingTop: 'clamp(100px, 14vw, 140px)',
           paddingBottom: 'clamp(80px, 10vw, 120px)',
