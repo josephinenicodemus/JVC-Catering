@@ -17,7 +17,7 @@ export default function Hero() {
       {/* ─── 4K Background Image - Event Catering ─── */}
       <div className="absolute inset-0 z-0">
         <img
-          src="https://images.unsplash.com/photo-1555244162-803834f70033?w=3840&h=2160&fit=crop&q=95&auto=format"
+          src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=3840&h=2160&fit=crop&q=95"
           alt="JVC Catering - Elegant Event Buffet Setup"
           className="w-full h-full object-cover object-center"
           style={{ animation: 'heroZoom 24s ease-in-out infinite alternate' }}
