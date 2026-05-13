@@ -83,11 +83,20 @@ const partners = [
     logo: '/logo/educate.png',
     logoBg: '#ffffff',
   },
+  // 🌍 NEW: One Planet Partner
+  {
+    name: 'One Planet',
+    tag: 'Sustainable Solutions · Global Impact',
+    accent: '#2E7D32',
+    letter: 'O',
+    logo: '/logo/oneplanet.png',
+    logoBg: '#ffffff',
+  },
 ]
 
 const stats = [
   { value: '25+',  label: 'Years of Experience' },
-  { value: '8+',   label: 'Trusted Partners'    },
+  { value: '9+',   label: 'Trusted Partners'    }, // ✅ Updated count
   { value: '500+', label: 'Events Catered'       },
   { value: '4',    label: 'Cuisine Styles'       },
 ]
@@ -177,7 +186,7 @@ export default function Testimonials() {
           </div>
         </RevealEl>
 
-        {/* ── Partner cards ── */}
+        {/* ── Partner cards grid ── */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
@@ -218,14 +227,14 @@ export default function Testimonials() {
   )
 }
 
-// ─── Partner card with real logo ──────────────────────────────────────────────
+// ─── Partner card with real logo & enhanced UX ────────────────────────────────
 function PartnerCard({ partner }) {
   const { name, tag, accent, letter, logo, logoBg } = partner
 
   const onEnter = (e) => {
-    e.currentTarget.style.transform   = 'translateY(-5px)'
-    e.currentTarget.style.borderColor = `${accent}66`
-    e.currentTarget.style.boxShadow   = `0 24px 48px rgba(0,0,0,0.45), 0 0 0 1px ${accent}33`
+    e.currentTarget.style.transform   = 'translateY(-6px)'
+    e.currentTarget.style.borderColor = `${accent}80`
+    e.currentTarget.style.boxShadow   = `0 28px 60px rgba(0,0,0,0.5), 0 0 0 1px ${accent}40`
   }
   const onLeave = (e) => {
     e.currentTarget.style.transform   = 'translateY(0)'
@@ -233,10 +242,9 @@ function PartnerCard({ partner }) {
     e.currentTarget.style.boxShadow   = 'none'
   }
 
-  // On image error → hide img, show fallback letter badge
   const onError = (e) => {
     e.currentTarget.style.display = 'none'
-    const fb = e.currentTarget.parentNode.querySelector('[data-fallback]')
+    const fb = e.currentTarget.parentNode?.querySelector('[data-fallback]')
     if (fb) fb.style.display = 'flex'
   }
 
@@ -244,42 +252,49 @@ function PartnerCard({ partner }) {
     <div
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
+      onFocus={onEnter}
+      onBlur={onLeave}
+      tabIndex={0}
+      title={`${name} — ${tag}`}
       style={{
-        position: 'relative', borderRadius: '16px', overflow: 'hidden',
+        position: 'relative', borderRadius: '18px', overflow: 'hidden',
         background: '#1a1a1a',
         border: '1px solid rgba(255,255,255,0.07)',
-        padding: '28px 24px 36px',
-        transition: 'transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease',
+        padding: '30px 26px 38px',
+        transition: 'all 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
         cursor: 'default',
-        display: 'flex', flexDirection: 'column', gap: '18px',
+        display: 'flex', flexDirection: 'column', gap: '20px',
         height: '100%',
+        outline: 'none',
       }}
     >
       {/* Corner accent glow */}
       <div style={{
-        position: 'absolute', top: 0, left: 0, width: '100px', height: '100px',
-        borderRadius: '0 0 100px 0',
-        background: `radial-gradient(circle, ${accent}1a 0%, transparent 72%)`,
+        position: 'absolute', top: 0, left: 0, width: '120px', height: '120px',
+        borderRadius: '0 0 120px 0',
+        background: `radial-gradient(circle at 0% 0%, ${accent}25 0%, transparent 70%)`,
         pointerEvents: 'none',
+        opacity: 0.8,
       }} />
 
-      {/* ── Logo container ── */}
+      {/* ── Logo container with enhanced visibility ── */}
       <div style={{
-        width: '72px', height: '72px',
-        borderRadius: '14px',
+        width: '80px', height: '80px',
+        borderRadius: '16px',
         background: logoBg,
-        border: `1px solid rgba(255,255,255,0.10)`,
+        border: `2px solid rgba(255,255,255,0.15)`,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         overflow: 'hidden', flexShrink: 0,
-        boxShadow: `0 4px 20px rgba(0,0,0,0.35)`,
+        boxShadow: `0 6px 24px rgba(0,0,0,0.4)`,
         position: 'relative',
-        padding: '8px',
+        padding: '10px',
+        transition: 'transform 0.3s ease, box-shadow 0.3s ease',
       }}>
-        {/* Real logo image — 4K quality via object-fit contain */}
         <img
           src={logo}
-          alt={`${name} logo`}
+          alt={`${name} partner logo`}
           loading="lazy"
+          decoding="async"
           onError={onError}
           style={{
             width: '100%',
@@ -287,60 +302,74 @@ function PartnerCard({ partner }) {
             objectFit: 'contain',
             objectPosition: 'center',
             display: 'block',
-            imageRendering: 'high-quality',
-            /* Start greyscale → full colour on card hover via CSS transition */
-            filter: 'grayscale(30%) brightness(0.95)',
+            filter: 'grayscale(25%) brightness(0.98)',
             transition: 'filter 0.4s ease, transform 0.4s ease',
           }}
         />
-
-        {/* Fallback letter badge — only shown if image fails to load */}
+        {/* Fallback letter badge */}
         <span
           data-fallback
           style={{
             display: 'none',
             position: 'absolute', inset: 0,
             alignItems: 'center', justifyContent: 'center',
-            background: `linear-gradient(135deg, ${accent}, ${accent}99)`,
+            background: `linear-gradient(135deg, ${accent}, ${accent}cc)`,
             fontFamily: '"Playfair Display", serif',
-            fontSize: '1.6rem', fontWeight: 700, color: '#fff',
-            borderRadius: '14px',
+            fontSize: '1.8rem', fontWeight: 700, color: '#fff',
+            borderRadius: '16px',
+            textShadow: '0 2px 4px rgba(0,0,0,0.3)',
           }}
         >
           {letter}
         </span>
       </div>
 
-      {/* ── Text ── */}
-      <div>
-        <div style={{
+      {/* ── Text Content ── */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <h3 style={{
           fontFamily: '"Playfair Display", serif',
-          fontSize: '1.05rem', fontWeight: 700,
-          color: '#F5F0E8', marginBottom: '6px', lineHeight: 1.3,
+          fontSize: '1.1rem', fontWeight: 700,
+          color: '#F5F0E8', marginBottom: '8px', lineHeight: 1.3,
+          letterSpacing: '-0.01em',
+          margin: 0,
         }}>
           {name}
-        </div>
-        <div style={{
-          fontSize: '0.75rem',
-          color: 'rgba(245,240,232,0.42)',
-          letterSpacing: '0.03em', lineHeight: 1.55,
+        </h3>
+        <p style={{
+          fontSize: '0.8rem',
+          color: 'rgba(245,240,232,0.5)',
+          letterSpacing: '0.02em', lineHeight: 1.6,
+          margin: 0,
         }}>
           {tag}
-        </div>
+        </p>
       </div>
 
       {/* ── Bottom accent rule ── */}
       <div style={{
-        position: 'absolute', bottom: 0, left: '24px', right: '24px', height: '2px',
-        background: `linear-gradient(to right, ${accent}88, transparent)`,
+        position: 'absolute', bottom: 0, left: '26px', right: '26px', height: '2px',
+        background: `linear-gradient(90deg, ${accent}cc, ${accent}40, transparent)`,
         borderRadius: '2px',
+        opacity: 0.9,
       }} />
 
-      {/* ── Hover logo colour reveal via CSS ── */}
+      {/* ── Hover effects via CSS ── */}
       <style>{`
-        div:hover > div > img {
-          filter: grayscale(0%) brightness(1.05) !important;
-          transform: scale(1.04);
+        @media (hover: hover) {
+          div[tabindex]:hover img,
+          div[tabindex]:focus img {
+            filter: grayscale(0%) brightness(1.08) !important;
+            transform: scale(1.06);
+          }
+          div[tabindex]:hover > div:nth-child(2),
+          div[tabindex]:focus > div:nth-child(2) {
+            transform: scale(1.03);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+          }
+          div[tabindex]:focus {
+            border-color: ${accent}80 !important;
+            box-shadow: 0 28px 60px rgba(0,0,0,0.5), 0 0 0 1px ${accent}40 !important;
+          }
         }
       `}</style>
     </div>
