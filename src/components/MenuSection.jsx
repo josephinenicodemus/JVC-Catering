@@ -10,27 +10,18 @@ const TABS = [
   { key: 'beverages', items: ['muwa', 'juice', 'cocktail', 'mocktail', 'chai', 'bev'] },
 ]
 
-/* -------------------------------------------------------------------------- */
-/* HIGH QUALITY IMAGES                                                        */
-/* ONLY 4 STARTER IMAGES UPDATED USING /public/menu/ PATHS                    */
-/* -------------------------------------------------------------------------- */
-
 const IMAGES = {
   /* STARTERS */
 
   sambusa:
     'https://images.unsplash.com/photo-1601050690294-397f3c324515?auto=format&fit=crop&w=2400&q=100',
 
-  // UPDATED
   maandazi: '/menu/maandazi.png',
 
-  // UPDATED
   kitumbua: '/menu/kitumbua.png',
-
-  // UPDATED
+  
   kachori: '/menu/kachori.png',
 
-  // UPDATED
   mishkaki: '/menu/mshikaki.png',
 
   urojo:
@@ -38,20 +29,15 @@ const IMAGES = {
 
   /* MAINS */
 
-  pilau:
-    'https://images.unsplash.com/photo-1596797038530-2c107229654b?auto=format&fit=crop&w=2400&q=100',
+  pilau:'/menu/pilau.png',
+    
+  nyamachoma:'/menu/nyamachoma.png',
 
-  nyamachoma:
-    'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=2400&q=100',
+  walinazi:'/menu/walinazi.png',
 
-  walinazi:
-    'https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?auto=format&fit=crop&w=2400&q=100',
+  maharage:'/menu/maharage.png',
 
-  maharage:
-    'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=2400&q=100',
-
-  ndizi:
-    'https://images.unsplash.com/photo-1528823872057-9c018a7a7553?auto=format&fit=crop&w=2400&q=100',
+  ndizi:'/menu/ndizinyama.png',
 
   biryani:
     'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=2400&q=100',
@@ -67,19 +53,15 @@ const IMAGES = {
   fruit:
     'https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?auto=format&fit=crop&w=2400&q=100',
 
-  halwa:
-    'https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=2400&q=100',
+  halwa:'/menu/halwa.png',
 
-  pudding:
-    'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=2400&q=100',
+  pudding:'/menu/coconutpudding.png',
 
-  sweetmaan:
-    'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=2400&q=100',
+  sweetmaan:'/menu/maandazihoney.png',
 
   /* BEVERAGES */
 
-  muwa:
-    'https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=2400&q=100',
+  muwa:'/menu/sugarcanejuice.png',
 
   juice:
     'https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=2400&q=100',
