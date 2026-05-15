@@ -106,18 +106,17 @@ const IMAGES = {
   juice:
     'https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=900&q=75',
 
-  cocktail:
-    'https://images.unsplash.com/photo-1551538827-9c037cb4f32a?auto=format&fit=crop&w=900&q=75',
+  cocktail:'/menu/cocktail.png',
 
   mocktail:
     'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=900&q=75',
 
-  chai:
-    'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=75',
+  chai:'/menu/chai.png',
 
-  bev:
-    'https://images.unsplash.com/photo-1497534547324-0ebb3f052e88?auto=format&fit=crop&w=900&q=75',
+  bev:'/menu/beverage.png',
+
 }
+
 
 function RevealEl({ children, delay = 0 }) {
   const [ref, visible] = useReveal()
