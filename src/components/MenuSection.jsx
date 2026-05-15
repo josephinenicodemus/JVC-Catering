@@ -52,72 +52,37 @@ const TABS = [
 
 const IMAGES = {
   /* STARTERS */
-
-  sambusa:
-    'https://images.unsplash.com/photo-1601050690294-397f3c324515?auto=format&fit=crop&w=900&q=75',
-
-  maandazi: '/menu/maandazi.png',
-
-  kitumbua: '/menu/kitumbua.png',
-
-  kachori: '/menu/kachori.png',
-
-  mishkaki: '/menu/mshikaki.png',
-
-  urojo:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Urojo_Zanzibar_112018.jpg/1920px-Urojo_Zanzibar_112018.jpg',
-
+  sambusa: '/menu/sambusa.webp',
+  maandazi: '/menu/maandazi.webp',
+  kitumbua: '/menu/kitumbua.webp',
+  kachori: '/menu/kachori.webp',
+  mishkaki: '/menu/mshikaki.webp',
+  urojo: '/menu/urojo.webp',
 
   /* MAINS */
-
-  pilau: '/menu/pilau.png',
-
-  nyamachoma: '/menu/nyamachoma.png',
-
-  walinazi: '/menu/walinazi.png',
-
-  maharage: '/menu/maharage.png',
-
-  ndizi: '/menu/ndizinyama.png',
-
-  biryani:
-    'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=900&q=75',
+  pilau: '/menu/pilau.webp',
+  nyamachoma: '/menu/nyamachoma.webp',
+  walinazi: '/menu/walinazi.webp',
+  maharage: '/menu/maharage.webp',
+  ndizi: '/menu/ndizinyama.webp',
+  biryani: '/menu/biryani.webp',
 
   /* DESSERTS */
-
-  icecream:
-    'https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=900&q=75',
-
-  cake:
-    'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=75',
-
-  fruit:
-    'https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?auto=format&fit=crop&w=900&q=75',
-
-  halwa: '/menu/halwa.png',
-
-  pudding: '/menu/coconutpudding.png',
-
-  sweetmaan: '/menu/maandazihoney.png',
+  icecream: '/menu/icecream.webp',
+  cake: '/menu/cake.webp',
+  fruit: '/menu/fruit.webp',
+  halwa: '/menu/halwa.webp',
+  pudding: '/menu/coconutpudding.webp',
+  sweetmaan: '/menu/maandazihoney.webp',
 
   /* BEVERAGES */
-
-  muwa: '/menu/sugarcanejuice.png',
-
-  juice:
-    'https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=900&q=75',
-
-  cocktail:'/menu/cocktail.png',
-
-  mocktail:
-    'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=900&q=75',
-
-  chai:'/menu/chai.png',
-
-  bev:'/menu/beverage.png',
-
+  muwa: '/menu/sugarcanejuice.webp',
+  juice: '/menu/juice.webp',
+  cocktail: '/menu/cocktail.webp',
+  mocktail: '/menu/mocktail.webp',
+  chai: '/menu/chai.webp',
+  bev: '/menu/beverage.webp',
 }
-
 
 function RevealEl({ children, delay = 0 }) {
   const [ref, visible] = useReveal()
@@ -129,8 +94,8 @@ function RevealEl({ children, delay = 0 }) {
         opacity: visible ? 1 : 0,
         transform: visible
           ? 'translate3d(0,0,0)'
-          : 'translate3d(0,28px,0)',
-        transition: `opacity 0.7s ${delay}ms ease, transform 0.7s ${delay}ms ease`,
+          : 'translate3d(0,30px,0)',
+        transition: `all 0.7s ${delay}ms cubic-bezier(0.22,1,0.36,1)`,
         willChange: 'opacity, transform',
       }}
     >
@@ -140,64 +105,14 @@ function RevealEl({ children, delay = 0 }) {
 }
 
 function openMenuPDF() {
-  const html = `
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>JVC Catering — Full Menu 2026</title>
+  const link = document.createElement('a')
 
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  link.href = '/menu/JVC-Catering-Full-Menu.pdf'
+  link.download = 'JVC-Catering-Full-Menu.pdf'
 
-    <style>
-      *{
-        box-sizing:border-box;
-        margin:0;
-        padding:0;
-      }
-
-      body{
-        font-family:'Plus Jakarta Sans',sans-serif;
-        background:#fff;
-        color:#1F2937;
-        padding:2rem;
-      }
-
-      .page{
-        max-width:900px;
-        margin:auto;
-      }
-
-      h1{
-        font-family:'Playfair Display',serif;
-        margin-bottom:1rem;
-      }
-
-      p{
-        line-height:1.7;
-      }
-    </style>
-  </head>
-
-  <body>
-    <div class="page">
-      <h1>JVC Catering Menu</h1>
-      <p>Premium Tanzanian cuisine crafted with authentic coastal flavours.</p>
-    </div>
-  </body>
-  </html>
-  `
-
-  const w = window.open(
-    '',
-    '_blank',
-    'width=900,height=700,scrollbars=yes'
-  )
-
-  if (w) {
-    w.document.write(html)
-    w.document.close()
-  }
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
 }
 
 const MenuCard = memo(function MenuCard({
@@ -207,58 +122,102 @@ const MenuCard = memo(function MenuCard({
 }) {
   return (
     <div
-      className="group rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 cursor-default"
+      className="
+        group
+        rounded-3xl
+        overflow-hidden
+        transition-all
+        duration-500
+        hover:-translate-y-2
+        hover:shadow-2xl
+        cursor-default
+      "
       style={{
-        background: 'rgba(255,255,255,0.04)',
-        border: '1px solid rgba(255,255,255,0.07)',
+        background: 'rgba(255,255,255,0.03)',
+        border: '1px solid rgba(255,255,255,0.06)',
         animationDelay: `${delay}ms`,
         willChange: 'transform',
         transform: 'translateZ(0)',
-        backdropFilter: 'blur(10px)',
       }}
     >
-      {/* Image */}
-      <div className="h-44 overflow-hidden bg-[#1a2030] relative">
+      {/* IMAGE */}
+      <div className="relative h-56 overflow-hidden bg-[#1a2030]">
+        {/* Skeleton */}
+        <div className="absolute inset-0 animate-pulse bg-gray-800" />
+
         <img
           src={IMAGES[itemKey]}
           alt={item?.name || itemKey}
           loading="lazy"
           decoding="async"
+          fetchpriority="low"
+          draggable="false"
           width="600"
           height="400"
-          draggable="false"
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          className="
+            relative
+            z-10
+            w-full
+            h-full
+            object-cover
+            transition-all
+            duration-700
+            group-hover:scale-105
+          "
           style={{
-            willChange: 'transform',
-            transform: 'translateZ(0)',
+            contentVisibility: 'auto',
           }}
-          onError={e => {
-            e.currentTarget.src =
-              'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=75'
+          onError={(e) => {
+            e.currentTarget.src = '/menu/fallback.webp'
+          }}
+        />
+
+        {/* Overlay */}
+        <div
+          className="absolute inset-0 z-20"
+          style={{
+            background:
+              'linear-gradient(to top, rgba(0,0,0,0.45), transparent)',
           }}
         />
       </div>
 
-      {/* Content */}
-      <div className="p-5">
+      {/* CONTENT */}
+      <div className="p-5 md:p-6">
         <h4
+          className="
+            text-xl
+            font-semibold
+            text-white
+            mb-2
+            tracking-tight
+          "
           style={{
             fontFamily: '"Playfair Display", serif',
           }}
-          className="text-lg font-semibold text-white mb-1.5"
         >
           {item?.name}
         </h4>
 
-        <p className="text-sm text-white/40 leading-relaxed mb-3">
+        <p className="text-sm text-white/55 leading-relaxed mb-4">
           {item?.desc}
         </p>
 
         <span
-          className="inline-block px-3 py-1 rounded-full text-[0.62rem] font-bold tracking-widest uppercase"
+          className="
+            inline-flex
+            items-center
+            px-3
+            py-1.5
+            rounded-full
+            text-[0.65rem]
+            font-bold
+            tracking-[0.15em]
+            uppercase
+          "
           style={{
             background: 'rgba(201,122,42,0.12)',
-            border: '1px solid rgba(201,122,42,0.2)',
+            border: '1px solid rgba(201,122,42,0.25)',
             color: '#E8A05C',
           }}
         >
@@ -271,6 +230,7 @@ const MenuCard = memo(function MenuCard({
 
 export default function MenuSection() {
   const { t } = useTranslation()
+
   const [activeTab, setActiveTab] = useState('starters')
 
   const currentItems =
@@ -280,20 +240,39 @@ export default function MenuSection() {
     <section
       id="menu"
       className="section-pad relative overflow-hidden"
-      style={{ background: '#111827' }}
+      style={{
+        background:
+          'linear-gradient(to bottom, #0f172a, #111827, #0b1120)',
+      }}
     >
-      {/* Background Glow Top */}
+      {/* TOP GLOW */}
       <div
-        className="absolute -top-32 -left-32 w-96 h-96 rounded-full pointer-events-none"
+        className="
+          absolute
+          -top-32
+          -left-32
+          w-96
+          h-96
+          rounded-full
+          pointer-events-none
+        "
         style={{
           background: 'rgba(27,107,58,0.15)',
           filter: 'blur(100px)',
         }}
       />
 
-      {/* Background Glow Bottom */}
+      {/* BOTTOM GLOW */}
       <div
-        className="absolute -bottom-32 -right-32 w-96 h-96 rounded-full pointer-events-none"
+        className="
+          absolute
+          -bottom-32
+          -right-32
+          w-96
+          h-96
+          rounded-full
+          pointer-events-none
+        "
         style={{
           background: 'rgba(201,122,42,0.12)',
           filter: 'blur(100px)',
@@ -301,21 +280,71 @@ export default function MenuSection() {
       />
 
       <div className="container-xl relative z-10">
-        {/* Heading */}
+        {/* HEADER */}
         <RevealEl>
-          <div className="mb-10">
+          <div className="mb-12 text-center">
+            {/* LOGO */}
+            <div className="flex flex-col items-center mb-6">
+              <img
+                src="/logo.png"
+                alt="JVC Catering Logo"
+                loading="eager"
+                width="110"
+                height="110"
+                className="
+                  w-24
+                  h-24
+                  md:w-28
+                  md:h-28
+                  object-contain
+                  mb-3
+                  drop-shadow-2xl
+                "
+              />
+
+              {/* SIGNATURE */}
+              <div
+                className="
+                  text-[#E8A05C]
+                  text-3xl
+                  md:text-4xl
+                "
+                style={{
+                  fontFamily: '"Great Vibes", cursive',
+                }}
+              >
+                Veronica
+              </div>
+            </div>
+
+            {/* EYEBROW */}
             <div
-              className="eyebrow mb-3"
+              className="
+                uppercase
+                tracking-[0.25em]
+                text-xs
+                font-bold
+                mb-4
+              "
               style={{ color: '#E8A05C' }}
             >
               {t('menu.eyebrow')}
             </div>
 
+            {/* TITLE */}
             <h2
+              className="
+                text-4xl
+                md:text-5xl
+                xl:text-6xl
+                font-semibold
+                text-white
+                leading-tight
+                mb-5
+              "
               style={{
                 fontFamily: '"Playfair Display", serif',
               }}
-              className="text-4xl md:text-5xl font-semibold text-white mt-3 mb-4"
             >
               {t('menu.heading1')}{' '}
               <em
@@ -328,33 +357,66 @@ export default function MenuSection() {
               </em>
             </h2>
 
-            <p className="text-white/40 text-sm leading-relaxed max-w-lg">
+            {/* SUBTITLE */}
+            <p
+              className="
+                text-white/50
+                text-sm
+                md:text-base
+                leading-relaxed
+                max-w-2xl
+                mx-auto
+              "
+            >
               {t('menu.sub')}
             </p>
           </div>
         </RevealEl>
 
-        {/* Tabs */}
+        {/* TABS */}
         <RevealEl delay={100}>
-          <div className="flex flex-wrap gap-2 mb-8">
+          <div
+            className="
+              flex
+              overflow-x-auto
+              gap-3
+              pb-3
+              mb-10
+              scrollbar-hide
+            "
+          >
             {TABS.map(tab => (
               <button
                 key={tab.key}
+                aria-label={tab.key}
                 onClick={() => setActiveTab(tab.key)}
-                className="px-5 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase transition-colors transition-transform duration-300 hover:scale-105"
+                className="
+                  shrink-0
+                  px-5
+                  py-3
+                  rounded-full
+                  text-xs
+                  font-bold
+                  tracking-[0.15em]
+                  uppercase
+                  transition-all
+                  duration-300
+                  hover:scale-105
+                  focus:outline-none
+                "
                 style={
                   activeTab === tab.key
                     ? {
                         background: '#C97A2A',
                         color: '#fff',
                         boxShadow:
-                          '0 4px 16px rgba(201,122,42,0.35)',
+                          '0 8px 24px rgba(201,122,42,0.35)',
                       }
                     : {
-                        background: 'transparent',
-                        color: 'rgba(255,255,255,0.45)',
+                        background: 'rgba(255,255,255,0.03)',
+                        color: 'rgba(255,255,255,0.55)',
                         border:
-                          '1.5px solid rgba(255,255,255,0.08)',
+                          '1px solid rgba(255,255,255,0.08)',
                       }
                 }
               >
@@ -364,12 +426,16 @@ export default function MenuSection() {
           </div>
         </RevealEl>
 
-        {/* Food Grid */}
+        {/* GRID */}
         <div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
-          style={{
-            animation: 'fadeUp 0.4s ease both',
-          }}
+          className="
+            grid
+            grid-cols-1
+            sm:grid-cols-2
+            xl:grid-cols-3
+            gap-5
+            md:gap-6
+          "
         >
           {currentItems.map((itemKey, i) => {
             const item = t(`menu.items.${itemKey}`, {
@@ -381,24 +447,42 @@ export default function MenuSection() {
                 key={itemKey}
                 itemKey={itemKey}
                 item={item}
-                delay={i * 60}
+                delay={i * 70}
               />
             )
           })}
         </div>
 
-        {/* Download Button */}
+        {/* DOWNLOAD */}
         <RevealEl delay={200}>
-          <div className="mt-12 text-center flex flex-col items-center gap-3">
+          <div className="mt-14 text-center flex flex-col items-center gap-3">
             <button
               onClick={openMenuPDF}
-              className="btn-primary flex items-center gap-2"
+              aria-label="Download Full Menu"
+              className="
+                inline-flex
+                items-center
+                gap-2
+                px-6
+                py-3
+                rounded-full
+                font-semibold
+                text-white
+                transition-all
+                duration-300
+                hover:scale-105
+                hover:shadow-2xl
+              "
+              style={{
+                background:
+                  'linear-gradient(135deg,#C97A2A,#E8A05C)',
+              }}
             >
-              <FileDown size={16} />
+              <FileDown size={18} />
               {t('menu.download')}
             </button>
 
-            <p className="text-white/25 text-xs">
+            <p className="text-white/30 text-xs md:text-sm">
               {t('menu.downloadSub')}
             </p>
           </div>
