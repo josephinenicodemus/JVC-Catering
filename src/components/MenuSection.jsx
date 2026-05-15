@@ -65,7 +65,8 @@ const IMAGES = {
   mishkaki: '/menu/mshikaki.png',
 
   urojo:
-    'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Urojo_Zanzibar_112018.jpg/1200px-Urojo_Zanzibar_112018.jpg',
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Urojo_Zanzibar_112018.jpg/1920px-Urojo_Zanzibar_112018.jpg',
+
 
   /* MAINS */
 
