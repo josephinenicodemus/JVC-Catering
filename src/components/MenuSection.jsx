@@ -11,27 +11,32 @@ const TABS = [
 ]
 
 /* -------------------------------------------------------------------------- */
-/*  HIGH QUALITY 4K / HD IMAGES                                               */
+/* HIGH QUALITY IMAGES                                                        */
+/* ONLY 4 STARTER IMAGES UPDATED USING /public/menu/ PATHS                    */
 /* -------------------------------------------------------------------------- */
 
 const IMAGES = {
+  /* STARTERS */
+
   sambusa:
     'https://images.unsplash.com/photo-1601050690294-397f3c324515?auto=format&fit=crop&w=2400&q=100',
 
-  maandazi:
-    'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=2400&q=100',
+  // UPDATED
+  maandazi: '/menu/maandazi.png',
 
-  kitumbua:
-    'https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=2400&q=100',
+  // UPDATED
+  kitumbua: '/menu/kitumbua.png',
 
-  kachori:
-    'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=2400&q=100',
+  // UPDATED
+  kachori: '/menu/kachori.png',
 
-  mishkaki:
-    'https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?auto=format&fit=crop&w=2400&q=100',
+  // UPDATED
+  mishkaki: '/menu/mshikaki.png',
 
   urojo:
     'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Urojo_Zanzibar_112018.jpg/1920px-Urojo_Zanzibar_112018.jpg',
+
+  /* MAINS */
 
   pilau:
     'https://images.unsplash.com/photo-1596797038530-2c107229654b?auto=format&fit=crop&w=2400&q=100',
@@ -51,6 +56,8 @@ const IMAGES = {
   biryani:
     'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=2400&q=100',
 
+  /* DESSERTS */
+
   icecream:
     'https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=2400&q=100',
 
@@ -68,6 +75,8 @@ const IMAGES = {
 
   sweetmaan:
     'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=2400&q=100',
+
+  /* BEVERAGES */
 
   muwa:
     'https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=2400&q=100',
@@ -277,7 +286,6 @@ export default function MenuSection() {
                     alt={item?.name || itemKey}
                     loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    referrerPolicy="no-referrer"
                     onError={e => {
                       e.currentTarget.src =
                         'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=2400&q=100'
