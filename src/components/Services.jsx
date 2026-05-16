@@ -218,6 +218,7 @@ export default function Services() {
                         fontSize: '1.95rem',
                         fontWeight: 600,
                         lineHeight: 1.15,
+                        letterSpacing: '-0.02em',
                         color: '#0D0D0D',
                       }}
                     >
