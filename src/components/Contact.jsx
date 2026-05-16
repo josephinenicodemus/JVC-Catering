@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { useReveal } from '../hooks/useReveal'
 import { MessageCircle, Phone, Mail, Instagram, MapPin, Lock, ArrowRight, ArrowLeft, Check, X } from 'lucide-react'
 
-const WA = '255767620509'
+const WA = '255767602509'
 
 function RevealEl({ children, delay = 0, dir = 'up', className = '' }) {
   const [ref, visible] = useReveal()
