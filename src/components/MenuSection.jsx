@@ -52,38 +52,28 @@ const TABS = [
 
 const IMAGES = {
   /* STARTERS */
-
   sambusa:
     'https://images.unsplash.com/photo-1601050690294-397f3c324515?auto=format&fit=crop&w=900&q=75',
 
   maandazi: '/menu/maandazi.png',
-
   kitumbua: '/menu/kitumbua.png',
-
   kachori: '/menu/kachori.png',
-
   mishkaki: '/menu/mshikaki.png',
 
   urojo:
     'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Urojo_Zanzibar_112018.jpg/1200px-Urojo_Zanzibar_112018.jpg',
 
   /* MAINS */
-
   pilau: '/menu/pilau.png',
-
   nyamachoma: '/menu/nyamachoma.png',
-
   walinazi: '/menu/walinazi.png',
-
   maharage: '/menu/maharage.png',
-
   ndizi: '/menu/ndizinyama.png',
 
   biryani:
     'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=900&q=75',
 
   /* DESSERTS */
-
   icecream:
     'https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=900&q=75',
 
@@ -94,29 +84,24 @@ const IMAGES = {
     'https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?auto=format&fit=crop&w=900&q=75',
 
   halwa: '/menu/halwa.png',
-
   pudding: '/menu/coconutpudding.png',
-
   sweetmaan: '/menu/maandazihoney.png',
 
   /* BEVERAGES */
-
   muwa: '/menu/sugarcanejuice.png',
 
   juice:
     'https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=900&q=75',
 
-  cocktail:'/menu/cocktail.png',
+  cocktail: '/menu/cocktail.png',
 
   mocktail:
     'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=900&q=75',
 
-  chai:'/menu/chai.png',
+  chai: '/menu/chai.png',
 
-  bev:'/menu/beverage.png',
-
+  bev: '/menu/beverage.png',
 }
-
 
 function RevealEl({ children, delay = 0 }) {
   const [ref, visible] = useReveal()
@@ -127,10 +112,9 @@ function RevealEl({ children, delay = 0 }) {
       style={{
         opacity: visible ? 1 : 0,
         transform: visible
-          ? 'translate3d(0,0,0)'
-          : 'translate3d(0,28px,0)',
-        transition: `opacity 0.7s ${delay}ms ease, transform 0.7s ${delay}ms ease`,
-        willChange: 'opacity, transform',
+          ? 'translateY(0)'
+          : 'translateY(20px)',
+        transition: `all 0.6s ${delay}ms ease`,
       }}
     >
       {children}
@@ -139,125 +123,114 @@ function RevealEl({ children, delay = 0 }) {
 }
 
 function openMenuPDF() {
-  const html = `
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>JVC Catering — Full Menu 2026</title>
+  const pdfWindow = window.open('', '_blank')
 
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  if (!pdfWindow) return
 
-    <style>
-      *{
-        box-sizing:border-box;
-        margin:0;
-        padding:0;
-      }
+  pdfWindow.document.write(`
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>JVC Catering Menu</title>
 
-      body{
-        font-family:'Plus Jakarta Sans',sans-serif;
-        background:#fff;
-        color:#1F2937;
-        padding:2rem;
-      }
+        <style>
+          body{
+            font-family: Arial, sans-serif;
+            padding:40px;
+            line-height:1.7;
+            color:#111827;
+          }
 
-      .page{
-        max-width:900px;
-        margin:auto;
-      }
+          h1{
+            font-size:32px;
+            margin-bottom:10px;
+          }
 
-      h1{
-        font-family:'Playfair Display',serif;
-        margin-bottom:1rem;
-      }
+          p{
+            font-size:16px;
+          }
+        </style>
+      </head>
 
-      p{
-        line-height:1.7;
-      }
-    </style>
-  </head>
+      <body>
+        <h1>JVC Catering Menu</h1>
 
-  <body>
-    <div class="page">
-      <h1>JVC Catering Menu</h1>
-      <p>Premium Tanzanian cuisine crafted with authentic coastal flavours.</p>
-    </div>
-  </body>
-  </html>
-  `
+        <p>
+          Authentic Tanzanian cuisine crafted with fresh local ingredients.
+        </p>
 
-  const w = window.open(
-    '',
-    '_blank',
-    'width=900,height=700,scrollbars=yes'
-  )
+        <hr />
 
-  if (w) {
-    w.document.write(html)
-    w.document.close()
-  }
+        <h2>Starters</h2>
+        <ul>
+          <li>Sambusa</li>
+          <li>Maandazi</li>
+          <li>Kitumbua</li>
+          <li>Kachori</li>
+        </ul>
+
+        <h2>Main Dishes</h2>
+        <ul>
+          <li>Pilau</li>
+          <li>Biryani</li>
+          <li>Nyama Choma</li>
+        </ul>
+      </body>
+    </html>
+  `)
+
+  pdfWindow.document.close()
 }
 
 const MenuCard = memo(function MenuCard({
   itemKey,
   item,
-  delay,
 }) {
   return (
     <div
-      className="group rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 cursor-default"
+      className="group overflow-hidden rounded-2xl transition-all duration-300 hover:-translate-y-1"
       style={{
         background: 'rgba(255,255,255,0.04)',
-        border: '1px solid rgba(255,255,255,0.07)',
-        animationDelay: `${delay}ms`,
-        willChange: 'transform',
-        transform: 'translateZ(0)',
-        backdropFilter: 'blur(10px)',
+        border: '1px solid rgba(255,255,255,0.06)',
       }}
     >
-      {/* Image */}
-      <div className="h-44 overflow-hidden bg-[#1a2030] relative">
+      {/* IMAGE */}
+      <div className="relative h-52 overflow-hidden bg-[#1a2030]">
+
         <img
           src={IMAGES[itemKey]}
           alt={item?.name || itemKey}
           loading="lazy"
           decoding="async"
-          width="600"
-          height="400"
           draggable="false"
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-          style={{
-            willChange: 'transform',
-            transform: 'translateZ(0)',
-          }}
-          onError={e => {
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          onError={(e) => {
             e.currentTarget.src =
               'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=75'
           }}
         />
+
       </div>
 
-      {/* Content */}
-      <div className="p-5">
-        <h4
+      {/* CONTENT */}
+      <div className="p-4">
+        <h3
+          className="text-xl text-white mb-2"
           style={{
             fontFamily: '"Playfair Display", serif',
           }}
-          className="text-lg font-semibold text-white mb-1.5"
         >
           {item?.name}
-        </h4>
+        </h3>
 
-        <p className="text-sm text-white/40 leading-relaxed mb-3">
+        <p className="text-sm text-white/60 leading-relaxed mb-3">
           {item?.desc}
         </p>
 
         <span
-          className="inline-block px-3 py-1 rounded-full text-[0.62rem] font-bold tracking-widest uppercase"
+          className="inline-block px-3 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wider"
           style={{
             background: 'rgba(201,122,42,0.12)',
-            border: '1px solid rgba(201,122,42,0.2)',
             color: '#E8A05C',
           }}
         >
@@ -270,7 +243,9 @@ const MenuCard = memo(function MenuCard({
 
 export default function MenuSection() {
   const { t } = useTranslation()
-  const [activeTab, setActiveTab] = useState('starters')
+
+  const [activeTab, setActiveTab] =
+    useState('starters')
 
   const currentItems =
     TABS.find(tab => tab.key === activeTab)?.items || []
@@ -278,130 +253,116 @@ export default function MenuSection() {
   return (
     <section
       id="menu"
-      className="section-pad relative overflow-hidden"
-      style={{ background: '#111827' }}
+      className="relative overflow-hidden py-20 px-4"
+      style={{
+        background: '#111827',
+      }}
     >
-      {/* Background Glow Top */}
-      <div
-        className="absolute -top-32 -left-32 w-96 h-96 rounded-full pointer-events-none"
-        style={{
-          background: 'rgba(27,107,58,0.15)',
-          filter: 'blur(100px)',
-        }}
-      />
 
-      {/* Background Glow Bottom */}
-      <div
-        className="absolute -bottom-32 -right-32 w-96 h-96 rounded-full pointer-events-none"
-        style={{
-          background: 'rgba(201,122,42,0.12)',
-          filter: 'blur(100px)',
-        }}
-      />
+      <div className="max-w-7xl mx-auto">
 
-      <div className="container-xl relative z-10">
-        {/* Heading */}
+        {/* HEADING */}
         <RevealEl>
-          <div className="mb-10">
-            <div
-              className="eyebrow mb-3"
-              style={{ color: '#E8A05C' }}
-            >
-              {t('menu.eyebrow')}
-            </div>
+          <div className="text-center mb-12">
 
             <h2
+              className="text-4xl md:text-5xl font-semibold text-white mb-4"
               style={{
                 fontFamily: '"Playfair Display", serif',
               }}
-              className="text-4xl md:text-5xl font-semibold text-white mt-3 mb-4"
             >
-              {t('menu.heading1')}{' '}
-              <em
+              Explore Our{' '}
+
+              <span
                 style={{
                   color: '#E8A05C',
                   fontStyle: 'italic',
                 }}
               >
-                {t('menu.heading2')}
-              </em>
+                Menu
+              </span>
             </h2>
 
-            <p className="text-white/40 text-sm leading-relaxed max-w-lg">
-              {t('menu.sub')}
+            <p className="text-white/60 max-w-2xl mx-auto text-sm md:text-base">
+              Authentic Swahili cuisine crafted with fresh local ingredients.
             </p>
+
           </div>
         </RevealEl>
 
-        {/* Tabs */}
+        {/* TABS */}
         <RevealEl delay={100}>
-          <div className="flex flex-wrap gap-2 mb-8">
+          <div className="flex flex-wrap justify-center gap-3 mb-10">
+
             {TABS.map(tab => (
               <button
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key)}
-                className="px-5 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase transition-colors transition-transform duration-300 hover:scale-105"
+                className="px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300"
                 style={
                   activeTab === tab.key
                     ? {
                         background: '#C97A2A',
                         color: '#fff',
-                        boxShadow:
-                          '0 4px 16px rgba(201,122,42,0.35)',
                       }
                     : {
-                        background: 'transparent',
-                        color: 'rgba(255,255,255,0.45)',
+                        background:
+                          'rgba(255,255,255,0.05)',
+                        color:
+                          'rgba(255,255,255,0.65)',
                         border:
-                          '1.5px solid rgba(255,255,255,0.08)',
+                          '1px solid rgba(255,255,255,0.08)',
                       }
                 }
               >
                 {t(`menu.tab_${tab.key}`)}
               </button>
             ))}
+
           </div>
         </RevealEl>
 
-        {/* Food Grid */}
-        <div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
-          style={{
-            animation: 'fadeUp 0.4s ease both',
-          }}
-        >
-          {currentItems.map((itemKey, i) => {
-            const item = t(`menu.items.${itemKey}`, {
-              returnObjects: true,
-            })
+        {/* GRID */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          {currentItems.map(itemKey => {
+            const item = t(
+              `menu.items.${itemKey}`,
+              {
+                returnObjects: true,
+              }
+            )
 
             return (
               <MenuCard
                 key={itemKey}
                 itemKey={itemKey}
                 item={item}
-                delay={i * 60}
               />
             )
           })}
+
         </div>
 
-        {/* Download Button */}
+        {/* DOWNLOAD */}
         <RevealEl delay={200}>
-          <div className="mt-12 text-center flex flex-col items-center gap-3">
+          <div className="mt-14 flex justify-center">
+
             <button
               onClick={openMenuPDF}
-              className="btn-primary flex items-center gap-2"
+              className="flex items-center gap-2 px-6 py-3 rounded-full text-white transition-all duration-300"
+              style={{
+                background: '#C97A2A',
+              }}
             >
-              <FileDown size={16} />
+              <FileDown size={18} />
+
               {t('menu.download')}
             </button>
 
-            <p className="text-white/25 text-xs">
-              {t('menu.downloadSub')}
-            </p>
           </div>
         </RevealEl>
+
       </div>
     </section>
   )
