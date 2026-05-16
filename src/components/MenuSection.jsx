@@ -67,8 +67,6 @@ const IMAGES = {
 
   mishkaki: '/menu/mshikaki.png',
 
-  /* REALISTIC UROJO IMAGE */
-
   urojo:
     'https://upload.wikimedia.org/wikipedia/commons/e/e7/Urojo_Zanzibar_112018.jpg',
 
@@ -171,92 +169,87 @@ function openMenuPDF() {
           font-family:'Inter',sans-serif;
           background:#f8f5ef;
           color:#1f2937;
-          line-height:1.7;
+          line-height:1.8;
         }
 
         .hero{
           background:#14532d;
-          padding:70px 40px;
+          padding:80px 40px;
           text-align:center;
           color:white;
         }
 
         .hero h1{
           font-family:'Playfair Display',serif;
-          font-size:58px;
-          margin-bottom:18px;
+          font-size:60px;
+          margin-bottom:20px;
           font-weight:700;
-        }
-
-        .hero span{
-          color:#E8A05C;
-          font-style:italic;
+          color:#ffffff;
         }
 
         .hero p{
-          max-width:700px;
+          max-width:760px;
           margin:auto;
           font-size:18px;
           color:rgba(255,255,255,0.85);
         }
 
-        .section{
+        .container{
           max-width:1100px;
           margin:auto;
           padding:60px 35px;
         }
 
+        .section{
+          background:white;
+          border-radius:24px;
+          padding:35px;
+          margin-bottom:35px;
+          box-shadow:0 10px 30px rgba(0,0,0,0.06);
+        }
+
         .section-title{
           font-family:'Playfair Display',serif;
-          font-size:40px;
+          font-size:38px;
           color:#14532d;
-          margin-bottom:35px;
-          text-align:center;
+          margin-bottom:25px;
+          border-bottom:2px solid #E8A05C;
+          padding-bottom:12px;
         }
 
-        .grid{
+        .menu-grid{
           display:grid;
-          grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-          gap:25px;
+          grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+          gap:18px;
         }
 
-        .card{
-          background:white;
-          border-radius:22px;
-          overflow:hidden;
-          box-shadow:0 10px 30px rgba(0,0,0,0.08);
+        .menu-item{
+          padding:18px;
+          border-radius:18px;
+          background:#faf7f2;
+          border:1px solid rgba(0,0,0,0.05);
         }
 
-        .card img{
-          width:100%;
-          height:220px;
-          object-fit:cover;
-          display:block;
-        }
-
-        .content{
-          padding:24px;
-        }
-
-        .content h3{
+        .menu-item h3{
           font-family:'Playfair Display',serif;
-          font-size:28px;
-          margin-bottom:12px;
+          font-size:24px;
+          margin-bottom:10px;
+          color:#111827;
         }
 
-        .content p{
-          color:#4b5563;
+        .menu-item p{
           font-size:15px;
-          margin-bottom:18px;
+          color:#4b5563;
         }
 
         .tag{
           display:inline-block;
+          margin-top:14px;
+          padding:7px 14px;
+          border-radius:999px;
           background:#14532d10;
           color:#E8A05C;
-          padding:8px 14px;
-          border-radius:999px;
-          font-size:12px;
+          font-size:11px;
           font-weight:700;
           letter-spacing:1px;
           text-transform:uppercase;
@@ -265,8 +258,8 @@ function openMenuPDF() {
         .footer{
           background:#14532d;
           color:white;
+          padding:60px 30px;
           text-align:center;
-          padding:50px 30px;
           margin-top:40px;
         }
 
@@ -277,15 +270,34 @@ function openMenuPDF() {
         }
 
         .footer p{
-          color:rgba(255,255,255,0.85);
-          max-width:700px;
-          margin:auto;
+          color:rgba(255,255,255,0.82);
         }
 
         .contact{
-          margin-top:25px;
-          font-size:15px;
+          margin-top:22px;
           line-height:2;
+          font-size:15px;
+        }
+
+        .download-btn{
+          position:fixed;
+          top:20px;
+          right:20px;
+          background:#E8A05C;
+          color:white;
+          border:none;
+          padding:12px 22px;
+          border-radius:999px;
+          font-weight:600;
+          cursor:pointer;
+          font-size:14px;
+          box-shadow:0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        @media print{
+          .download-btn{
+            display:none;
+          }
         }
 
       </style>
@@ -293,32 +305,41 @@ function openMenuPDF() {
 
     <body>
 
+      <button
+        class="download-btn"
+        onclick="window.print()"
+      >
+        Download PDF
+      </button>
+
+      <!-- HERO -->
+
       <section class="hero">
 
         <h1>
-          Explore Our
-          <span> Menu</span>
+          Explore Our Menu
         </h1>
 
         <p>
           Authentic Tanzanian cuisine crafted with fresh local ingredients,
-          warm hospitality, and unforgettable culinary experiences.
+          premium hospitality, and unforgettable culinary experiences.
         </p>
 
       </section>
 
-      <section class="section">
+      <div class="container">
 
-        <h2 class="section-title">
-          Signature Starters
-        </h2>
+        <!-- STARTERS -->
 
-        <div class="grid">
+        <section class="section">
 
-          <div class="card">
-            <img src="/menu/sambusa.png" />
+          <h2 class="section-title">
+            Signature Starters
+          </h2>
 
-            <div class="content">
+          <div class="menu-grid">
+
+            <div class="menu-item">
               <h3>Sambusa</h3>
 
               <p>
@@ -330,32 +351,37 @@ function openMenuPDF() {
                 Popular Choice
               </span>
             </div>
-          </div>
 
-          <div class="card">
-            <img src="/menu/maandazi.png" />
-
-            <div class="content">
+            <div class="menu-item">
               <h3>Maandazi</h3>
 
               <p>
-                Soft East African fried bread with delicate sweetness.
+                Soft East African fried bread with delicate sweetness
+                and fluffy texture.
               </p>
 
               <span class="tag">
                 Traditional
               </span>
             </div>
-          </div>
 
-          <div class="card">
-            <img src="/menu/urojo.png" />
+            <div class="menu-item">
+              <h3>Kitumbua</h3>
 
-            <div class="content">
+              <p>
+                Traditional coconut rice cakes with authentic Swahili flavor.
+              </p>
+
+              <span class="tag">
+                Coastal Favorite
+              </span>
+            </div>
+
+            <div class="menu-item">
               <h3>Urojo</h3>
 
               <p>
-                Authentic Zanzibar street-style soup with potatoes,
+                Authentic Zanzibar street-style soup layered with potatoes,
                 bhajias, coconut, mango, and tangy spices.
               </p>
 
@@ -363,41 +389,34 @@ function openMenuPDF() {
                 Zanzibar Flavor
               </span>
             </div>
+
           </div>
 
-        </div>
+        </section>
 
-      </section>
+        <!-- MAINS -->
 
-      <section class="section">
+        <section class="section">
 
-        <h2 class="section-title">
-          Main Dishes
-        </h2>
+          <h2 class="section-title">
+            Main Dishes
+          </h2>
 
-        <div class="grid">
+          <div class="menu-grid">
 
-          <div class="card">
-            <img src="/menu/pilau.png" />
-
-            <div class="content">
+            <div class="menu-item">
               <h3>Pilau</h3>
 
               <p>
-                Aromatic Tanzanian spiced rice infused with rich
-                coastal flavors.
+                Aromatic Tanzanian spiced rice infused with rich coastal flavors.
               </p>
 
               <span class="tag">
                 Signature Dish
               </span>
             </div>
-          </div>
 
-          <div class="card">
-            <img src="/menu/biryani.png" />
-
-            <div class="content">
+            <div class="menu-item">
               <h3>Biryani</h3>
 
               <p>
@@ -409,12 +428,8 @@ function openMenuPDF() {
                 Premium
               </span>
             </div>
-          </div>
 
-          <div class="card">
-            <img src="/menu/walinazi.png" />
-
-            <div class="content">
+            <div class="menu-item">
               <h3>Wali wa Nazi</h3>
 
               <p>
@@ -425,24 +440,85 @@ function openMenuPDF() {
                 Coastal Cuisine
               </span>
             </div>
+
+            <div class="menu-item">
+              <h3>Nyama Choma</h3>
+
+              <p>
+                Tender grilled meat seasoned with East African spices
+                and served fresh.
+              </p>
+
+              <span class="tag">
+                BBQ Favorite
+              </span>
+            </div>
+
           </div>
 
-        </div>
+        </section>
 
-      </section>
+        <!-- DESSERTS -->
 
-      <section class="section">
+        <section class="section">
 
-        <h2 class="section-title">
-          Premium Beverages
-        </h2>
+          <h2 class="section-title">
+            Desserts
+          </h2>
 
-        <div class="grid">
+          <div class="menu-grid">
 
-          <div class="card">
-            <img src="/menu/sugarcanejuice.png" />
+            <div class="menu-item">
+              <h3>Halwa</h3>
 
-            <div class="content">
+              <p>
+                Rich traditional Swahili dessert prepared with aromatic spices.
+              </p>
+
+              <span class="tag">
+                Sweet Treat
+              </span>
+            </div>
+
+            <div class="menu-item">
+              <h3>Coconut Pudding</h3>
+
+              <p>
+                Creamy tropical pudding infused with coconut flavor.
+              </p>
+
+              <span class="tag">
+                Tropical
+              </span>
+            </div>
+
+            <div class="menu-item">
+              <h3>Fresh Fruit Selection</h3>
+
+              <p>
+                Seasonal tropical fruits beautifully prepared and served fresh.
+              </p>
+
+              <span class="tag">
+                Freshly Served
+              </span>
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- BEVERAGES -->
+
+        <section class="section">
+
+          <h2 class="section-title">
+            Premium Beverages
+          </h2>
+
+          <div class="menu-grid">
+
+            <div class="menu-item">
               <h3>Sugarcane Juice</h3>
 
               <p>
@@ -454,12 +530,8 @@ function openMenuPDF() {
                 Refreshing
               </span>
             </div>
-          </div>
 
-          <div class="card">
-            <img src="/menu/mocktail.png" />
-
-            <div class="content">
+            <div class="menu-item">
               <h3>Mocktails</h3>
 
               <p>
@@ -471,27 +543,38 @@ function openMenuPDF() {
                 Alcohol-Free
               </span>
             </div>
-          </div>
 
-          <div class="card">
-            <img src="/menu/cocktail.png" />
-
-            <div class="content">
+            <div class="menu-item">
               <h3>Signature Cocktails</h3>
 
               <p>
-                Crafted cocktails with local spirits and tropical mixers.
+                Crafted cocktails with local spirits and premium tropical mixers.
               </p>
 
               <span class="tag">
                 Adults Only
               </span>
             </div>
+
+            <div class="menu-item">
+              <h3>Fresh Juices</h3>
+
+              <p>
+                Seasonal tropical juices prepared fresh with natural ingredients.
+              </p>
+
+              <span class="tag">
+                Freshly Made
+              </span>
+            </div>
+
           </div>
 
-        </div>
+        </section>
 
-      </section>
+      </div>
+
+      <!-- FOOTER -->
 
       <footer class="footer">
 
@@ -518,6 +601,7 @@ function openMenuPDF() {
       </footer>
 
     </body>
+
     </html>
   `)
 
@@ -538,6 +622,7 @@ const MenuCard = memo(function MenuCard({
       }}
     >
       {/* IMAGE */}
+
       <div className="relative h-48 overflow-hidden bg-[#1a2030]">
 
         <img
@@ -557,6 +642,7 @@ const MenuCard = memo(function MenuCard({
       </div>
 
       {/* CONTENT */}
+
       <div className="p-4">
 
         <h3
@@ -606,7 +692,8 @@ export default function MenuSection() {
       }}
     >
 
-      {/* GLOW EFFECTS */}
+      {/* GLOW EFFECT */}
+
       <div
         className="absolute top-0 left-0 w-full h-full pointer-events-none"
         style={{
@@ -618,29 +705,20 @@ export default function MenuSection() {
       <div className="max-w-7xl mx-auto relative z-10">
 
         {/* HEADING */}
+
         <RevealEl>
 
           <div className="text-center mb-14">
 
             <h2
-              className="text-4xl md:text-5xl lg:text-6xl font-semibold text-white mb-5"
+              className="text-4xl md:text-5xl lg:text-6xl font-semibold mb-5"
               style={{
                 fontFamily: '"Playfair Display", serif',
+                color: '#ffffff',
+                lineHeight: '1.1',
               }}
             >
-              Explore Our{' '}
-
-              <em
-                style={{
-                  color: '#E8A05C',
-                  fontStyle: 'italic',
-                  fontFamily: '"Playfair Display", serif',
-                  fontWeight: 600,
-                }}
-              >
-                Menu
-              </em>
-
+              Explore Our Menu
             </h2>
 
             <p className="text-white/60 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
@@ -653,6 +731,7 @@ export default function MenuSection() {
         </RevealEl>
 
         {/* TABS */}
+
         <RevealEl delay={100}>
 
           <div className="flex flex-wrap justify-center gap-3 mb-12">
@@ -689,6 +768,7 @@ export default function MenuSection() {
         </RevealEl>
 
         {/* GRID */}
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
           {currentItems.map(itemKey => {
@@ -711,6 +791,7 @@ export default function MenuSection() {
         </div>
 
         {/* DOWNLOAD BUTTON */}
+
         <RevealEl delay={200}>
 
           <div className="mt-16 flex flex-col items-center gap-3">
