@@ -77,13 +77,13 @@ export default function Services() {
   return (
     <section
       id="services"
-      className="relative overflow-hidden py-20 px-4"
+      className="relative overflow-hidden py-20 md:py-24 px-4"
       style={{
         background: '#FAF9F6',
       }}
     >
 
-      {/* BACKGROUND GLOWS */}
+      {/* SOFT BACKGROUND GLOWS */}
 
       <div
         className="absolute top-0 left-0 w-96 h-96 rounded-full blur-3xl pointer-events-none"
@@ -105,7 +105,7 @@ export default function Services() {
 
         <RevealEl>
 
-          <div className="text-center max-w-3xl mx-auto mb-14">
+          <div className="text-center max-w-3xl mx-auto mb-14 md:mb-16">
 
             <div
               className="uppercase tracking-[0.25em] text-xs font-semibold mb-5"
@@ -123,8 +123,8 @@ export default function Services() {
                 fontSize: 'clamp(2.8rem, 5vw, 4.5rem)',
                 fontWeight: 600,
                 lineHeight: 1.05,
-                color: '#0D0D0D',
                 letterSpacing: '-0.03em',
+                color: '#0D0D0D',
               }}
             >
               Premium Services
@@ -162,10 +162,10 @@ export default function Services() {
               >
 
                 <div
-                  className="group bg-white rounded-[28px] overflow-hidden transition-all duration-500 h-full flex flex-col border border-zinc-200/60 hover:-translate-y-2"
+                  className="group bg-white rounded-[30px] overflow-hidden border border-zinc-200/70 transition-all duration-500 h-full flex flex-col hover:-translate-y-2"
                   style={{
                     boxShadow:
-                      '0 8px 30px rgba(0,0,0,0.05)',
+                      '0 10px 35px rgba(0,0,0,0.05)',
                   }}
                 >
 
@@ -178,6 +178,7 @@ export default function Services() {
                       alt={alt}
                       loading="lazy"
                       decoding="async"
+                      draggable="false"
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                       onError={(e) => {
                         e.currentTarget.src =
@@ -185,9 +186,9 @@ export default function Services() {
                       }}
                     />
 
-                    {/* SOFT OVERLAY */}
+                    {/* SOFT IMAGE OVERLAY */}
 
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-80" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
 
                   </div>
 
@@ -214,13 +215,10 @@ export default function Services() {
                       style={{
                         fontFamily:
                           '"Playfair Display", serif',
-                        fontSize: '2rem',
+                        fontSize: '1.95rem',
                         fontWeight: 600,
                         lineHeight: 1.15,
-                        color:
-                          key === 's3'
-                            ? '#C97A2A'
-                            : '#0D0D0D',
+                        color: '#0D0D0D',
                       }}
                     >
                       {t(`services.${key}h`)}
@@ -232,18 +230,18 @@ export default function Services() {
                       {t(`services.${key}p`)}
                     </p>
 
-                    {/* LIST */}
+                    {/* FEATURES */}
 
                     <ul className="flex flex-col gap-3 mb-7 flex-1">
 
                       {lists.map(lk => (
                         <li
                           key={lk}
-                          className="flex items-center gap-3 text-sm"
+                          className="flex items-start gap-3"
                         >
 
                           <div
-                            className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0"
+                            className="w-5 h-5 rounded-full flex items-center justify-center mt-[2px] flex-shrink-0"
                             style={{
                               background: `${color}15`,
                             }}
@@ -257,7 +255,7 @@ export default function Services() {
                             />
                           </div>
 
-                          <span className="text-zinc-600 leading-relaxed">
+                          <span className="text-sm text-zinc-600 leading-relaxed">
                             {t(`services.${lk}`)}
                           </span>
 
@@ -270,7 +268,7 @@ export default function Services() {
 
                     <button
                       onClick={scrollTo}
-                      className="flex items-center gap-2 text-xs font-bold tracking-[0.18em] uppercase transition-all duration-300 hover:gap-3"
+                      className="flex items-center gap-2 text-xs font-bold tracking-[0.18em] uppercase transition-all duration-300 hover:gap-3 mt-auto"
                       style={{
                         color: color,
                       }}
