@@ -22,7 +22,12 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-start overflow-hidden bg-[#0D0D0D]"
+      className="
+        relative
+        min-h-screen
+        overflow-hidden
+        bg-[#0D0D0D]
+      "
     >
 
       {/* BACKGROUND IMAGE */}
@@ -30,20 +35,26 @@ export default function Hero() {
       <div className="absolute inset-0 z-0">
 
         <img
-          src="https://images.unsplash.com/photo-1555244162-803834f70033?w=3840&h=2160&fit=crop&q=95&auto=format"
-          alt="JVC Catering - Elegant Event Buffet Setup"
-          className="w-full h-full object-cover object-center"
+          src="https://images.unsplash.com/photo-1555244162-803834f70033?w=3840&h=2160&fit=crop&q=90&auto=format"
+          alt="JVC Catering luxury buffet setup"
+          className="
+            w-full
+            h-full
+            object-cover
+            object-center
+            select-none
+          "
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
+          draggable="false"
           style={{
             animation:
               'heroZoom 24s ease-in-out infinite alternate',
           }}
-          loading="eager"
-          fetchpriority="high"
-          decoding="async"
-          draggable="false"
           onError={(e) => {
             e.currentTarget.src =
-              'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=3840&h=2160&fit=crop&q=95'
+              'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=2400&q=85'
           }}
         />
 
@@ -54,48 +65,66 @@ export default function Hero() {
           style={{
             background: `
               linear-gradient(
-                105deg,
-                rgba(13,13,13,0.92) 0%,
-                rgba(13,13,13,0.82) 22%,
-                rgba(13,13,13,0.52) 48%,
-                rgba(13,13,13,0.20) 100%
+                100deg,
+                rgba(10,10,10,0.94) 0%,
+                rgba(10,10,10,0.82) 22%,
+                rgba(10,10,10,0.55) 48%,
+                rgba(10,10,10,0.25) 100%
               )
             `,
           }}
         />
 
-        {/* BOTTOM VIGNETTE */}
+        {/* BOTTOM DEPTH */}
 
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0D0D0D]/90 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
 
         {/* FILM GRAIN */}
 
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E")`,
-            backgroundSize: '256px 256px',
-            opacity: 0.4,
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E")`,
+            backgroundSize: '240px 240px',
             mixBlendMode: 'overlay',
+            opacity: 0.35,
           }}
         />
 
       </div>
 
-      {/* LEFT ACCENT BAR */}
+      {/* LEFT ACCENT LINE */}
 
       <div
-        className="absolute left-0 top-0 bottom-0 w-[4px] z-20 pointer-events-none hidden sm:block"
+        className="
+          absolute
+          left-0
+          top-0
+          bottom-0
+          hidden
+          sm:block
+          w-[4px]
+          z-10
+        "
         style={{
           background:
-            'linear-gradient(to bottom, transparent 5%, #C97A2A 35%, #1B6B3A 65%, transparent 95%)',
+            'linear-gradient(to bottom, transparent 6%, #C97A2A 35%, #1B6B3A 65%, transparent 94%)',
         }}
       />
 
       {/* RIGHT DECORATIVE LINE */}
 
       <div
-        className="absolute right-[5%] top-[20%] bottom-[20%] w-px z-10 hidden xl:block pointer-events-none"
+        className="
+          absolute
+          right-[5%]
+          top-[20%]
+          bottom-[20%]
+          hidden
+          xl:block
+          w-px
+          z-10
+        "
         style={{
           background:
             'linear-gradient(to bottom, transparent, rgba(201,122,42,0.45) 35%, rgba(201,122,42,0.45) 65%, transparent)',
@@ -106,237 +135,281 @@ export default function Hero() {
 
       <div
         className="
-          relative z-10 w-full max-w-[1400px] mx-auto
-          px-6 sm:px-10 lg:px-16 xl:px-24
-          flex flex-col justify-center min-h-screen
+          relative
+          z-20
+          w-full
+          max-w-[1440px]
+          mx-auto
+          min-h-screen
+          flex
+          items-center
+          px-6
+          sm:px-10
+          lg:px-16
+          xl:px-24
         "
-        style={{
-          paddingTop:
-            'clamp(100px, 14vw, 140px)',
-          paddingBottom:
-            'clamp(80px, 10vw, 120px)',
-        }}
       >
 
-        {/* ORNAMENT */}
+        <div className="w-full max-w-[760px]">
 
-        <div
-          className="flex items-center gap-4 mb-8 sm:mb-10"
-          style={{
-            animation:
-              'fadeUp 0.8s 0.2s ease both',
-          }}
-        >
+          {/* ORNAMENT */}
 
           <div
-            className="h-px w-10 sm:w-16"
-            style={{
-              background:
-                'rgba(201,122,42,0.6)',
-            }}
-          />
-
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#C97A2A"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="flex-shrink-0"
-          >
-            <path d="M3 2v7c0 1.1.9 2 2 2h2v11h2V11h2a2 2 0 0 0 2-2V2h-2v5H7V2H5v5H3V2z" />
-            <path d="M18 2c0 0-3 2-3 6s3 6 3 6v8h2V2h-2z" />
-          </svg>
-
-          <div
-            className="h-px w-10 sm:w-16"
-            style={{
-              background:
-                'rgba(201,122,42,0.6)',
-            }}
-          />
-
-        </div>
-
-        {/* HERO TITLE */}
-
-        <div
-          className="mb-6 sm:mb-8"
-          style={{
-            animation:
-              'fadeUp 0.9s 0.35s ease both',
-          }}
-        >
-
-          <h1
-            style={{
-              fontFamily:
-                '"Playfair Display", serif',
-              fontSize:
-                'clamp(3.5rem, 11vw, 9rem)',
-              fontWeight: 600,
-              color: '#F5F0E8',
-              lineHeight: 0.88,
-              letterSpacing: '-0.03em',
-            }}
-            className="leading-none"
-          >
-            JVC
-            <br />
-            Catering
-          </h1>
-
-        </div>
-
-        {/* SUBTITLE */}
-
-        <div
-          className="flex items-center gap-4 sm:gap-6 mb-10 sm:mb-14"
-          style={{
-            animation:
-              'fadeUp 0.8s 0.65s ease both',
-          }}
-        >
-
-          <div
-            className="h-px w-8 sm:w-12"
-            style={{
-              background:
-                'rgba(245,240,232,0.35)',
-            }}
-          />
-
-          <p
-            style={{
-              fontFamily:
-                '"Playfair Display", serif',
-              fontSize:
-                'clamp(1rem, 2.2vw, 1.35rem)',
-              fontStyle: 'italic',
-              fontWeight: 400,
-              color:
-                'rgba(245,240,232,0.75)',
-              letterSpacing: '0.08em',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            The service you need
-          </p>
-
-          <div
-            className="h-px w-8 sm:w-12"
-            style={{
-              background:
-                'rgba(245,240,232,0.35)',
-            }}
-          />
-
-        </div>
-
-        {/* CTA BUTTONS */}
-
-        <div
-          className="flex flex-wrap gap-3 sm:gap-5"
-          style={{
-            animation:
-              'fadeUp 0.8s 0.8s ease both',
-          }}
-        >
-
-          {/* PRIMARY CTA */}
-
-          <button
-            onClick={() => scrollTo('#contact')}
             className="
-              inline-flex items-center gap-2.5
-              px-6 sm:px-8 py-[14px] sm:py-4
-              rounded-[4px]
-              text-white
-              text-[0.7rem] sm:text-[0.75rem]
-              font-bold
-              tracking-[0.18em]
-              uppercase
-              transition-all duration-300
-              hover:-translate-y-[3px]
-              active:translate-y-0
-              focus:outline-none
+              flex
+              items-center
+              gap-4
+              mb-8
+              sm:mb-10
             "
             style={{
-              fontFamily:
-                '"Playfair Display", serif',
-              background:
-                'linear-gradient(135deg, #C97A2A 0%, #E8A05C 100%)',
-              boxShadow:
-                '0 8px 28px rgba(201,122,42,0.35)',
+              animation:
+                'fadeUp 0.8s 0.2s ease both',
             }}
           >
 
-            <MessageCircle
-              size={16}
-              className="flex-shrink-0"
+            <div
+              className="h-px w-10 sm:w-16"
+              style={{
+                background:
+                  'rgba(201,122,42,0.6)',
+              }}
             />
 
-            <span>
-              {t('hero.cta1') ||
-                'Request a Quote'}
-            </span>
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#C97A2A"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M3 2v7c0 1.1.9 2 2 2h2v11h2V11h2a2 2 0 0 0 2-2V2h-2v5H7V2H5v5H3V2z" />
+              <path d="M18 2c0 0-3 2-3 6s3 6 3 6v8h2V2h-2z" />
+            </svg>
 
-          </button>
+            <div
+              className="h-px w-10 sm:w-16"
+              style={{
+                background:
+                  'rgba(201,122,42,0.6)',
+              }}
+            />
 
-          {/* SECONDARY CTA */}
+          </div>
 
-          <button
-            onClick={() => scrollTo('#menu')}
+          {/* TITLE */}
+
+          <div
+            className="mb-7 sm:mb-9"
+            style={{
+              animation:
+                'fadeUp 0.9s 0.35s ease both',
+            }}
+          >
+
+            <h1
+              className="leading-none"
+              style={{
+                fontFamily:
+                  '"Playfair Display", serif',
+                fontSize:
+                  'clamp(4rem, 11vw, 9rem)',
+                fontWeight: 600,
+                color: '#F5F0E8',
+                lineHeight: 0.88,
+                letterSpacing: '-0.04em',
+                textRendering:
+                  'optimizeLegibility',
+                WebkitFontSmoothing:
+                  'antialiased',
+                MozOsxFontSmoothing:
+                  'grayscale',
+              }}
+            >
+              JVC
+              <br />
+              Catering
+            </h1>
+
+          </div>
+
+          {/* SUBTITLE */}
+
+          <div
             className="
-              inline-flex items-center gap-2.5
-              px-6 sm:px-8 py-[14px] sm:py-4
-              rounded-[4px]
-              text-[#F5F0E8]
-              text-[0.7rem] sm:text-[0.75rem]
-              font-bold
-              tracking-[0.18em]
-              uppercase
-              border
-              transition-all duration-300
-              hover:-translate-y-[3px]
+              flex
+              items-center
+              gap-4
+              sm:gap-6
+              mb-10
+              sm:mb-14
             "
             style={{
-              fontFamily:
-                '"Playfair Display", serif',
-              borderColor:
-                'rgba(245,240,232,0.35)',
-              backdropFilter: 'blur(8px)',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor =
-                'rgba(201,122,42,0.7)'
-
-              e.currentTarget.style.color =
-                '#C97A2A'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor =
-                'rgba(245,240,232,0.35)'
-
-              e.currentTarget.style.color =
-                '#F5F0E8'
+              animation:
+                'fadeUp 0.8s 0.55s ease both',
             }}
           >
 
-            <UtensilsCrossed
-              size={16}
-              className="flex-shrink-0"
+            <div
+              className="h-px w-8 sm:w-12"
+              style={{
+                background:
+                  'rgba(245,240,232,0.35)',
+              }}
             />
 
-            <span>
-              {t('hero.cta2') ||
-                'Explore Menu'}
-            </span>
+            <p
+              style={{
+                fontFamily:
+                  '"Playfair Display", serif',
+                fontSize:
+                  'clamp(1rem, 2vw, 1.35rem)',
+                fontStyle: 'italic',
+                fontWeight: 400,
+                color:
+                  'rgba(245,240,232,0.78)',
+                letterSpacing: '0.08em',
+              }}
+              className="whitespace-nowrap"
+            >
+              {t('hero.subtitle') ||
+                'The service you need'}
+            </p>
 
-          </button>
+            <div
+              className="h-px w-8 sm:w-12"
+              style={{
+                background:
+                  'rgba(245,240,232,0.35)',
+              }}
+            />
+
+          </div>
+
+          {/* CTA BUTTONS */}
+
+          <div
+            className="
+              flex
+              flex-wrap
+              gap-4
+            "
+            style={{
+              animation:
+                'fadeUp 0.8s 0.75s ease both',
+            }}
+          >
+
+            {/* PRIMARY */}
+
+            <button
+              onClick={() =>
+                scrollTo('#contact')
+              }
+              className="
+                inline-flex
+                items-center
+                gap-2.5
+                px-7
+                sm:px-9
+                py-4
+                rounded-[6px]
+                text-white
+                text-[0.72rem]
+                sm:text-[0.78rem]
+                font-bold
+                uppercase
+                tracking-[0.18em]
+                transition-all
+                duration-300
+                hover:-translate-y-[3px]
+                focus:outline-none
+              "
+              style={{
+                fontFamily:
+                  '"Playfair Display", serif',
+                background:
+                  'linear-gradient(135deg, #C97A2A 0%, #E5A15D 100%)',
+                boxShadow:
+                  '0 10px 30px rgba(201,122,42,0.35)',
+              }}
+            >
+
+              <MessageCircle
+                size={16}
+              />
+
+              <span>
+                {t('hero.cta1') ||
+                  'Request a Quote'}
+              </span>
+
+            </button>
+
+            {/* SECONDARY */}
+
+            <button
+              onClick={() =>
+                scrollTo('#menu')
+              }
+              className="
+                inline-flex
+                items-center
+                gap-2.5
+                px-7
+                sm:px-9
+                py-4
+                rounded-[6px]
+                text-[0.72rem]
+                sm:text-[0.78rem]
+                font-bold
+                uppercase
+                tracking-[0.18em]
+                border
+                transition-all
+                duration-300
+                hover:-translate-y-[3px]
+              "
+              style={{
+                fontFamily:
+                  '"Playfair Display", serif',
+                color: '#F5F0E8',
+                borderColor:
+                  'rgba(245,240,232,0.30)',
+                backdropFilter:
+                  'blur(10px)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor =
+                  '#C97A2A'
+
+                e.currentTarget.style.color =
+                  '#C97A2A'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor =
+                  'rgba(245,240,232,0.30)'
+
+                e.currentTarget.style.color =
+                  '#F5F0E8'
+              }}
+            >
+
+              <UtensilsCrossed
+                size={16}
+              />
+
+              <span>
+                {t('hero.cta2') ||
+                  'Explore Menu'}
+              </span>
+
+            </button>
+
+          </div>
 
         </div>
 
@@ -345,31 +418,40 @@ export default function Hero() {
       {/* SCROLL INDICATOR */}
 
       <button
-        onClick={() => scrollTo('#about')}
+        onClick={() =>
+          scrollTo('#about')
+        }
         className="
-          absolute bottom-6 sm:bottom-8
-          left-1/2 -translate-x-1/2
-          z-10 flex flex-col items-center
-          gap-2 bg-transparent border-none
-          cursor-pointer transition-all
-          duration-300 group
+          absolute
+          bottom-7
+          left-1/2
+          -translate-x-1/2
+          z-20
+          flex
+          flex-col
+          items-center
+          gap-2
+          group
         "
         style={{
           animation:
-            'fadeIn 1s 1.5s ease both',
+            'fadeIn 1s 1.3s ease both',
         }}
       >
 
         <span
           className="
-            text-[0.5rem] sm:text-[0.55rem]
-            tracking-[0.3em]
             uppercase
+            tracking-[0.30em]
+            text-[0.55rem]
             font-semibold
-            text-[rgba(245,240,232,0.4)]
-            group-hover:text-[#C97A2A]
-            transition-colors duration-300
+            transition-colors
+            duration-300
           "
+          style={{
+            color:
+              'rgba(245,240,232,0.45)',
+          }}
         >
           Scroll
         </span>
@@ -377,11 +459,12 @@ export default function Hero() {
         <ChevronDown
           size={16}
           className="
-            text-[rgba(245,240,232,0.4)]
-            group-hover:text-[#C97A2A]
-            transition-colors duration-300
+            transition-colors
+            duration-300
           "
           style={{
+            color:
+              'rgba(245,240,232,0.45)',
             animation:
               'scrollBounce 2.2s ease-in-out infinite',
           }}
