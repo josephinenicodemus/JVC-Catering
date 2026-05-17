@@ -19,6 +19,55 @@ export default function Hero() {
     }
   }
 
+  // ─── Single source of truth for the hero title typography ───────────────────
+  // Defined once, applied identically to the <h1> wrapper so both "JVC" and
+  // "Catering" share every property from the same declaration — no split nodes,
+  // no Tailwind class interference, no WebKit fill-color drift.
+  const heroTitleStyles = {
+    // Font stack
+    fontFamily: '"Playfair Display", serif',
+
+    // Scale — fluid between 4 rem (mobile) and 9 rem (wide desktop)
+    fontSize: 'clamp(4rem, 11vw, 9rem)',
+
+    // Weight
+    fontWeight: 600,
+
+    // Tight luxury line-height — applied ONLY via inline style.
+    // No Tailwind leading-* class on this element; that class would
+    // inject a conflicting line-height declaration that causes per-node
+    // rendering drift between "JVC" and "Catering".
+    lineHeight: 0.88,
+
+    // Tracking
+    letterSpacing: '-0.04em',
+
+    // ── Colour ──────────────────────────────────────────────────────────────
+    // `color` is the CSS cascade value; `-webkit-text-fill-color` is the
+    // actual paint value WebKit/Blink use.  Setting both to the same token
+    // prevents Safari / Chrome-macOS from letting a composited-layer tint
+    // (the gold gradient behind/below the section) bleed through and warm
+    // the second text node independently.
+    color: '#F5F0E8',
+    WebkitTextFillColor: '#F5F0E8',
+
+    // ── Rendering optimisations ──────────────────────────────────────────────
+    // `optimizeLegibility` enables kerning + ligatures; combined with
+    // antialiased smoothing this gives the sharpest result on all screens.
+    textRendering: 'optimizeLegibility',
+    WebkitFontSmoothing: 'antialiased',
+    MozOsxFontSmoothing: 'grayscale',
+
+    // Prevent the browser from synthesising a faux-bold or faux-italic
+    // variant if Playfair Display 600 hasn't loaded yet — avoids a flash
+    // of differently-weighted glyphs that can look warmer.
+    fontSynthesis: 'none',
+
+    // Opt into the font's own optical sizing hints (variable fonts).
+    // No-op on static fonts but harmless and future-safe.
+    fontOpticalSizing: 'auto',
+  }
+
   return (
     <section
       id="hero"
@@ -200,7 +249,21 @@ export default function Hero() {
 
           </div>
 
-          {/* TITLE */}
+          {/* ── TITLE ──────────────────────────────────────────────────────────
+               Both words are wrapped in identical <span style="display:block">
+               elements rather than separated by a <br />.
+
+               Why this matters:
+               A <br /> creates two anonymous text-node siblings inside the <h1>.
+               The layout engine assigns each node its own rendering context,
+               which can cause the subpixel rounding, gamma correction, and
+               composited-layer colour blending to diverge between "JVC" and
+               "Catering" — producing the warmer/orange tint on the second line.
+
+               Using display:block spans gives both words an identical, explicit
+               rendering context so every property (colour, smoothing, weight,
+               spacing) is computed from the same starting state.
+          ─────────────────────────────────────────────────────────────────── */}
 
           <div
             className="mb-7 sm:mb-9"
@@ -211,27 +274,11 @@ export default function Hero() {
           >
 
             <h1
-              className="leading-none"
-              style={{
-                fontFamily:
-                  '"Playfair Display", serif',
-                fontSize:
-                  'clamp(4rem, 11vw, 9rem)',
-                fontWeight: 600,
-                color: '#F5F0E8',
-                lineHeight: 0.88,
-                letterSpacing: '-0.04em',
-                textRendering:
-                  'optimizeLegibility',
-                WebkitFontSmoothing:
-                  'antialiased',
-                MozOsxFontSmoothing:
-                  'grayscale',
-              }}
+              aria-label="JVC Catering"
+              style={heroTitleStyles}
             >
-              JVC
-              <br />
-              Catering
+              <span style={{ display: 'block' }}>JVC</span>
+              <span style={{ display: 'block' }}>Catering</span>
             </h1>
 
           </div>
