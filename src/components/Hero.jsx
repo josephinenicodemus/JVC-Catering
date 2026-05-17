@@ -19,52 +19,31 @@ export default function Hero() {
     }
   }
 
-  // ─── Single source of truth for the hero title typography ───────────────────
-  // Defined once, applied identically to the <h1> wrapper so both "JVC" and
-  // "Catering" share every property from the same declaration — no split nodes,
-  // no Tailwind class interference, no WebKit fill-color drift.
+  /* HERO TITLE TYPOGRAPHY */
+
   const heroTitleStyles = {
-    // Font stack
     fontFamily: '"Playfair Display", serif',
 
-    // Scale — fluid between 4 rem (mobile) and 9 rem (wide desktop)
-    fontSize: 'clamp(4rem, 11vw, 9rem)',
+    /* RESPONSIVE SCALE */
 
-    // Weight
+    fontSize: 'clamp(3.5rem, 10vw, 8.8rem)',
+
     fontWeight: 600,
 
-    // Tight luxury line-height — applied ONLY via inline style.
-    // No Tailwind leading-* class on this element; that class would
-    // inject a conflicting line-height declaration that causes per-node
-    // rendering drift between "JVC" and "Catering".
-    lineHeight: 0.88,
+    /* IMPROVED LINE HEIGHT */
 
-    // Tracking
+    lineHeight: 0.92,
+
     letterSpacing: '-0.04em',
 
-    // ── Colour ──────────────────────────────────────────────────────────────
-    // `color` is the CSS cascade value; `-webkit-text-fill-color` is the
-    // actual paint value WebKit/Blink use.  Setting both to the same token
-    // prevents Safari / Chrome-macOS from letting a composited-layer tint
-    // (the gold gradient behind/below the section) bleed through and warm
-    // the second text node independently.
     color: '#F5F0E8',
     WebkitTextFillColor: '#F5F0E8',
 
-    // ── Rendering optimisations ──────────────────────────────────────────────
-    // `optimizeLegibility` enables kerning + ligatures; combined with
-    // antialiased smoothing this gives the sharpest result on all screens.
     textRendering: 'optimizeLegibility',
     WebkitFontSmoothing: 'antialiased',
     MozOsxFontSmoothing: 'grayscale',
 
-    // Prevent the browser from synthesising a faux-bold or faux-italic
-    // variant if Playfair Display 600 hasn't loaded yet — avoids a flash
-    // of differently-weighted glyphs that can look warmer.
     fontSynthesis: 'none',
-
-    // Opt into the font's own optical sizing hints (variable fonts).
-    // No-op on static fonts but harmless and future-safe.
     fontOpticalSizing: 'auto',
   }
 
@@ -78,11 +57,9 @@ export default function Hero() {
         bg-[#0D0D0D]
       "
     >
-
       {/* BACKGROUND IMAGE */}
 
       <div className="absolute inset-0 z-0">
-
         <img
           src="https://images.unsplash.com/photo-1555244162-803834f70033?w=3840&h=2160&fit=crop&q=90&auto=format"
           alt="JVC Catering luxury buffet setup"
@@ -97,6 +74,7 @@ export default function Hero() {
           fetchPriority="high"
           decoding="async"
           draggable="false"
+          sizes="100vw"
           style={{
             animation:
               'heroZoom 24s ease-in-out infinite alternate',
@@ -116,9 +94,9 @@ export default function Hero() {
               linear-gradient(
                 100deg,
                 rgba(10,10,10,0.94) 0%,
-                rgba(10,10,10,0.82) 22%,
-                rgba(10,10,10,0.55) 48%,
-                rgba(10,10,10,0.25) 100%
+                rgba(10,10,10,0.78) 22%,
+                rgba(10,10,10,0.52) 48%,
+                rgba(10,10,10,0.22) 100%
               )
             `,
           }}
@@ -139,10 +117,9 @@ export default function Hero() {
             opacity: 0.35,
           }}
         />
-
       </div>
 
-      {/* LEFT ACCENT LINE */}
+      {/* LEFT ACCENT */}
 
       <div
         className="
@@ -161,7 +138,7 @@ export default function Hero() {
         }}
       />
 
-      {/* RIGHT DECORATIVE LINE */}
+      {/* RIGHT DECOR */}
 
       <div
         className="
@@ -198,9 +175,7 @@ export default function Hero() {
           xl:px-24
         "
       >
-
-        <div className="w-full max-w-[760px]">
-
+        <div className="w-full max-w-[760px] pt-16 sm:pt-20">
           {/* ORNAMENT */}
 
           <div
@@ -216,7 +191,6 @@ export default function Hero() {
                 'fadeUp 0.8s 0.2s ease both',
             }}
           >
-
             <div
               className="h-px w-10 sm:w-16"
               style={{
@@ -246,24 +220,9 @@ export default function Hero() {
                   'rgba(201,122,42,0.6)',
               }}
             />
-
           </div>
 
-          {/* ── TITLE ──────────────────────────────────────────────────────────
-               Both words are wrapped in identical <span style="display:block">
-               elements rather than separated by a <br />.
-
-               Why this matters:
-               A <br /> creates two anonymous text-node siblings inside the <h1>.
-               The layout engine assigns each node its own rendering context,
-               which can cause the subpixel rounding, gamma correction, and
-               composited-layer colour blending to diverge between "JVC" and
-               "Catering" — producing the warmer/orange tint on the second line.
-
-               Using display:block spans gives both words an identical, explicit
-               rendering context so every property (colour, smoothing, weight,
-               spacing) is computed from the same starting state.
-          ─────────────────────────────────────────────────────────────────── */}
+          {/* TITLE */}
 
           <div
             className="mb-7 sm:mb-9"
@@ -272,15 +231,18 @@ export default function Hero() {
                 'fadeUp 0.9s 0.35s ease both',
             }}
           >
-
             <h1
               aria-label="JVC Catering"
               style={heroTitleStyles}
             >
-              <span style={{ display: 'block' }}>JVC</span>
-              <span style={{ display: 'block' }}>Catering</span>
-            </h1>
+              <span style={{ display: 'block' }}>
+                JVC
+              </span>
 
+              <span style={{ display: 'block' }}>
+                Catering
+              </span>
+            </h1>
           </div>
 
           {/* SUBTITLE */}
@@ -299,7 +261,6 @@ export default function Hero() {
                 'fadeUp 0.8s 0.55s ease both',
             }}
           >
-
             <div
               className="h-px w-8 sm:w-12"
               style={{
@@ -317,13 +278,21 @@ export default function Hero() {
                 fontStyle: 'italic',
                 fontWeight: 400,
                 color:
-                  'rgba(245,240,232,0.78)',
+                  'rgba(245,240,232,0.82)',
                 letterSpacing: '0.08em',
+                lineHeight: 1.4,
               }}
-              className="whitespace-nowrap"
+              className="
+                text-center
+                sm:text-left
+                whitespace-normal
+                sm:whitespace-nowrap
+              "
             >
-              {t('hero.subtitle') ||
-                'The service you need'}
+              {t(
+                'hero.subtitle',
+                'The service you need'
+              )}
             </p>
 
             <div
@@ -333,7 +302,6 @@ export default function Hero() {
                   'rgba(245,240,232,0.35)',
               }}
             />
-
           </div>
 
           {/* CTA BUTTONS */}
@@ -341,7 +309,8 @@ export default function Hero() {
           <div
             className="
               flex
-              flex-wrap
+              flex-col
+              sm:flex-row
               gap-4
             "
             style={{
@@ -349,7 +318,6 @@ export default function Hero() {
                 'fadeUp 0.8s 0.75s ease both',
             }}
           >
-
             {/* PRIMARY */}
 
             <button
@@ -359,11 +327,12 @@ export default function Hero() {
               className="
                 inline-flex
                 items-center
+                justify-center
                 gap-2.5
                 px-7
                 sm:px-9
                 py-4
-                rounded-[6px]
+                rounded-xl
                 text-white
                 text-[0.72rem]
                 sm:text-[0.78rem]
@@ -372,7 +341,8 @@ export default function Hero() {
                 tracking-[0.18em]
                 transition-all
                 duration-300
-                hover:-translate-y-[3px]
+                hover:-translate-y-1
+                hover:shadow-2xl
                 focus:outline-none
               "
               style={{
@@ -384,16 +354,12 @@ export default function Hero() {
                   '0 10px 30px rgba(201,122,42,0.35)',
               }}
             >
-
-              <MessageCircle
-                size={16}
-              />
+              <MessageCircle size={16} />
 
               <span>
                 {t('hero.cta1') ||
                   'Request a Quote'}
               </span>
-
             </button>
 
             {/* SECONDARY */}
@@ -405,11 +371,12 @@ export default function Hero() {
               className="
                 inline-flex
                 items-center
+                justify-center
                 gap-2.5
                 px-7
                 sm:px-9
                 py-4
-                rounded-[6px]
+                rounded-xl
                 text-[0.72rem]
                 sm:text-[0.78rem]
                 font-bold
@@ -418,7 +385,8 @@ export default function Hero() {
                 border
                 transition-all
                 duration-300
-                hover:-translate-y-[3px]
+                hover:-translate-y-1
+                hover:shadow-2xl
               "
               style={{
                 fontFamily:
@@ -444,7 +412,6 @@ export default function Hero() {
                   '#F5F0E8'
               }}
             >
-
               <UtensilsCrossed
                 size={16}
               />
@@ -453,13 +420,9 @@ export default function Hero() {
                 {t('hero.cta2') ||
                   'Explore Menu'}
               </span>
-
             </button>
-
           </div>
-
         </div>
-
       </div>
 
       {/* SCROLL INDICATOR */}
@@ -485,7 +448,6 @@ export default function Hero() {
             'fadeIn 1s 1.3s ease both',
         }}
       >
-
         <span
           className="
             uppercase
@@ -497,7 +459,7 @@ export default function Hero() {
           "
           style={{
             color:
-              'rgba(245,240,232,0.45)',
+              'rgba(245,240,232,0.6)',
           }}
         >
           Scroll
@@ -511,12 +473,11 @@ export default function Hero() {
           "
           style={{
             color:
-              'rgba(245,240,232,0.45)',
+              'rgba(245,240,232,0.6)',
             animation:
               'scrollBounce 2.2s ease-in-out infinite',
           }}
         />
-
       </button>
 
       {/* KEYFRAMES */}
@@ -570,7 +531,6 @@ export default function Hero() {
         }
 
       `}</style>
-
     </section>
   )
 }
