@@ -42,12 +42,12 @@ export default function Hero() {
           decoding="async"
           draggable="false"
           onError={(e) => {
-            e.target.src =
+            e.currentTarget.src =
               'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=3840&h=2160&fit=crop&q=95'
           }}
         />
 
-        {/* DARK OVERLAY */}
+        {/* CINEMATIC OVERLAY */}
 
         <div
           className="absolute inset-0"
@@ -56,8 +56,8 @@ export default function Hero() {
               linear-gradient(
                 105deg,
                 rgba(13,13,13,0.92) 0%,
-                rgba(13,13,13,0.80) 20%,
-                rgba(13,13,13,0.50) 45%,
+                rgba(13,13,13,0.82) 22%,
+                rgba(13,13,13,0.52) 48%,
                 rgba(13,13,13,0.20) 100%
               )
             `,
@@ -98,7 +98,7 @@ export default function Hero() {
         className="absolute right-[5%] top-[20%] bottom-[20%] w-px z-10 hidden xl:block pointer-events-none"
         style={{
           background:
-            'linear-gradient(to bottom, transparent, rgba(201,122,42,0.5) 35%, rgba(201,122,42,0.5) 65%, transparent)',
+            'linear-gradient(to bottom, transparent, rgba(201,122,42,0.45) 35%, rgba(201,122,42,0.45) 65%, transparent)',
         }}
       />
 
@@ -161,9 +161,15 @@ export default function Hero() {
 
         </div>
 
-        {/* MAIN TITLE */}
+        {/* HERO TITLE */}
 
-        <div className="mb-6 sm:mb-8">
+        <div
+          className="mb-6 sm:mb-8"
+          style={{
+            animation:
+              'fadeUp 0.9s 0.35s ease both',
+          }}
+        >
 
           <h1
             style={{
@@ -173,31 +179,13 @@ export default function Hero() {
                 'clamp(3.5rem, 11vw, 9rem)',
               fontWeight: 600,
               color: '#F5F0E8',
-              lineHeight: 0.9,
-              letterSpacing: '-0.02em',
-              animation:
-                'fadeUp 0.9s 0.35s ease both',
+              lineHeight: 0.88,
+              letterSpacing: '-0.03em',
             }}
             className="leading-none"
           >
             JVC
-          </h1>
-
-          <h1
-            style={{
-              fontFamily:
-                '"Playfair Display", serif',
-              fontSize:
-                'clamp(3.5rem, 11vw, 9rem)',
-              fontWeight: 600,
-              color: '#F5F0E8',
-              lineHeight: 0.9,
-              letterSpacing: '-0.02em',
-              animation:
-                'fadeUp 0.9s 0.5s ease both',
-            }}
-            className="leading-none"
-          >
+            <br />
             Catering
           </h1>
 
@@ -258,7 +246,7 @@ export default function Hero() {
           }}
         >
 
-          {/* PRIMARY */}
+          {/* PRIMARY CTA */}
 
           <button
             onClick={() => scrollTo('#contact')}
@@ -298,7 +286,7 @@ export default function Hero() {
 
           </button>
 
-          {/* SECONDARY */}
+          {/* SECONDARY CTA */}
 
           <button
             onClick={() => scrollTo('#menu')}
@@ -321,6 +309,20 @@ export default function Hero() {
               borderColor:
                 'rgba(245,240,232,0.35)',
               backdropFilter: 'blur(8px)',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor =
+                'rgba(201,122,42,0.7)'
+
+              e.currentTarget.style.color =
+                '#C97A2A'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor =
+                'rgba(245,240,232,0.35)'
+
+              e.currentTarget.style.color =
+                '#F5F0E8'
             }}
           >
 
@@ -393,7 +395,7 @@ export default function Hero() {
 
         @keyframes heroZoom {
           from {
-            transform: scale(1.0);
+            transform: scale(1);
           }
 
           to {
