@@ -22,7 +22,7 @@ export default function CTABand() {
           <em style={{ fontStyle: 'italic' }}>{t('cta.heading2')}</em>
         </h2>
         <p className="text-white/72 text-base mb-9">{t('cta.sub')}</p>
-        <a href="https://wa.me/255767620509?text=Hello%20JVC%20Catering%2C%20I%20would%20like%20to%20discuss%20my%20event."
+        <a href="https://wa.me/255767602509?text=Hello%20JVC%20Catering%2C%20I%20would%20like%20to%20discuss%20my%20event."
           target="_blank" rel="noreferrer"
           className="inline-flex items-center gap-3 px-9 py-4 rounded-full bg-white text-[#C97A2A] text-sm font-bold tracking-widest uppercase transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
           <MessageCircle size={18} style={{ color: '#25d366' }} />
