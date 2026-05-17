@@ -355,7 +355,7 @@ Please share pricing and availability.`
                   {
                     icon: MessageCircle,
                     label: t('contact.wa'),
-                    val: '+255 767 620 509',
+                    val: '+255 767 602 509',
                     color: '#C97A2A',
                     href: `https://wa.me/${WA}`,
                   },
