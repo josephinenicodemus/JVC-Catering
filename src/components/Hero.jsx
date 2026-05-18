@@ -19,31 +19,31 @@ export default function Hero() {
     }
   }
 
-  /* HERO TITLE TYPOGRAPHY */
+  /* OPTIMIZED HERO TITLE */
 
   const heroTitleStyles = {
     fontFamily: '"Playfair Display", serif',
 
-    /* RESPONSIVE SCALE */
-
-    fontSize: 'clamp(3.5rem, 10vw, 8.8rem)',
+    fontSize: 'clamp(3.2rem, 9vw, 8rem)',
 
     fontWeight: 600,
-
-    /* IMPROVED LINE HEIGHT */
 
     lineHeight: 0.92,
 
     letterSpacing: '-0.04em',
 
     color: '#F5F0E8',
+
     WebkitTextFillColor: '#F5F0E8',
 
     textRendering: 'optimizeLegibility',
+
     WebkitFontSmoothing: 'antialiased',
+
     MozOsxFontSmoothing: 'grayscale',
 
     fontSynthesis: 'none',
+
     fontOpticalSizing: 'auto',
   }
 
@@ -57,35 +57,51 @@ export default function Hero() {
         bg-[#0D0D0D]
       "
     >
-      {/* BACKGROUND IMAGE */}
+      {/* OPTIMIZED BACKGROUND */}
 
       <div className="absolute inset-0 z-0">
-        <img
-          src="https://images.unsplash.com/photo-1555244162-803834f70033?w=3840&h=2160&fit=crop&q=90&auto=format"
-          alt="JVC Catering luxury buffet setup"
-          className="
-            w-full
-            h-full
-            object-cover
-            object-center
-            select-none
-          "
-          loading="eager"
-          fetchPriority="high"
-          decoding="async"
-          draggable="false"
-          sizes="100vw"
-          style={{
-            animation:
-              'heroZoom 24s ease-in-out infinite alternate',
-          }}
-          onError={(e) => {
-            e.currentTarget.src =
-              'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=2400&q=85'
-          }}
-        />
+        <picture>
+          {/* MOBILE */}
 
-        {/* CINEMATIC OVERLAY */}
+          <source
+            media="(max-width: 640px)"
+            srcSet="/images/hero-mobile.webp"
+          />
+
+          {/* TABLET */}
+
+          <source
+            media="(max-width: 1024px)"
+            srcSet="/images/hero-tablet.webp"
+          />
+
+          {/* DESKTOP */}
+
+          <img
+            src="/images/hero-desktop.webp"
+            alt="JVC Catering luxury buffet setup"
+            className="
+              w-full
+              h-full
+              object-cover
+              object-center
+              select-none
+              will-change-transform
+            "
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
+            draggable="false"
+            width="1920"
+            height="1080"
+            sizes="100vw"
+            style={{
+              transform: 'scale(1.02)',
+            }}
+          />
+        </picture>
+
+        {/* SIMPLIFIED PREMIUM OVERLAY */}
 
         <div
           className="absolute inset-0"
@@ -93,28 +109,26 @@ export default function Hero() {
             background: `
               linear-gradient(
                 100deg,
-                rgba(10,10,10,0.94) 0%,
-                rgba(10,10,10,0.78) 22%,
-                rgba(10,10,10,0.52) 48%,
-                rgba(10,10,10,0.22) 100%
+                rgba(10,10,10,0.88) 0%,
+                rgba(10,10,10,0.68) 35%,
+                rgba(10,10,10,0.38) 65%,
+                rgba(10,10,10,0.18) 100%
               )
             `,
           }}
         />
 
-        {/* BOTTOM DEPTH */}
+        {/* DEPTH OVERLAY */}
 
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
-        {/* FILM GRAIN */}
+        {/* LIGHTWEIGHT TEXTURE */}
 
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E")`,
-            backgroundSize: '240px 240px',
-            mixBlendMode: 'overlay',
-            opacity: 0.35,
+            background:
+              'rgba(0,0,0,0.08)',
           }}
         />
       </div>
@@ -129,12 +143,12 @@ export default function Hero() {
           bottom-0
           hidden
           sm:block
-          w-[4px]
+          w-[3px]
           z-10
         "
         style={{
           background:
-            'linear-gradient(to bottom, transparent 6%, #C97A2A 35%, #1B6B3A 65%, transparent 94%)',
+            'linear-gradient(to bottom, transparent 8%, #C97A2A 38%, #1B6B3A 62%, transparent 92%)',
         }}
       />
 
@@ -144,16 +158,17 @@ export default function Hero() {
         className="
           absolute
           right-[5%]
-          top-[20%]
-          bottom-[20%]
+          top-[22%]
+          bottom-[22%]
           hidden
           xl:block
           w-px
           z-10
+          opacity-70
         "
         style={{
           background:
-            'linear-gradient(to bottom, transparent, rgba(201,122,42,0.45) 35%, rgba(201,122,42,0.45) 65%, transparent)',
+            'linear-gradient(to bottom, transparent, rgba(201,122,42,0.35) 35%, rgba(201,122,42,0.35) 65%, transparent)',
         }}
       />
 
@@ -188,7 +203,7 @@ export default function Hero() {
             "
             style={{
               animation:
-                'fadeUp 0.8s 0.2s ease both',
+                'fadeUp 0.7s ease both',
             }}
           >
             <div
@@ -228,7 +243,7 @@ export default function Hero() {
             className="mb-7 sm:mb-9"
             style={{
               animation:
-                'fadeUp 0.9s 0.35s ease both',
+                'fadeUp 0.8s ease both',
             }}
           >
             <h1
@@ -258,7 +273,7 @@ export default function Hero() {
             "
             style={{
               animation:
-                'fadeUp 0.8s 0.55s ease both',
+                'fadeUp 0.9s ease both',
             }}
           >
             <div
@@ -273,13 +288,19 @@ export default function Hero() {
               style={{
                 fontFamily:
                   '"Playfair Display", serif',
+
                 fontSize:
                   'clamp(1rem, 2vw, 1.35rem)',
+
                 fontStyle: 'italic',
+
                 fontWeight: 400,
+
                 color:
                   'rgba(245,240,232,0.82)',
+
                 letterSpacing: '0.08em',
+
                 lineHeight: 1.4,
               }}
               className="
@@ -315,7 +336,7 @@ export default function Hero() {
             "
             style={{
               animation:
-                'fadeUp 0.8s 0.75s ease both',
+                'fadeUp 1s ease both',
             }}
           >
             {/* PRIMARY */}
@@ -342,16 +363,18 @@ export default function Hero() {
                 transition-all
                 duration-300
                 hover:-translate-y-1
-                hover:shadow-2xl
+                hover:shadow-xl
                 focus:outline-none
               "
               style={{
                 fontFamily:
                   '"Playfair Display", serif',
+
                 background:
                   'linear-gradient(135deg, #C97A2A 0%, #E5A15D 100%)',
+
                 boxShadow:
-                  '0 10px 30px rgba(201,122,42,0.35)',
+                  '0 8px 24px rgba(201,122,42,0.28)',
               }}
             >
               <MessageCircle size={16} />
@@ -386,30 +409,20 @@ export default function Hero() {
                 transition-all
                 duration-300
                 hover:-translate-y-1
-                hover:shadow-2xl
+                hover:border-[#C97A2A]
+                hover:text-[#C97A2A]
               "
               style={{
                 fontFamily:
                   '"Playfair Display", serif',
+
                 color: '#F5F0E8',
+
                 borderColor:
-                  'rgba(245,240,232,0.30)',
-                backdropFilter:
-                  'blur(10px)',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor =
-                  '#C97A2A'
+                  'rgba(245,240,232,0.28)',
 
-                e.currentTarget.style.color =
-                  '#C97A2A'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor =
-                  'rgba(245,240,232,0.30)'
-
-                e.currentTarget.style.color =
-                  '#F5F0E8'
+                background:
+                  'rgba(255,255,255,0.04)',
               }}
             >
               <UtensilsCrossed
@@ -445,7 +458,7 @@ export default function Hero() {
         "
         style={{
           animation:
-            'fadeIn 1s 1.3s ease both',
+            'fadeIn 1s ease both',
         }}
       >
         <span
@@ -480,24 +493,14 @@ export default function Hero() {
         />
       </button>
 
-      {/* KEYFRAMES */}
+      {/* OPTIMIZED KEYFRAMES */}
 
       <style>{`
-
-        @keyframes heroZoom {
-          from {
-            transform: scale(1);
-          }
-
-          to {
-            transform: scale(1.08);
-          }
-        }
 
         @keyframes fadeUp {
           from {
             opacity: 0;
-            transform: translateY(40px);
+            transform: translateY(22px);
           }
 
           to {
@@ -522,11 +525,11 @@ export default function Hero() {
           }
 
           40% {
-            transform: translateY(8px);
+            transform: translateY(6px);
           }
 
           60% {
-            transform: translateY(4px);
+            transform: translateY(3px);
           }
         }
 
