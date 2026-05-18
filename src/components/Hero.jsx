@@ -2,29 +2,10 @@ import { useCallback, memo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MessageCircle, UtensilsCrossed, ChevronDown } from 'lucide-react'
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   MODULE-LEVEL CONSTANTS
-   Defined outside the component so they are created once per module import,
-   not once per render. This matters for style objects especially.
-───────────────────────────────────────────────────────────────────────────── */
-
 const BASE_URL =
   'https://images.unsplash.com/photo-1555244162-803834f70033'
 
-/**
- * RESPONSIVE SRCSET
- * Covers the full breakpoint range. Unsplash's CDN (via imgix) delivers
- * WebP automatically when auto=format is present.
- *
- * 640w  → phones in portrait (< 640px viewport)
- * 1080w → phones landscape / small tablets
- * 1600w → tablets / laptop screens
- * 2400w → large desktop / retina displays
- *
- * The browser multiplies viewport width by devicePixelRatio to pick the
- * right source. A 390px iPhone 15 Pro at 3× DPR would want 1170px — so it
- * picks 1600w instead of the old 3840w. Savings: ~3.5 MB per mobile load.
- */
+
 const IMG_SRCSET = [
   `${BASE_URL}?auto=format&fit=crop&w=640&q=72   640w`,
   `${BASE_URL}?auto=format&fit=crop&w=1080&q=75 1080w`,
@@ -43,11 +24,6 @@ const IMG_SRC = `${BASE_URL}?auto=format&fit=crop&w=1600&q=78`
  * Uses a different Unsplash photo (same cuisine category) at safe resolution.
  */
 const IMG_FALLBACK = `${BASE_URL}?auto=format&fit=crop&w=1080&q=72`
-
-/* ── Static style objects ───────────────────────────────────────────────────
-   Hoisted to module scope → identity-stable across renders → no unnecessary
-   reconciliation of style props by React.
-─────────────────────────────────────────────────────────────────────────── */
 
 // H1 typography — Playfair Display, luxury cinematic scale
 const titleStyle = {
@@ -95,13 +71,6 @@ const secondaryBtnStyle = {
 
 const Hero = memo(function Hero() {
   const { t } = useTranslation()
-
-  /**
-   * scrollTo — memoized with empty dep array.
-   * Without useCallback, this arrow function is recreated every render and
-   * passed as a new reference to each <button>'s onClick — preventing React
-   * from short-circuiting event-listener updates.
-   */
   const scrollTo = useCallback((id) => {
     document.querySelector(id)?.scrollIntoView({
       behavior: 'smooth',
@@ -114,33 +83,6 @@ const Hero = memo(function Hero() {
       className="relative w-full min-h-screen overflow-hidden"
       aria-label="JVC Catering — hero"
     >
-      {/* ════════════════════════════════════════════════════════════════════
-          BACKGROUND IMAGE
-          ════════════════════════════════════════════════════════════════════
-          Key optimisations applied here:
-
-          • srcSet + sizes  — browser picks the smallest adequate resolution.
-            Mobile users no longer download a 3840-wide image.
-
-          • fetchPriority="high"  — signals this as the LCP candidate to the
-            browser's preload scanner. Combined with the <link rel="preload">
-            in index.html this dramatically reduces LCP.
-
-          • loading="eager"  — don't lazy-load the above-the-fold LCP image.
-
-          • decoding="async"  — image decoding happens off the main thread so
-            it doesn't block script execution or layout.
-
-          • width + height intrinsic dimensions  — lets the browser calculate
-            aspect ratio before the image loads → prevents CLS.
-
-          • REMOVED: heroZoom transform:scale animation. This was the primary
-            cause of continuous GPU compositing and high paint times. The hero
-            still looks cinematic from the overlay alone.
-
-          • aria-hidden + empty alt  — decorative image; screen readers skip
-            it. The section aria-label provides context.
-      ════════════════════════════════════════════════════════════════════ */}
       <div className="absolute inset-0 z-0" aria-hidden="true">
         <img
           src={IMG_SRC}
@@ -359,32 +301,7 @@ const Hero = memo(function Hero() {
       </button>
 
       {/* ════════════════════════════════════════════════════════════════════
-          CRITICAL CSS
-          ════════════════════════════════════════════════════════════════════
-
-          Kept as a <style> block inside the component so it is co-located
-          and tree-shaken if the component is ever removed. In a larger app
-          these could live in a Hero.module.css file.
-
-          KEY DECISIONS:
-          • jvc-fade-up uses `animation-fill-mode: both` which applies the
-            `from` keyframe state (opacity:0, translateY) during the delay
-            period — so elements are invisible before their animation starts
-            without needing an explicit `opacity: 0` CSS rule that could
-            conflict if JS is disabled.
-
-          • All animations use ONLY `opacity` and/or `transform`.
-            These are the two compositor-only properties — they never trigger
-            layout or paint. All other animated properties (color, border-color,
-            box-shadow) use CSS `transition` on :hover which is similarly safe.
-
-          • REMOVED: heroZoom  (scale transform on full-viewport image)
-          • REMOVED: feTurbulence grain filter
-          • REMOVED: JS hover handlers
-
-          • prefers-reduced-motion: all motion is completely disabled for
-            users who have requested it in their OS settings.
-      ════════════════════════════════════════════════════════════════════ */}
+         
       <style>{`
         /* ── Staggered entrance animation ─────────────────────────────── */
         .jvc-fade-up {
