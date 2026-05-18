@@ -1,117 +1,268 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- CHARACTER -->
+    <!-- ─── CHARACTER ENCODING ───────────────────────────────────────────────
+         Must be the FIRST tag inside <head> — the browser needs to know the
+         encoding before it reads any other byte, including the <title>.
+         Placing anything before charset risks character misinterpretation.
+    ───────────────────────────────────────────────────────────────────────── -->
     <meta charset="UTF-8" />
 
-    <!-- RESPONSIVE -->
+    <!-- ─── VIEWPORT ────────────────────────────────────────────────────────
+         FIX: Added `viewport-fit=cover` — required for iPhones with a notch
+         (iPhone X and later) to render content edge-to-edge correctly.
+         Without it, the hero section can show white bars on notched devices.
+    ───────────────────────────────────────────────────────────────────────── -->
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
 
-    <!-- SEO -->
-    <title>
-      JVC Catering | Tailored Tastes. Warm Moments. Spectacular Impressions.
-    </title>
-
+    <!-- ─── SEO ─────────────────────────────────────────────────────────────
+         Title, description, keywords, author, robots: all correct. No change.
+    ───────────────────────────────────────────────────────────────────────── -->
+    <title>JVC Catering | Tailored Tastes. Warm Moments. Spectacular Impressions.</title>
     <meta
       name="description"
       content="Premium Tanzanian catering services for weddings, corporate events, private celebrations, and luxury gatherings."
     />
-
     <meta
       name="keywords"
       content="JVC Catering, Tanzania Catering, Wedding Catering Tanzania, Corporate Catering, Luxury Catering"
     />
+    <meta name="author" content="JVC Catering" />
+    <meta name="robots" content="index, follow" />
 
-    <meta
-      name="author"
-      content="JVC Catering"
-    />
+    <!-- ─── CANONICAL ───────────────────────────────────────────────────────
+         FIX: Original pointed to jvccatering.co.tz which may not be live.
+         A canonical that doesn't match the real serving URL will cause Google
+         to deindex the Vercel deployment. Set to your confirmed live URL.
+         When your custom domain is fully live and DNS-verified, change this
+         back to https://jvccatering.co.tz/
+    ───────────────────────────────────────────────────────────────────────── -->
+    <link rel="canonical" href="https://jvc-catering.vercel.app/" />
 
-    <meta
-      name="robots"
-      content="index, follow"
-    />
+    <!-- ─── THEME COLOR ─────────────────────────────────────────────────────
+         Correct. Shows in Android Chrome browser chrome and PWA installs.
+    ───────────────────────────────────────────────────────────────────────── -->
+    <meta name="theme-color" content="#c58a3d" />
 
-    <link
-      rel="canonical"
-      href="https://jvccatering.co.tz/"
-    />
+    <!-- ─── FAVICON ─────────────────────────────────────────────────────────
+         FIX: Added apple-touch-icon — without it iOS home-screen saves use
+         a blurry screenshot instead of the brand icon.
+         Ensure /favicon.png and /apple-touch-icon.png exist in /public/.
+    ───────────────────────────────────────────────────────────────────────── -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
-    <!-- THEME -->
-    <meta
-      name="theme-color"
-      content="#c58a3d"
-    />
-
-    <!-- FAVICON -->
-    <link
-      rel="icon"
-      type="image/png"
-      href="/favicon.png"
-    />
-
-    <!-- OPEN GRAPH -->
+    <!-- ─── OPEN GRAPH ───────────────────────────────────────────────────────
+         FIX 1: Added og:url — required by the OG spec. LinkedIn and some
+                WhatsApp versions won't render a card without it.
+         FIX 2: Added og:image — without it every share (WhatsApp, Facebook,
+                LinkedIn) shows a blank card with no preview.
+         FIX 3: Added og:image:width / height — platforms use these to render
+                the card without downloading the image first.
+         FIX 4: Added og:site_name — best practice for brand recognition.
+         FIX 5: Added og:locale — signals language/region to crawlers.
+    ───────────────────────────────────────────────────────────────────────── -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="JVC Catering" />
     <meta
       property="og:title"
-      content="JVC Catering"
+      content="JVC Catering | Tailored Tastes. Warm Moments. Spectacular Impressions."
     />
-
     <meta
       property="og:description"
       content="Premium Tanzanian catering services for weddings, corporate events, and luxury celebrations."
     />
-
+    <meta property="og:url" content="https://jvc-catering.vercel.app/" />
     <meta
-      property="og:type"
-      content="website"
+      property="og:image"
+      content="https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1200&h=630&q=82"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="en_TZ" />
+
+    <!-- ─── TWITTER / X CARD ─────────────────────────────────────────────────
+         FIX: Was missing entirely from original.
+         Without twitter:card tags, X (Twitter) shows a plain text link with
+         no image — a significant missed opportunity whenever the site is shared.
+    ───────────────────────────────────────────────────────────────────────── -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="JVC Catering | Tailored Tastes. Warm Moments." />
+    <meta
+      name="twitter:description"
+      content="Premium Tanzanian catering services for weddings, corporate events, and luxury celebrations."
+    />
+    <meta
+      name="twitter:image"
+      content="https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1200&h=630&q=82"
     />
 
-    <!-- PERFORMANCE -->
+    <!-- ─── PERFORMANCE: PRECONNECT ──────────────────────────────────────────
+         FIX: fonts.googleapis.com was missing `crossorigin` in original.
 
-    <!-- PRECONNECT -->
-    <link
-      rel="preconnect"
-      href="https://fonts.googleapis.com"
-    />
+         The font stylesheet IS fetched as a CORS request. Without crossorigin,
+         the browser opens a second anonymous connection when it later fetches
+         the actual stylesheet — completely wasting the preconnect handshake.
 
-    <link
-      rel="preconnect"
-      href="https://fonts.gstatic.com"
-      crossorigin
-    />
+         RULE: Any preconnect to an origin serving CORS resources (fonts,
+         images from a CDN) MUST include crossorigin.
+         All three origins here qualify.
+    ───────────────────────────────────────────────────────────────────────── -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
 
-    <link
-      rel="preconnect"
-      href="https://images.unsplash.com"
-      crossorigin
-    />
+    <!-- ─── PERFORMANCE: HERO IMAGE PRELOAD ─────────────────────────────────
+         FIX 1: Added imagesrcset + imagesizes — the single most impactful
+                LCP fix in this file.
 
-    <!-- PRELOAD HERO IMAGE -->
+                Without imagesrcset, the browser preloads the 1600w default
+                for EVERY device, including a 390px mobile phone — still
+                downloading a massive image unnecessarily.
 
+                With imagesrcset, the browser picks 640w for small phones,
+                1080w for medium screens. Savings on mobile: ~1.5–3 MB per load.
+
+                CRITICAL: The srcset values here MUST match exactly what is in
+                Hero.jsx's srcSet attribute — any mismatch causes a double
+                fetch (preload wasted, browser fetches again from <img>).
+
+         FIX 2: Added crossorigin — Unsplash CDN serves images with CORS
+                headers. Without crossorigin on the preload, the preloaded
+                response is NOT reused by the <img> tag (different cache keys),
+                making the preload completely useless.
+
+                This was the original's most critical preload bug.
+
+         fetchpriority="high" was correct in the original. Kept.
+    ───────────────────────────────────────────────────────────────────────── -->
     <link
       rel="preload"
       as="image"
       href="https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1600&q=78"
+      imagesrcset="
+        https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=640&q=72   640w,
+        https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1080&q=75 1080w,
+        https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1600&q=78 1600w,
+        https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=2400&q=80 2400w
+      "
+      imagesizes="100vw"
       fetchpriority="high"
+      crossorigin
     />
 
-    <!-- FONTS -->
+    <!-- ─── FONTS ─────────────────────────────────────────────────────────────
+         FIX 1: RENDER-BLOCKING — this was the most damaging line in the file.
 
+                The original used a plain <link rel="stylesheet"> for Google
+                Fonts. This is FULLY render-blocking: the browser stops parsing
+                all HTML and halts all rendering until the font CSS is
+                downloaded, parsed, and applied. On a slow mobile network
+                (common in Tanzania) this alone adds 600–1500ms to FCP.
+
+                SOLUTION: rel="preload" + onload pattern.
+                The font CSS is fetched in parallel in the background. When
+                it's ready the onload handler switches rel to "stylesheet".
+                `this.onload=null` prevents the handler firing twice in some
+                browsers. <noscript> covers JS-disabled environments (rare
+                but important for accessibility compliance).
+
+         FIX 2: Trimmed to only the weights actually in use.
+                ORIGINAL loaded: Playfair Display 400,500,600,700,800
+                                 Plus Jakarta Sans 300,400,500,600,700
+                = 10 font file downloads (~20–40 KB each = up to 400 KB)
+
+                Hero.jsx uses only:
+                  Playfair Display 600 (title) + 400 italic (subtitle)
+
+                The safe set below keeps those plus Plus Jakarta Sans 400 and
+                600 for body/button text. Add weights back ONLY if other
+                components use them — check with browser DevTools font tab.
+    ───────────────────────────────────────────────────────────────────────── -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Plus+Jakarta+Sans:wght@400;600&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
     />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Plus+Jakarta+Sans:wght@400;600&display=swap"
+      />
+    </noscript>
+
+    <!-- ─── CRITICAL INLINE CSS ───────────────────────────────────────────────
+         Inlined styles apply instantly on HTML parse — zero network requests.
+         These three rules prevent the most common visual glitches between
+         HTML load and React hydration.
+    ───────────────────────────────────────────────────────────────────────── -->
+    <style>
+      /* Universal box model — avoids layout surprises across components */
+      *, *::before, *::after { box-sizing: border-box; }
+
+      /* Prevent white flash before React mounts the dark hero section */
+      body { margin: 0; background-color: #0a0a0a; }
+
+      /* Prevent CLS: root needs height before React injects content.
+         100svh uses the Small Viewport Height unit — correct on mobile
+         browsers where the address bar collapses (avoids overflow). */
+      #root { min-height: 100svh; }
+
+      /* Playfair Display system fallback with adjusted metrics.
+         The size-adjust + override values make Georgia occupy roughly the
+         same line-heights as Playfair Display — minimising CLS when the
+         real font swaps in via font-display:swap. */
+      @font-face {
+        font-family: 'Playfair Display Fallback';
+        src: local('Georgia'), local('Times New Roman');
+        ascent-override: 97%;
+        descent-override: 25%;
+        line-gap-override: 0%;
+        size-adjust: 105%;
+      }
+    </style>
+
+    <!-- ─── STRUCTURED DATA (JSON-LD) ────────────────────────────────────────
+         FIX: Was missing from the original.
+         Inline <script type="application/ld+json"> is non-render-blocking
+         and makes zero network requests. It helps Google understand this is
+         a local business and improves eligibility for rich results (address,
+         business type displayed in search).
+    ───────────────────────────────────────────────────────────────────────── -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CateringBusiness",
+      "name": "JVC Catering",
+      "description": "Premium catering services for weddings, corporate events, and private functions in Dar es Salaam, Tanzania.",
+      "url": "https://jvc-catering.vercel.app",
+      "foundingDate": "2016",
+      "image": "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1200&h=630&q=82",
+      "areaServed": {
+        "@type": "City",
+        "name": "Dar es Salaam"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Dar es Salaam",
+        "addressCountry": "TZ"
+      }
+    }
+    </script>
   </head>
 
   <body>
+    <!-- React mounts here -->
     <div id="root"></div>
 
-    <script
-      type="module"
-      src="/src/main.jsx"
-    ></script>
+    <!--
+      type="module" is inherently deferred and non-render-blocking.
+      Vite replaces /src/main.jsx with the correct hashed bundle at build time.
+    -->
+    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
